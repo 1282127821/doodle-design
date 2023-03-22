@@ -13,4 +13,13 @@
   <artifactId>doodle-design-dependencies</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.doodle</groupId>
+        <artifactId>doodle-design-comon</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 </project>

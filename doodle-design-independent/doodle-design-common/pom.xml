@@ -6,18 +6,19 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.doodle</groupId>
-    <artifactId>doodle-design-parent</artifactId>
+    <artifactId>doodle-design-independent</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <relativePath>doodle-design-parent/pom.xml</relativePath>
+    <relativePath>../pom.xml</relativePath>
   </parent>
-  <artifactId>doodle-design</artifactId>
-  <packaging>pom</packaging>
+  <artifactId>doodle-design-common</artifactId>
   <properties>
-    <maven.deploy.skip>true</maven.deploy.skip>
+    <spotless-maven-plugin.skip>false</spotless-maven-plugin.skip>
   </properties>
-  <modules>
-    <module>doodle-design-dependencies</module>
-    <module>doodle-design-independent</module>
-    <module>doodle-design-parent</module>
-  </modules>
+  <dependencies>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
 </project>
