@@ -1,0 +1,4 @@
+= Doodle Design image:https://github.com/org-doodle/doodle-design/actions/workflows/ci-maven.yml/badge.svg?style=svg["Actions Status", link="https://github.com/org-doodle/doodle-design/actions/workflows/ci-maven.yml"]
+:github: https://github.com/org-doodle/doodle-design/
+
+SpringBoot 游戏服务端技术需求描述与设计。
