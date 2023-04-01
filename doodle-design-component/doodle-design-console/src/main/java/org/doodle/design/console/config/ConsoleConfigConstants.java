@@ -25,5 +25,5 @@ public final class ConsoleConfigConstants {
   /** group tag */
   public static final String GROUP = "group";
   /** configId tag */
-  public static final String CONFIG_ID = "CONFIG_ID";
+  public static final String CONFIG_ID = "configId";
 }
