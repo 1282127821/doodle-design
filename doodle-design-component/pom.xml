@@ -14,5 +14,6 @@
   <packaging>pom</packaging>
   <modules>
     <module>doodle-design-console</module>
+    <module>doodle-design-excel</module>
   </modules>
 </project>
