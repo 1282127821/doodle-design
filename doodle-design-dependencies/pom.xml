@@ -17,7 +17,12 @@
     <dependencies>
       <dependency>
         <groupId>org.doodle</groupId>
-        <artifactId>doodle-design-comon</artifactId>
+        <artifactId>doodle-design-console</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.doodle</groupId>
+        <artifactId>doodle-design-common</artifactId>
         <version>${project.version}</version>
       </dependency>
     </dependencies>
