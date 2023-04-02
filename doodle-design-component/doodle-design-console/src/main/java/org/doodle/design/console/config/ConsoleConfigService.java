@@ -19,5 +19,5 @@ import java.io.IOException;
 
 /** Console 配置服务 */
 public interface ConsoleConfigService {
-  String getConfig(String group, String configId) throws IOException;
+  String getConfig(String dataId, String group, String configId) throws IOException;
 }
