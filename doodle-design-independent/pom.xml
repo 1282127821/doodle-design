@@ -14,5 +14,7 @@
   <packaging>pom</packaging>
   <modules>
     <module>doodle-design-common</module>
+    <module>doodle-design-socket</module>
+    <module>doodle-design-vaadin</module>
   </modules>
 </project>

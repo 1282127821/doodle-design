@@ -50,6 +50,16 @@
         <artifactId>doodle-design-common</artifactId>
         <version>${project.version}</version>
       </dependency>
+      <dependency>
+        <groupId>org.doodle</groupId>
+        <artifactId>doodle-design-socket</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.doodle</groupId>
+        <artifactId>doodle-design-vaadin</artifactId>
+        <version>${project.version}</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 </project>
