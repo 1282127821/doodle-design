@@ -17,12 +17,32 @@
     <dependencies>
       <dependency>
         <groupId>org.doodle</groupId>
+        <artifactId>doodle-design-admin</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.doodle</groupId>
+        <artifactId>doodle-design-broker</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.doodle</groupId>
         <artifactId>doodle-design-console</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
         <groupId>org.doodle</groupId>
         <artifactId>doodle-design-excel</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.doodle</groupId>
+        <artifactId>doodle-design-login</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.doodle</groupId>
+        <artifactId>doodle-design-payment</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
