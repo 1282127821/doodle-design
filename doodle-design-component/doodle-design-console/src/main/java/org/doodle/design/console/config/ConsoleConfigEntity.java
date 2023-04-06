@@ -15,11 +15,22 @@
  */
 package org.doodle.design.console.config;
 
-import java.io.IOException;
-import reactor.core.publisher.Flux;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.Map;
+import lombok.Data;
+import org.springframework.data.annotation.Id;
 
-/** Console 配置服务 */
-public interface ConsoleConfigService {
-  Flux<ConsoleConfigEntity> getConfig(String dataId, String group, String configId)
-      throws IOException;
+/** Console 配置实体 */
+@Data
+public class ConsoleConfigEntity {
+
+  /** 数据库存储主键ID, 客户端不需要所以忽略 Json */
+  @JsonIgnore @Id private String id;
+
+  private String dataId;
+  private String group;
+  private String configId;
+
+  /** SpringBoot Environment 格式配置 */
+  private Map<String, Object> configs;
 }
