@@ -16,6 +16,8 @@
 package org.doodle.design.broker.frame;
 
 import io.rsocket.ConnectionSetupPayload;
+import io.rsocket.Payload;
+import io.rsocket.metadata.WellKnownMimeType;
 import java.util.Map;
 import org.doodle.broker.design.frame.BrokerFrame;
 import org.springframework.cglib.core.internal.Function;
@@ -23,24 +25,29 @@ import org.springframework.messaging.rsocket.MetadataExtractor;
 import org.springframework.messaging.rsocket.RSocketStrategies;
 import org.springframework.util.MimeType;
 
-public class BrokerFrameExtractor implements Function<ConnectionSetupPayload, BrokerFrame> {
-  private final Function<ConnectionSetupPayload, BrokerFrame> frameExtractor;
+public class BrokerFrameExtractor implements Function<Payload, BrokerFrame> {
+  private final Function<Payload, BrokerFrame> frameExtractor;
 
   public BrokerFrameExtractor(RSocketStrategies strategies) {
     this.frameExtractor =
-        (setupPayload) -> {
-          MimeType mimeType = MimeType.valueOf(setupPayload.metadataMimeType());
+        (payload) -> {
+          MimeType mimeType =
+              MimeType.valueOf(
+                  (payload instanceof ConnectionSetupPayload setupPayload)
+                      ? setupPayload.metadataMimeType()
+                      : WellKnownMimeType.MESSAGE_RSOCKET_COMPOSITE_METADATA.toString());
           MetadataExtractor metadataExtractor = strategies.metadataExtractor();
-          Map<String, Object> setupMetadata = metadataExtractor.extract(setupPayload, mimeType);
-          if (setupMetadata.containsKey(BrokerFrameMimeTypes.BROKER_FRAME_METADATA_KEY)) {
-            return (BrokerFrame) setupMetadata.get(BrokerFrameMimeTypes.BROKER_FRAME_METADATA_KEY);
+          Map<String, Object> payloadMetadata = metadataExtractor.extract(payload, mimeType);
+          if (payloadMetadata.containsKey(BrokerFrameMimeTypes.BROKER_FRAME_METADATA_KEY)) {
+            return (BrokerFrame)
+                payloadMetadata.get(BrokerFrameMimeTypes.BROKER_FRAME_METADATA_KEY);
           }
           return null;
         };
   }
 
   @Override
-  public BrokerFrame apply(ConnectionSetupPayload setup) {
-    return this.frameExtractor.apply(setup);
+  public BrokerFrame apply(Payload payload) {
+    return this.frameExtractor.apply(payload);
   }
 }
