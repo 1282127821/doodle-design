@@ -22,12 +22,12 @@ import org.doodle.broker.design.frame.Address;
 import org.doodle.broker.design.frame.RoutingType;
 
 @AllArgsConstructor
-public class MulticastBrokerBrokerRSocketLocator implements BrokerRSocketLocator {
+public class UnicastBrokerRSocketLocator implements BrokerRSocketLocator {
   private final BrokerRSocketQuery query;
 
   @Override
   public boolean supports(RoutingType routingType) {
-    return routingType == RoutingType.MULTICAST;
+    return routingType == RoutingType.UNICAST;
   }
 
   @Override
