@@ -15,6 +15,7 @@
   <modules>
     <module>doodle-design-admin</module>
     <module>doodle-design-broker</module>
+    <module>doodle-design-config</module>
     <module>doodle-design-console</module>
     <module>doodle-design-excel</module>
     <module>doodle-design-login</module>

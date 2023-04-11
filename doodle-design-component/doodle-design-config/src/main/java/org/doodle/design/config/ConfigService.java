@@ -13,24 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.console.config;
+package org.doodle.design.config;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.util.Map;
-import lombok.Data;
-import org.springframework.data.annotation.Id;
+import java.io.IOException;
+import reactor.core.publisher.Flux;
 
-/** Console 配置实体 */
-@Data
-public class ConsoleConfigEntity {
-
-  /** 数据库存储主键ID, 客户端不需要所以忽略 Json */
-  @JsonIgnore @Id private String id;
-
-  private String dataId;
-  private String group;
-  private String configId;
-
-  /** SpringBoot Environment 格式配置 */
-  private Map<String, Object> configs;
+/** 配置服务 */
+@FunctionalInterface
+public interface ConfigService {
+  Flux<ConfigEntity> getConfig(String dataId, String group, String configId) throws IOException;
 }

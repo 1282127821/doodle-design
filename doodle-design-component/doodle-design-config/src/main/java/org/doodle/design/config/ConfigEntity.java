@@ -13,17 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.console.config;
+package org.doodle.design.config;
 
-import lombok.experimental.UtilityClass;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.Map;
+import lombok.Data;
+import org.springframework.data.annotation.Id;
 
-/** Console 配置常量 */
-@UtilityClass
-public final class ConsoleConfigConstants {
-  /** 配置前缀 */
-  public static final String PREFIX = "doodleConfig:";
-  /** group tag */
-  public static final String GROUP = "group";
-  /** configId tag */
-  public static final String CONFIG_ID = "configId";
+/** 配置实体 */
+@Data
+public class ConfigEntity {
+
+  /** 数据库存储主键ID, 客户端不需要所以忽略 Json */
+  @JsonIgnore @Id private String id;
+
+  private String dataId;
+  private String group;
+  private String configId;
+
+  /** SpringBoot Environment 格式配置 */
+  private Map<String, Object> configs;
 }

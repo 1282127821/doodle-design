@@ -13,14 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.console.config;
+package org.doodle.design.config;
 
-import java.io.IOException;
-import reactor.core.publisher.Flux;
+import lombok.experimental.UtilityClass;
 
-/** Console 配置服务 */
-@FunctionalInterface
-public interface ConsoleConfigService {
-  Flux<ConsoleConfigEntity> getConfig(String dataId, String group, String configId)
-      throws IOException;
+/** 配置常量 */
+@UtilityClass
+public final class ConfigConstants {
+  /** 配置前缀 */
+  public static final String PREFIX = "doodleConfig:";
+  /** group tag */
+  public static final String GROUP = "group";
+  /** configId tag */
+  public static final String CONFIG_ID = "configId";
 }
