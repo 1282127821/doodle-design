@@ -16,6 +16,7 @@
 package org.doodle.design.excel.config;
 
 /** Excel 配置服务 */
+@FunctionalInterface
 public interface ExcelConfigService {
 
   String getConfig(String xlsx, String sheet);

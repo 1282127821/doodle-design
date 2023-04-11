@@ -19,6 +19,7 @@ import java.io.IOException;
 import reactor.core.publisher.Flux;
 
 /** Console 配置服务 */
+@FunctionalInterface
 public interface ConsoleConfigService {
   Flux<ConsoleConfigEntity> getConfig(String dataId, String group, String configId)
       throws IOException;
