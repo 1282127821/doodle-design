@@ -15,22 +15,13 @@
  */
 package org.doodle.design.config;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.util.Map;
-import lombok.Data;
-import org.springframework.data.annotation.Id;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-/** 配置实体 */
-@Data
-public class ConfigEntity {
-
-  /** 数据库存储主键ID, 客户端不需要所以忽略 Json */
-  @JsonIgnore @Id private String id;
-
-  private String dataId;
-  private String group;
-  private String configId;
-
-  /** SpringBoot Environment 格式配置 */
-  private Map<String, Object> configs;
+@Entity
+@Table(name = ConfigSharedEntity.TABLE_OR_COLLECTION)
+@Document(collection = ConfigSharedEntity.TABLE_OR_COLLECTION)
+public class ConfigSharedEntity extends ConfigBaseEntity {
+  public static final String TABLE_OR_COLLECTION = "config_shared";
 }

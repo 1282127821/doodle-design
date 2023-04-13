@@ -15,12 +15,15 @@
  */
 package org.doodle.design.config;
 
-import java.io.IOException;
-import reactor.core.publisher.Flux;
+import java.util.Map;
+import lombok.Data;
 
-/** 配置服务 */
-@FunctionalInterface
-public interface ConfigService {
-  Flux<ConfigInstanceDTO> getConfig(String dataId, String group, String configId)
-      throws IOException;
+@Data
+public class ConfigInstanceDTO {
+
+  private String dataId;
+  private String group;
+  private String configId;
+
+  private Map<String, Object> configs;
 }
