@@ -15,37 +15,27 @@
  */
 package org.doodle.design.config;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Convert;
-import jakarta.persistence.MappedSuperclass;
 import jakarta.validation.constraints.NotEmpty;
 import java.util.Map;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.doodle.design.common.data.BaseSecurityEntity;
-import org.doodle.design.common.data.jpa.JpaConverters;
 
 @ToString(callSuper = true)
 @Getter
 @Setter
-@MappedSuperclass
 public abstract class ConfigBaseEntity extends BaseSecurityEntity<String> {
 
-  @NotEmpty(message = "配置数据集(dataId)不能为空")
-  @Column(nullable = false)
+  @NotEmpty(message = "配置数据集不能为空")
   protected String dataId;
 
-  @NotEmpty(message = "配置分组(group)不能为空")
-  @Column(nullable = false)
+  @NotEmpty(message = "配置分组不能为空")
   protected String group;
 
-  @NotEmpty(message = "配置ID(configId)不能为空")
-  @Column(name = "config_id", nullable = false)
+  @NotEmpty(message = "配置ID不能为空")
   protected String configId;
 
-  @NotEmpty(message = "配置参数(configProperties)不能为空")
-  @Column(name = "config_properties", nullable = false)
-  @Convert(converter = JpaConverters.ObjectToJsonConverter.class)
+  @NotEmpty(message = "配置参数不能为空")
   protected Map<String, Object> configProperties;
 }

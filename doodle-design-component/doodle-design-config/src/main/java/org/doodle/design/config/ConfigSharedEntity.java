@@ -15,13 +15,9 @@
  */
 package org.doodle.design.config;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Entity
-@Table(name = ConfigSharedEntity.TABLE_OR_COLLECTION)
-@Document(collection = ConfigSharedEntity.TABLE_OR_COLLECTION)
+@Document(collection = ConfigSharedEntity.COLLECTION)
 public class ConfigSharedEntity extends ConfigBaseEntity {
-  public static final String TABLE_OR_COLLECTION = "config_shared";
+  public static final String COLLECTION = "config_shared";
 }

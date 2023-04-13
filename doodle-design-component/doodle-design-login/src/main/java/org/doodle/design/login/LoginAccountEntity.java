@@ -15,42 +15,23 @@
  */
 package org.doodle.design.login;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
-import java.util.List;
 import lombok.*;
 import org.doodle.design.common.data.BaseDateEntity;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.DocumentReference;
 
 @ToString(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-@Entity
-@EntityListeners(AuditingEntityListener.class)
-@Table(name = LoginAccountEntity.TABLE_OR_COLLECTION)
 @Document(collection = LoginAccountEntity.TABLE_OR_COLLECTION)
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public class LoginAccountEntity extends BaseDateEntity<Long> {
+public class LoginAccountEntity extends BaseDateEntity<String> {
   public static final String TABLE_OR_COLLECTION = "login_account";
 
-  @Min(value = 0L, message = "帐号ID不能小于0")
-  @Column(name = "account_id", nullable = false, unique = true, updatable = false)
-  private Long accountId;
-
   @NotEmpty(message = "帐号不能为空")
-  @Column(nullable = false, unique = true, updatable = false)
   private String account;
 
   @NotEmpty(message = "密码不能为空")
-  @Column(nullable = false)
   private String password;
-
-  @OneToMany(fetch = FetchType.EAGER, mappedBy = "account")
-  @DocumentReference(collection = LoginAccountEntity.TABLE_OR_COLLECTION)
-  private List<LoginRoleEntity> roles;
 }

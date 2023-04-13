@@ -15,7 +15,6 @@
  */
 package org.doodle.design.common.data;
 
-import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,14 +25,9 @@ import org.springframework.data.annotation.LastModifiedDate;
 @ToString(callSuper = true)
 @Getter
 @Setter
-@MappedSuperclass
 public abstract class BaseDateEntity<ID> extends BaseEntity<ID> {
 
-  @CreatedDate
-  @Column(name = "created_date", updatable = false, nullable = false)
-  protected LocalDateTime createdDate;
+  @CreatedDate protected LocalDateTime createdDate;
 
-  @LastModifiedDate
-  @Column(name = "modified_date", nullable = false)
-  protected LocalDateTime modifiedDate;
+  @LastModifiedDate protected LocalDateTime modifiedDate;
 }

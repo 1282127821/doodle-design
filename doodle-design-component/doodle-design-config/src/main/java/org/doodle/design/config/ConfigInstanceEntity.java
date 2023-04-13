@@ -15,27 +15,20 @@
  */
 package org.doodle.design.config;
 
-import jakarta.persistence.*;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.DocumentReference;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-@Entity
-@Table(name = ConfigInstanceEntity.TABLE_OR_COLLECTION)
-@Document(collection = ConfigInstanceEntity.TABLE_OR_COLLECTION)
+@Document(collection = ConfigInstanceEntity.COLLECTION)
 public class ConfigInstanceEntity extends ConfigBaseEntity {
-  public static final String TABLE_OR_COLLECTION = "config_instance";
+  public static final String COLLECTION = "config_instance";
 
-  @OneToMany(targetEntity = ConfigSharedEntity.class)
-  @DocumentReference(collection = ConfigSharedEntity.TABLE_OR_COLLECTION)
-  @Column(name = "shared_properties")
   private List<ConfigSharedEntity> sharedProperties;
 }

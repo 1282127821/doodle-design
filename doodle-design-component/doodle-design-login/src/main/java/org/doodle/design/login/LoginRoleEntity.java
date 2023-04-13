@@ -15,43 +15,27 @@
  */
 package org.doodle.design.login;
 
-import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 import org.doodle.design.common.data.BaseDateEntity;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.DocumentReference;
-import org.springframework.data.mongodb.core.mapping.Field;
 
 @ToString(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-@Entity
-@EntityListeners(AuditingEntityListener.class)
-@Table(name = LoginRoleEntity.TABLE_OR_COLLECTION)
 @Document(collection = LoginRoleEntity.TABLE_OR_COLLECTION)
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public class LoginRoleEntity extends BaseDateEntity<Long> {
+public class LoginRoleEntity extends BaseDateEntity<String> {
   public static final String TABLE_OR_COLLECTION = "login_role";
 
-  @Field(name = "role_id")
-  @Column(name = "role_id", nullable = false, unique = true, updatable = false)
-  private Long roleId;
+  @Min(value = 0, message = "角色ID不能为负数")
+  private long roleId;
 
   @NotEmpty(message = "角色名不能为空")
   private String name;
 
-  @Min(value = 0, message = "角色等级最小为0")
+  @Min(value = 0, message = "角色等级不能为负数")
   private int level;
-
-  @ToString.Exclude
-  @EqualsAndHashCode.Exclude
-  @ManyToOne(targetEntity = LoginAccountEntity.class, optional = false)
-  @JoinColumn(name = "account_id")
-  @DocumentReference(collection = LoginAccountEntity.TABLE_OR_COLLECTION)
-  private LoginAccountEntity account;
 }

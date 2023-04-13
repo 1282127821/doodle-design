@@ -15,7 +15,6 @@
  */
 package org.doodle.design.common.data;
 
-import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,16 +25,13 @@ import org.springframework.data.annotation.LastModifiedBy;
 @ToString(callSuper = true)
 @Getter
 @Setter
-@MappedSuperclass
 public abstract class BaseSecurityEntity<ID> extends BaseDateEntity<ID> {
 
   @NotEmpty(message = "创建作者不能为空")
   @CreatedBy
-  @Column(name = "created_by", nullable = false, updatable = false)
   protected String createdBy;
 
   @NotEmpty(message = "修改作者不能为空")
   @LastModifiedBy
-  @Column(name = "modified_by", nullable = false)
   protected String modifiedBy;
 }

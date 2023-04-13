@@ -15,18 +15,15 @@
  */
 package org.doodle.design.common.data;
 
-import jakarta.persistence.*;
 import java.io.Serializable;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.data.annotation.Id;
 
 @ToString
 @Getter
 @Setter
-@MappedSuperclass
 public abstract class BaseEntity<ID> implements Serializable {
-  @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  protected ID id;
+  @Id protected ID id;
 }
