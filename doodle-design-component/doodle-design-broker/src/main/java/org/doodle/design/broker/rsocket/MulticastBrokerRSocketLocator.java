@@ -16,7 +16,6 @@
 package org.doodle.design.broker.rsocket;
 
 import io.rsocket.RSocket;
-import java.util.List;
 import lombok.AllArgsConstructor;
 import org.doodle.broker.design.frame.Address;
 import org.doodle.broker.design.frame.RoutingType;
@@ -32,7 +31,6 @@ public class MulticastBrokerRSocketLocator implements BrokerRSocketLocator {
 
   @Override
   public RSocket locate(Address address) {
-    List<RSocket> found = query.query(address.getTags());
-    return null;
+    return new MulticastBrokerRSocket(() -> query.query(address.getTags()));
   }
 }

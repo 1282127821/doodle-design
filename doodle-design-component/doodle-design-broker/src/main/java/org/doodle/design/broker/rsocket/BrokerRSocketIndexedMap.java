@@ -16,24 +16,7 @@
 package org.doodle.design.broker.rsocket;
 
 import io.rsocket.RSocket;
-import java.util.List;
-import java.util.Objects;
-import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.doodle.broker.design.frame.Tags;
-import org.springframework.util.CollectionUtils;
+import org.doodle.broker.design.frame.UUID;
+import org.doodle.design.bitmap.RoaringBitmapIndexedMap;
 
-@Slf4j
-@AllArgsConstructor
-public class CombinedBrokerRSocketQuery implements BrokerRSocketQuery {
-
-  private final BrokerRSocketIndex rSocketIndex;
-
-  @Override
-  public List<RSocket> query(Tags tags) {
-    if (Objects.isNull(tags) || CollectionUtils.isEmpty(tags.getTagMap())) {
-      throw new IllegalArgumentException("索引查询 TAG 不能为空");
-    }
-    return rSocketIndex.query(tags);
-  }
-}
+public class BrokerRSocketIndexedMap extends RoaringBitmapIndexedMap<UUID, RSocket> {}

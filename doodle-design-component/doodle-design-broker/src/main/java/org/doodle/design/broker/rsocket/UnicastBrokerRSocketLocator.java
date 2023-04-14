@@ -20,6 +20,7 @@ import java.util.List;
 import lombok.AllArgsConstructor;
 import org.doodle.broker.design.frame.Address;
 import org.doodle.broker.design.frame.RoutingType;
+import org.springframework.util.CollectionUtils;
 
 @AllArgsConstructor
 public class UnicastBrokerRSocketLocator implements BrokerRSocketLocator {
@@ -33,6 +34,9 @@ public class UnicastBrokerRSocketLocator implements BrokerRSocketLocator {
   @Override
   public RSocket locate(Address address) {
     List<RSocket> found = query.query(address.getTags());
-    return null;
+    if (CollectionUtils.isEmpty(found)) {
+      throw new IllegalArgumentException("检索不到路由");
+    }
+    return found.get(0);
   }
 }
