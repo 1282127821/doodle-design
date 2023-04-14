@@ -16,11 +16,9 @@
 package org.doodle.design.payment;
 
 import jakarta.validation.constraints.*;
-
 import java.util.Currency;
 import java.util.Locale;
 import java.util.Map;
-
 import lombok.*;
 import org.doodle.design.common.data.BaseDateEntity;
 import org.springframework.data.mongodb.core.mapping.Document;
