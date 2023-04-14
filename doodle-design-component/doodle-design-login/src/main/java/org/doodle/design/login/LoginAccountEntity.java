@@ -25,9 +25,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @NoArgsConstructor
 @Getter
 @Setter
-@Document(collection = LoginAccountEntity.TABLE_OR_COLLECTION)
+@Document(collection = LoginAccountEntity.COLLECTION)
 public class LoginAccountEntity extends BaseDateEntity<String> {
-  public static final String TABLE_OR_COLLECTION = "login_account";
+  public static final String COLLECTION = "login_account";
 
   @NotEmpty(message = "帐号不能为空")
   private String account;

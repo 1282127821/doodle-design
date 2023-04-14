@@ -26,12 +26,12 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @NoArgsConstructor
 @Getter
 @Setter
-@Document(collection = LoginRoleEntity.TABLE_OR_COLLECTION)
+@Document(collection = LoginRoleEntity.COLLECTION)
 public class LoginRoleEntity extends BaseDateEntity<String> {
-  public static final String TABLE_OR_COLLECTION = "login_role";
+  public static final String COLLECTION = "login_role";
 
-  @Min(value = 0, message = "角色ID不能为负数")
-  private long roleId;
+  @Min(value = 0, message = "角色社交ID不能为负数")
+  private long socialId;
 
   @NotEmpty(message = "角色名不能为空")
   private String name;
