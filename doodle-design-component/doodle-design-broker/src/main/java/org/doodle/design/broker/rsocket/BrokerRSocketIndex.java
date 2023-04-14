@@ -18,17 +18,15 @@ package org.doodle.design.broker.rsocket;
 import io.rsocket.RSocket;
 import java.util.Collection;
 import java.util.List;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.doodle.broker.design.frame.Tags;
 import org.doodle.broker.design.frame.UUID;
 import org.doodle.design.bitmap.IndexedMap;
 
 @Slf4j
-@RequiredArgsConstructor
 public class BrokerRSocketIndex implements IndexedMap<UUID, RSocket, Tags> {
 
-  private final BrokerRSocketIndexedMap indexedMap;
+  private final BrokerRSocketIndexedMap indexedMap = new BrokerRSocketIndexedMap();
 
   @Override
   public RSocket get(UUID key) {

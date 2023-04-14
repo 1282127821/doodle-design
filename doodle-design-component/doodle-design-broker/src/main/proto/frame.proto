@@ -23,8 +23,7 @@ option java_package = "org.doodle.broker.design.frame";
 option java_outer_classname = "BrokerFrameProto";
 
 message UUID {
-  sfixed64 lsb = 1;
-  sfixed64  msb = 2;
+  string id = 1;
 }
 
 message Tags {

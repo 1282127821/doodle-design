@@ -95,7 +95,7 @@ final class BrokerRoutingRSocket implements RSocket {
 
   private RSocket locate(Payload payload) {
     BrokerFrame brokerFrame = frameExtractor.apply(payload);
-    if (brokerFrame.getKindCase() != BrokerFrame.KindCase.SETUP) {
+    if (brokerFrame.getKindCase() != BrokerFrame.KindCase.ADDRESS) {
       throw new IllegalStateException("必须传入 Address 参数");
     }
     Address address = brokerFrame.getAddress();
