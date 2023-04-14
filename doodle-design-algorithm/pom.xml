@@ -8,18 +8,11 @@
     <groupId>org.doodle</groupId>
     <artifactId>doodle-design-parent</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <relativePath>doodle-design-parent/pom.xml</relativePath>
+    <relativePath>../doodle-design-parent/pom.xml</relativePath>
   </parent>
-  <artifactId>doodle-design</artifactId>
+  <artifactId>doodle-design-algorithm</artifactId>
   <packaging>pom</packaging>
-  <properties>
-    <maven.deploy.skip>true</maven.deploy.skip>
-  </properties>
   <modules>
-    <module>doodle-design-algorithm</module>
-    <module>doodle-design-component</module>
-    <module>doodle-design-dependencies</module>
-    <module>doodle-design-independent</module>
-    <module>doodle-design-parent</module>
+    <module>doodle-design-bitmap</module>
   </modules>
 </project>

@@ -13,8 +13,27 @@
   <artifactId>doodle-design-dependencies</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
+  <properties>
+    <roaringbitmap.version>0.9.39</roaringbitmap.version>
+    <agrona.version>1.18.0</agrona.version>
+  </properties>
   <dependencyManagement>
     <dependencies>
+      <dependency>
+        <groupId>org.roaringbitmap</groupId>
+        <artifactId>RoaringBitmap</artifactId>
+        <version>${roaringbitmap.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.agrona</groupId>
+        <artifactId>agrona</artifactId>
+        <version>${agrona.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.doodle</groupId>
+        <artifactId>doodle-design-bitmap</artifactId>
+        <version>${project.version}</version>
+      </dependency>
       <dependency>
         <groupId>org.doodle</groupId>
         <artifactId>doodle-design-admin</artifactId>
