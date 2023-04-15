@@ -1,0 +1,1 @@
+include::https://raw.githubusercontent.com/org-doodle/.github/main/profile/README.adoc[]
