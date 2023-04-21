@@ -16,7 +16,7 @@
 package org.doodle.design.login;
 
 @FunctionalInterface
-public interface SdkAuthApi {
+public interface RoleUploadOperation {
 
-  SdkAuthResponse auth(SdkAuthRequest request);
+  void upload(RoleUploadRequest request);
 }

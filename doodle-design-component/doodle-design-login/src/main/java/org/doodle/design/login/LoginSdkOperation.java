@@ -15,8 +15,20 @@
  */
 package org.doodle.design.login;
 
-@FunctionalInterface
-public interface RoleUploadApi {
+import lombok.RequiredArgsConstructor;
 
-  void upload(RoleUploadRequest request);
+@RequiredArgsConstructor
+public class LoginSdkOperation implements SdkAuthOperation, SdkVerifyOperation {
+  private final SdkAuthOperation authOperation;
+  private final SdkVerifyOperation verifyOperation;
+
+  @Override
+  public SdkAuthResponse auth(SdkAuthRequest request) {
+    return this.authOperation.auth(request);
+  }
+
+  @Override
+  public SdkVerifyResponse verify(SdkVerifyRequest request) {
+    return this.verifyOperation.verify(request);
+  }
 }

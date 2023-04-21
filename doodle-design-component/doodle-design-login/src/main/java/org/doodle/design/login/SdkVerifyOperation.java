@@ -15,20 +15,7 @@
  */
 package org.doodle.design.login;
 
-import lombok.RequiredArgsConstructor;
-
-@RequiredArgsConstructor
-public class LoginSdkApi implements SdkAuthApi, SdkVerifyApi {
-  private final SdkAuthApi authApi;
-  private final SdkVerifyApi verifyApi;
-
-  @Override
-  public SdkAuthResponse auth(SdkAuthRequest request) {
-    return this.authApi.auth(request);
-  }
-
-  @Override
-  public SdkVerifyResponse verify(SdkVerifyRequest request) {
-    return this.verifyApi.verify(request);
-  }
+@FunctionalInterface
+public interface SdkVerifyOperation {
+  SdkVerifyResponse verify(SdkVerifyRequest request);
 }
