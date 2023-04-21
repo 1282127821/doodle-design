@@ -13,13 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.login;
+package org.doodle.design.common;
 
-import lombok.Data;
-import org.doodle.design.common.SdkType;
-
-@Data
-public class SdkAuthRequest {
-  private SdkType sdkType = SdkType.EMBEDDED;
-  private String payload;
+public enum SdkType {
+  EMBEDDED;
 }
