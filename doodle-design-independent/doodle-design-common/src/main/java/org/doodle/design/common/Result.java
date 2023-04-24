@@ -16,10 +16,7 @@
 package org.doodle.design.common;
 
 import java.util.Optional;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
@@ -28,6 +25,7 @@ import org.springframework.util.Assert;
 @NoArgsConstructor
 @ToString
 @Getter
+@Setter
 public final class Result<T> {
   public static final int OK = 0;
   public static final int BAD = -1;
@@ -61,12 +59,9 @@ public final class Result<T> {
     <T> Result<T> body(T body);
   }
 
+  @RequiredArgsConstructor
   private static class DefaultBuilder implements Builder {
     private final int status;
-
-    DefaultBuilder(int status) {
-      this.status = status;
-    }
 
     @Override
     public <T> Result<T> body(T body) {
