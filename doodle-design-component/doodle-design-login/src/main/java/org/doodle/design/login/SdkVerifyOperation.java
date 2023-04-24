@@ -15,7 +15,9 @@
  */
 package org.doodle.design.login;
 
+import org.doodle.design.common.Result;
+
 @FunctionalInterface
 public interface SdkVerifyOperation {
-  SdkVerifyResponse verify(SdkVerifyRequest request);
+  Result<SdkVerifyResponse> verify(SdkVerifyRequest request);
 }

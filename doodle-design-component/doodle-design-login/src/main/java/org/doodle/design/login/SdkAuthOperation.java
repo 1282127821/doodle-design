@@ -15,8 +15,10 @@
  */
 package org.doodle.design.login;
 
+import org.doodle.design.common.Result;
+
 @FunctionalInterface
 public interface SdkAuthOperation {
 
-  SdkAuthResponse auth(SdkAuthRequest request);
+  Result<SdkAuthResponse> auth(SdkAuthRequest request);
 }
