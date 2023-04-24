@@ -15,9 +15,10 @@
  */
 package org.doodle.design.login;
 
-import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import org.doodle.design.common.data.BaseDateEntity;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @ToString(callSuper = true)
@@ -25,13 +26,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @NoArgsConstructor
 @Getter
 @Setter
-@Document(collection = LoginAccountEntity.COLLECTION)
-public class LoginAccountEntity extends BaseDateEntity<String> {
-  public static final String COLLECTION = "login_account";
+@Document(collection = RoleEntity.COLLECTION)
+public class RoleEntity extends BaseDateEntity<String> {
+  public static final String COLLECTION = "role";
 
-  @NotEmpty(message = "帐号不能为空")
+  @Indexed
+  @NotBlank(message = "角色关联账号ID不能为空")
   private String account;
-
-  @NotEmpty(message = "密码不能为空")
-  private String password;
 }

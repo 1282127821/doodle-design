@@ -15,10 +15,13 @@
  */
 package org.doodle.design.login;
 
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import java.util.List;
 import lombok.*;
+import org.doodle.design.common.SdkType;
 import org.doodle.design.common.data.BaseDateEntity;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @ToString(callSuper = true)
@@ -26,16 +29,16 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @NoArgsConstructor
 @Getter
 @Setter
-@Document(collection = LoginRoleEntity.COLLECTION)
-public class LoginRoleEntity extends BaseDateEntity<String> {
-  public static final String COLLECTION = "login_role";
+@Document(collection = AccountEntity.COLLECTION)
+public class AccountEntity extends BaseDateEntity<String> {
+  public static final String COLLECTION = "account";
 
-  @Min(value = 0, message = "角色社交ID不能为负数")
-  private long socialId;
+  @NotNull(message = "SDK 类型不能为空")
+  private SdkType type = SdkType.EMBEDDED;
 
-  @NotEmpty(message = "角色名不能为空")
-  private String name;
+  @Indexed
+  @NotEmpty(message = "SDK 账号绑定不能为空")
+  private String bind;
 
-  @Min(value = 0, message = "角色等级不能为负数")
-  private int level;
+  private List<String> roles;
 }
