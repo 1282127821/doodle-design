@@ -15,9 +15,62 @@
  */
 package org.doodle.design.common;
 
+import java.util.Optional;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
+import org.springframework.util.Assert;
 
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 @Getter
-public class Result<T> {
-  protected T data;
+public final class Result<T> {
+  public static final int OK = 0;
+  public static final int BAD = -1;
+
+  private int status;
+  private T body;
+
+  public static Builder status(int status) {
+    return new DefaultBuilder(status);
+  }
+
+  public static Builder ok() {
+    return status(OK);
+  }
+
+  public static <T> Result<T> ok(@Nullable T body) {
+    return ok().body(body);
+  }
+
+  public static <T> Result<T> bad() {
+    return status(BAD).body(null);
+  }
+
+  public static <T> Result<T> of(@NonNull Optional<T> body) {
+    Assert.notNull(body, "body 不能为空");
+    return body.map(Result::ok).orElseGet(Result::bad);
+  }
+
+  @FunctionalInterface
+  public interface Builder {
+    <T> Result<T> body(T body);
+  }
+
+  private static class DefaultBuilder implements Builder {
+    private final int status;
+
+    DefaultBuilder(int status) {
+      this.status = status;
+    }
+
+    @Override
+    public <T> Result<T> body(T body) {
+      return new Result<>(this.status, body);
+    }
+  }
 }
