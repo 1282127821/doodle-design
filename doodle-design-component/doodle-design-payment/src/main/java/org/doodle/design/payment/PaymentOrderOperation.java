@@ -16,13 +16,14 @@
 package org.doodle.design.payment;
 
 import lombok.RequiredArgsConstructor;
+import org.doodle.design.common.Result;
 
 @RequiredArgsConstructor
 public class PaymentOrderOperation implements OrderCreateOperation {
   private final OrderCreateOperation createOperation;
 
   @Override
-  public OrderCreateResponse create(OrderCreateRequest request) {
+  public Result<OrderCreateResponse> create(OrderCreateRequest request) {
     return this.createOperation.create(request);
   }
 }

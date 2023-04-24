@@ -15,7 +15,9 @@
  */
 package org.doodle.design.payment;
 
+import org.doodle.design.common.Result;
+
 @FunctionalInterface
 public interface OrderCreateOperation {
-  OrderCreateResponse create(OrderCreateRequest request);
+  Result<OrderCreateResponse> create(OrderCreateRequest request);
 }

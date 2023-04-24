@@ -15,7 +15,9 @@
  */
 package org.doodle.design.payment;
 
+import org.doodle.design.common.Result;
+
 @FunctionalInterface
 public interface SdkDeliverOperation {
-  SdkDeliverResponse deliver(SdkDeliverRequest request);
+  Result<SdkDeliverResponse> deliver(SdkDeliverRequest request);
 }
