@@ -15,11 +15,15 @@
  */
 package org.doodle.design.login;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.doodle.design.common.SdkType;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 public class SdkAuthRequest {
-  private SdkType sdkType = SdkType.EMBEDDED;
+  private SdkType type = SdkType.EMBEDDED;
   private String payload;
 }

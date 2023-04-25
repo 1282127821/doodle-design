@@ -15,15 +15,11 @@
  */
 package org.doodle.design.login;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+@FunctionalInterface
+public interface SdkTokenHandler {
+  SdkToken generate(AccountEntity account);
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Data
-public class SdkVerifyRequest {
-  private String account;
-  private long timestamp;
-  private String token;
+  default boolean validate(SdkToken token) {
+    return false;
+  }
 }

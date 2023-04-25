@@ -15,7 +15,15 @@
  */
 package org.doodle.design.login;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
-public class SdkAuthResponse {}
+public class SdkAuthResponse {
+  private String account;
+  private long timestamp;
+  private String token;
+}

@@ -17,12 +17,14 @@ package org.doodle.design.login;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode
 @Data
-public class SdkVerifyRequest {
+public class SdkToken {
   private String account;
   private long timestamp;
   private String token;

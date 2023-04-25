@@ -15,7 +15,14 @@
  */
 package org.doodle.design.login;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
-public class SdkVerifyResponse {}
+public class SdkVerifyResponse {
+
+  private AccountEntity account;
+}

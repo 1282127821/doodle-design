@@ -15,11 +15,14 @@
  */
 package org.doodle.design.login;
 
+import org.doodle.design.common.Result;
 import org.doodle.design.common.SdkType;
 
 @FunctionalInterface
-public interface SdkAuthHandler extends SdkAuthOperation {
+public interface SdkAuthHandler {
   default boolean match(SdkType type) {
     return false;
   }
+
+  Result<AccountEntity> auth(SdkAuthRequest request);
 }
