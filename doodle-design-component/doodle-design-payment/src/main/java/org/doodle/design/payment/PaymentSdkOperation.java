@@ -15,15 +15,4 @@
  */
 package org.doodle.design.payment;
 
-import lombok.RequiredArgsConstructor;
-import org.doodle.design.common.Result;
-
-@RequiredArgsConstructor
-public class PaymentSdkOperation implements SdkDeliverOperation {
-  private final SdkDeliverOperation deliverOperation;
-
-  @Override
-  public Result<SdkDeliverResponse> deliver(SdkDeliverRequest request) {
-    return this.deliverOperation.deliver(request);
-  }
-}
+public abstract class PaymentSdkOperation implements SdkDeliverOperation {}
