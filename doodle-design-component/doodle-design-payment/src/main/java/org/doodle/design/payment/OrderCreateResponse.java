@@ -15,7 +15,18 @@
  */
 package org.doodle.design.payment;
 
+import jakarta.validation.constraints.NotBlank;
+import java.util.Map;
 import lombok.Data;
 
 @Data
-public class OrderCreateResponse {}
+public class OrderCreateResponse {
+
+  @NotBlank(message = "订单ID不能为空")
+  private String orderId;
+
+  @NotBlank(message = "玩家角色ID不能为空")
+  private String roleId;
+
+  private Map<String, Object> params;
+}

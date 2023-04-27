@@ -15,7 +15,11 @@
  */
 package org.doodle.design.payment;
 
-public enum PaymentOrderStatus {
+public enum OrderStatus {
   CREATED,
-  DONE
+  DONE;
+
+  public String collection() {
+    return OrderEntity.COLLECTION + "_" + name().toLowerCase();
+  }
 }

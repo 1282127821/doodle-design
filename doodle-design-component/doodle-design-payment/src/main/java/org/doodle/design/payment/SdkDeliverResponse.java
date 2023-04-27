@@ -15,7 +15,11 @@
  */
 package org.doodle.design.payment;
 
+import java.util.Map;
 import lombok.Data;
 
 @Data
-public class SdkDeliverResponse {}
+public class SdkDeliverResponse {
+
+  private Map<String, Object> params;
+}

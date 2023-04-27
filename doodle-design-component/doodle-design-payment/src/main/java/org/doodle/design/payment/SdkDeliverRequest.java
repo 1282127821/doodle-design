@@ -15,7 +15,24 @@
  */
 package org.doodle.design.payment;
 
+import jakarta.validation.constraints.NotBlank;
+import java.util.Map;
 import lombok.Data;
 
 @Data
-public class SdkDeliverRequest {}
+public class SdkDeliverRequest {
+
+  @NotBlank(message = "订单ID不能为空")
+  private String orderId;
+
+  @NotBlank(message = "玩家帐号ID不能为空")
+  private String accountId;
+
+  @NotBlank(message = "玩家角色ID不能为空")
+  private String roleId;
+
+  @NotBlank(message = "玩家所在服ID不能为空")
+  private String serverId;
+
+  private Map<String, Object> params;
+}

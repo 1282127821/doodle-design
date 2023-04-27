@@ -20,6 +20,7 @@ import java.util.Currency;
 import java.util.Locale;
 import java.util.Map;
 import lombok.*;
+import org.doodle.design.common.SdkType;
 import org.doodle.design.common.data.BaseDateEntity;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -28,12 +29,18 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @NoArgsConstructor
 @Getter
 @Setter
-@Document(collection = PaymentOrderEntity.COLLECTION)
-public class PaymentOrderEntity extends BaseDateEntity<String> {
-  public static final String COLLECTION = "payment_order";
+@Document(collection = OrderEntity.COLLECTION)
+public class OrderEntity extends BaseDateEntity<String> {
+  public static final String COLLECTION = "order";
 
   @NotBlank(message = "玩家帐号ID不能为空")
   private String accountId;
+
+  @NotBlank(message = "玩家sdk账号不能为空")
+  private String bind;
+
+  @NotNull(message = "Sdk类型不能为空")
+  private SdkType type = SdkType.EMBEDDED;
 
   @NotBlank(message = "玩家角色ID不能为空")
   private String roleId;
@@ -47,9 +54,6 @@ public class PaymentOrderEntity extends BaseDateEntity<String> {
   @NotBlank(message = "玩家游戏ID不能为空")
   private String gameId;
 
-  @Positive(message = "玩家支付配置ID不能为负数或零")
-  private int configId;
-
   @Positive(message = "玩家支付金额不能为负数或零")
   private double amount;
 
@@ -57,7 +61,7 @@ public class PaymentOrderEntity extends BaseDateEntity<String> {
   private Currency currency = Currency.getInstance(Locale.CHINA);
 
   @NotNull(message = "玩家支付订单状态不能为空")
-  private PaymentOrderStatus status = PaymentOrderStatus.CREATED;
+  private OrderStatus status = OrderStatus.CREATED;
 
   private Map<String, Object> params;
 }

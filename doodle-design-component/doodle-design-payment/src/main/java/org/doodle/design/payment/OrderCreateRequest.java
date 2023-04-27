@@ -15,7 +15,43 @@
  */
 package org.doodle.design.payment;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import java.util.Currency;
+import java.util.Locale;
+import java.util.Map;
 import lombok.Data;
+import org.doodle.design.common.SdkType;
 
 @Data
-public class OrderCreateRequest {}
+public class OrderCreateRequest {
+  @NotBlank(message = "玩家帐号ID不能为空")
+  private String accountId;
+
+  @NotBlank(message = "玩家sdk账号不能为空")
+  private String bind;
+
+  @NotNull(message = "Sdk类型不能为空")
+  private SdkType type = SdkType.EMBEDDED;
+
+  @NotBlank(message = "玩家角色ID不能为空")
+  private String roleId;
+
+  @NotBlank(message = "玩家所在服ID不能为空")
+  private String serverId;
+
+  @NotBlank(message = "玩家渠道ID不能为空")
+  private String channelId;
+
+  @NotBlank(message = "玩家游戏ID不能为空")
+  private String gameId;
+
+  @Positive(message = "玩家支付金额不能为负数或零")
+  private double amount;
+
+  @NotNull(message = "玩家支付货币单位不能为空")
+  private Currency currency = Currency.getInstance(Locale.CHINA);
+
+  private Map<String, Object> params;
+}
