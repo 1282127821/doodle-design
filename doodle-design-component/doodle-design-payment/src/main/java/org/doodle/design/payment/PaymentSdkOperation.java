@@ -15,4 +15,4 @@
  */
 package org.doodle.design.payment;
 
-public abstract class PaymentSdkOperation implements SdkDeliverOperation {}
+public interface PaymentSdkOperation extends SdkDeliverOperation {}

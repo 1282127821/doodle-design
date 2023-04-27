@@ -15,4 +15,4 @@
  */
 package org.doodle.design.login;
 
-public interface LoginSdkOperation extends SdkAuthOperation, SdkVerifyOperation {}
+public interface LoginOperation extends LoginRoleOperation, LoginSdkOperation {}

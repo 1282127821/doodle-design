@@ -15,4 +15,4 @@
  */
 package org.doodle.design.payment;
 
-public abstract class PaymentOrderOperation implements OrderCreateOperation {}
+public interface PaymentOrderOperation extends OrderCreateOperation {}

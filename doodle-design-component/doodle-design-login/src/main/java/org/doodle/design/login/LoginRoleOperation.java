@@ -15,4 +15,4 @@
  */
 package org.doodle.design.login;
 
-public abstract class LoginRoleOperation implements RoleUploadOperation {}
+public interface LoginRoleOperation extends RoleUploadOperation {}
