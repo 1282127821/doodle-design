@@ -49,6 +49,11 @@ public final class Result<T> {
     return status(BAD).body(null);
   }
 
+  public static <T> Result<T> bad(int status) {
+    Assert.isTrue(status != OK, "bad 错误状态码不能和 OK 相同");
+    return status(status).body(null);
+  }
+
   public static <T> Result<T> of(@NonNull Optional<T> body) {
     Assert.notNull(body, "body 不能为空");
     return body.map(Result::ok).orElseGet(Result::bad);
