@@ -24,6 +24,7 @@ public enum LoginResultStatus {
   TOKEN_AUTH_FAILED(-3, "token检验失败"),
   SDK_NOT_FOUND(-4, "找不到对应的SDK"),
   SDK_PAYLOAD_INVALID(-5, "SDK参数非法"),
+  EXCEPTION(-6, "异常错误"),
   RESERVED(-100, "找不到对应错误码");
 
   final int status;
