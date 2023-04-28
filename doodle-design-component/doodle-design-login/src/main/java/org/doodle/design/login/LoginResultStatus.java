@@ -13,28 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.payment;
+package org.doodle.design.login;
 
 import java.util.Arrays;
 import lombok.Getter;
 
 @Getter
-public enum PaymentResultStatus {
-  ORDER_CREATE_FAILED(-2, "订单创建失败"),
-  ORDER_NOT_FOUND(-3, "查找不到对应订单"),
-  SDK_DELIVER_FAILED(-4, "订单兑现失败"),
-  EXCEPTION(-5, "异常错误"),
+public enum LoginResultStatus {
+  ACCOUNT_NOT_FOUND(-2, "找不到对应的账号"),
+  TOKEN_AUTH_FAILED(-3, "token检验失败"),
+  SDK_NOT_FOUND(-4, "找不到对应的SDK"),
+  SDK_PAYLOAD_INVALID(-5, "SDK参数非法"),
   RESERVED(-100, "找不到对应错误码");
 
   final int status;
   final String message;
 
-  PaymentResultStatus(int status, String message) {
+  LoginResultStatus(int status, String message) {
     this.status = status;
     this.message = message;
   }
 
-  public static PaymentResultStatus valueOf(int status) {
+  public static LoginResultStatus valueOf(int status) {
     return Arrays.stream(values()).filter(v -> v.status == status).findFirst().orElse(RESERVED);
   }
 
@@ -42,7 +42,7 @@ public enum PaymentResultStatus {
     return Arrays.stream(values())
         .filter(v -> v.status == status)
         .findFirst()
-        .map(PaymentResultStatus::getMessage)
+        .map(LoginResultStatus::getMessage)
         .orElseGet(RESERVED::getMessage);
   }
 }
