@@ -15,4 +15,4 @@
  */
 package org.doodle.design.payment;
 
-public interface PaymentOperation extends PaymentOrderOperation, PaymentSdkOperation {}
+public interface PaymentOperation {}
