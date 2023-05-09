@@ -13,17 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.config;
 
-import java.util.Map;
-import lombok.Data;
+syntax = "proto3";
 
-@Data
-public class ConfigInstanceDTO {
+package doodle.design.config;
 
-  private String dataId;
-  private String group;
-  private String configId;
-
-  private Map<String, Object> configs;
-}
+option java_multiple_files = true;
+option java_package = "org.doodle.design.config";
+option java_outer_classname = "ConfigProto";

@@ -13,12 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.excel.config;
 
-/** Excel 加载模式 */
-public enum ExcelConfigLoadingMode {
-  /** 本地 */
-  LOCAL,
-  /** 远程 */
-  REMOTE
-}
+syntax = "proto3";
+
+package doodle.design.excel;
+
+option java_multiple_files = true;
+option java_package = "org.doodle.design.excel";
+option java_outer_classname = "ExcelProto";
