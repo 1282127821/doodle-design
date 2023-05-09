@@ -19,7 +19,6 @@ import io.rsocket.ConnectionSetupPayload;
 import io.rsocket.Payload;
 import io.rsocket.metadata.WellKnownMimeType;
 import java.util.Map;
-import org.doodle.broker.design.frame.BrokerFrame;
 import org.springframework.cglib.core.internal.Function;
 import org.springframework.messaging.rsocket.MetadataExtractor;
 import org.springframework.messaging.rsocket.RSocketStrategies;

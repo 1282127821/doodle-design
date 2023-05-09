@@ -19,9 +19,9 @@ import io.rsocket.RSocket;
 import java.util.Collection;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
-import org.doodle.broker.design.frame.Tags;
-import org.doodle.broker.design.frame.UUID;
 import org.doodle.design.bitmap.IndexedMap;
+import org.doodle.design.broker.frame.Tags;
+import org.doodle.design.broker.frame.UUID;
 
 @Slf4j
 public class BrokerRSocketIndex implements IndexedMap<UUID, RSocket, Tags> {

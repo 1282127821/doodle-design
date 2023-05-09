@@ -19,7 +19,7 @@ syntax = "proto3";
 package doodle.broker.design.frame;
 
 option java_multiple_files = true;
-option java_package = "org.doodle.broker.design.frame";
+option java_package = "org.doodle.design.broker.frame";
 option java_outer_classname = "BrokerFrameProto";
 
 message UUID {

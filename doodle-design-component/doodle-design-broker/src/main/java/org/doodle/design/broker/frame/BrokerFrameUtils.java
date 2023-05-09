@@ -17,7 +17,6 @@ package org.doodle.design.broker.frame;
 
 import java.util.Map;
 import lombok.experimental.UtilityClass;
-import org.doodle.broker.design.frame.*;
 
 @UtilityClass
 public final class BrokerFrameUtils {

@@ -13,14 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.broker.rsocket;
 
-import io.rsocket.RSocket;
-import java.util.List;
-import org.doodle.design.broker.frame.Tags;
+syntax = "proto3";
 
-@FunctionalInterface
-public interface BrokerRSocketQuery {
+package doodle.design.console;
 
-  List<RSocket> query(Tags tags);
-}
+option java_multiple_files = true;
+option java_package = "org.doodle.design.console";
+option java_outer_classname = "ConsoleProto";

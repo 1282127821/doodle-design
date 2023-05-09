@@ -16,7 +16,7 @@
 package org.doodle.design.broker.rsocket;
 
 import io.rsocket.RSocket;
-import org.doodle.broker.design.frame.UUID;
 import org.doodle.design.bitmap.RoaringBitmapIndexedMap;
+import org.doodle.design.broker.frame.UUID;
 
 public class BrokerRSocketIndexedMap extends RoaringBitmapIndexedMap<UUID, RSocket> {}

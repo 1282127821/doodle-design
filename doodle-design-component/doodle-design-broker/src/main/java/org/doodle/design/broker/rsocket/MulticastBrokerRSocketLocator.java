@@ -17,8 +17,8 @@ package org.doodle.design.broker.rsocket;
 
 import io.rsocket.RSocket;
 import lombok.AllArgsConstructor;
-import org.doodle.broker.design.frame.Address;
-import org.doodle.broker.design.frame.RoutingType;
+import org.doodle.design.broker.frame.Address;
+import org.doodle.design.broker.frame.RoutingType;
 
 @AllArgsConstructor
 public class MulticastBrokerRSocketLocator implements BrokerRSocketLocator {
