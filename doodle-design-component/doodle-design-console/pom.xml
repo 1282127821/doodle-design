@@ -21,8 +21,8 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>com.google.protobuf</groupId>
-      <artifactId>protobuf-java</artifactId>
+      <groupId>org.doodle</groupId>
+      <artifactId>doodle-design-common</artifactId>
     </dependency>
   </dependencies>
   <build>

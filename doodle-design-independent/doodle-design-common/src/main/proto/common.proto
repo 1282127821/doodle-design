@@ -13,17 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.common.data;
 
-import java.io.Serializable;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-import org.springframework.data.annotation.Id;
+syntax = "proto3";
 
-@ToString
-@Getter
-@Setter
-public abstract class BaseEntity<ID> implements Serializable {
-  @Id protected ID id;
-}
+package doodle.design.common;
+
+option java_multiple_files = true;
+option java_package = "org.doodle.design.common";
+option java_outer_classname = "CommonProto";
+

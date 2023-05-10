@@ -21,17 +21,16 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>io.projectreactor</groupId>
-      <artifactId>reactor-core</artifactId>
-    </dependency>
-    <dependency>
       <groupId>org.doodle</groupId>
       <artifactId>doodle-design-common</artifactId>
     </dependency>
-    <dependency>
-      <groupId>org.springframework.data</groupId>
-      <artifactId>spring-data-mongodb</artifactId>
-      <optional>true</optional>
-    </dependency>
   </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.xolstice.maven.plugins</groupId>
+        <artifactId>protobuf-maven-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </build>
 </project>
