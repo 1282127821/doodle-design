@@ -20,6 +20,7 @@
     <module>doodle-design-excel</module>
     <module>doodle-design-login</module>
     <module>doodle-design-payment</module>
+    <module>doodle-design-pipeline</module>
     <module>doodle-design-security</module>
   </modules>
 </project>
