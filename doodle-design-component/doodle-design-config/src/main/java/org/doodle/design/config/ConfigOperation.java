@@ -15,4 +15,4 @@
  */
 package org.doodle.design.config;
 
-public interface ConfigOperation {}
+public interface ConfigOperation extends ConfigPullOperation {}

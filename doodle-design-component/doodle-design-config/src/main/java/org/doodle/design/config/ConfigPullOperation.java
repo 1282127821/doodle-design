@@ -13,24 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.doodle.design.config;
 
-syntax = "proto3";
+import org.springframework.lang.NonNull;
+import reactor.core.publisher.Mono;
 
-package doodle.design.config;
-
-import "google/protobuf/struct.proto";
-
-option java_multiple_files = true;
-option java_package = "org.doodle.design.config";
-option java_outer_classname = "ConfigProto";
-
-message ConfigId {
-  string group = 1;
-  string dataId = 2;
-  string profile = 3;
-}
-
-message ConfigProps {
-  ConfigId id = 1;
-  google.protobuf.Struct props = 2;
+@FunctionalInterface
+public interface ConfigPullOperation {
+  Mono<ConfigProps> pull(@NonNull ConfigId configId);
 }

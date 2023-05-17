@@ -13,24 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.doodle.design.config;
 
-syntax = "proto3";
+import lombok.experimental.UtilityClass;
 
-package doodle.design.config;
+@UtilityClass
+public final class ConfigConstants {
 
-import "google/protobuf/struct.proto";
+  public static final String CONFIG_PREFIX = "doodleConfig:";
 
-option java_multiple_files = true;
-option java_package = "org.doodle.design.config";
-option java_outer_classname = "ConfigProto";
+  public static final String CONFIG_DATA_ID = "dataId";
 
-message ConfigId {
-  string group = 1;
-  string dataId = 2;
-  string profile = 3;
-}
+  public static final String CONFIG_GROUP = "group";
 
-message ConfigProps {
-  ConfigId id = 1;
-  google.protobuf.Struct props = 2;
+  public static final String CONFIG_ID = "id";
 }

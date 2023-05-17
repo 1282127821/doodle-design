@@ -24,6 +24,7 @@ import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public final class ProtoUtils {
+
   public static Object fromProto(Value any) {
     switch (any.getKindCase()) {
       case NULL_VALUE -> {
@@ -39,28 +40,34 @@ public final class ProtoUtils {
         return any.getStringValue();
       }
       case STRUCT_VALUE -> {
-        Struct struct = any.getStructValue();
-        Map<String, Object> map = new HashMap<>();
-        for (Map.Entry<String, Value> pair : struct.getFieldsMap().entrySet()) {
-          map.put(pair.getKey(), fromProto(pair.getValue()));
-        }
-        return map;
+        return fromProto(any.getStructValue());
       }
       case LIST_VALUE -> {
-        List<Object> list = new ArrayList<>();
-        for (Value val : any.getListValue().getValuesList()) {
-          list.add(fromProto(val));
-        }
-        return list;
+        return fromProto(any.getListValue());
       }
       default -> throw new ClassCastException("不支持转换类型: " + any);
     }
   }
 
+  public static Map<String, Object> fromProto(Struct struct) {
+    Map<String, Object> map = new HashMap<>();
+    for (Map.Entry<String, Value> pair : struct.getFieldsMap().entrySet()) {
+      map.put(pair.getKey(), fromProto(pair.getValue()));
+    }
+    return map;
+  }
+
+  public static List<Object> fromProto(ListValue listValue) {
+    List<Object> list = new ArrayList<>();
+    for (Value val : listValue.getValuesList()) {
+      list.add(fromProto(val));
+    }
+    return list;
+  }
+
   @SuppressWarnings("unchecked")
   public static Value toProto(Object val) {
     Value.Builder builder = Value.newBuilder();
-
     if (Objects.isNull(val)) {
       builder.setNullValue(NullValue.NULL_VALUE);
     } else if (val instanceof Boolean) {
@@ -70,20 +77,27 @@ public final class ProtoUtils {
     } else if (val instanceof String) {
       builder.setStringValue((String) val);
     } else if (val instanceof Map) {
-      Map<String, Object> map = (Map<String, Object>) val;
-      Struct.Builder struct = Struct.newBuilder();
-      for (Map.Entry<String, Object> entry : map.entrySet()) {
-        struct.putFields(entry.getKey(), toProto(entry.getValue()));
-      }
-      builder.setStructValue(struct.build());
+      builder.setStructValue(toProto(((Map<String, Object>) val)));
     } else if (val instanceof List) {
-      ListValue.Builder list = ListValue.newBuilder();
-      for (Object obj : (List<Object>) val) {
-        list.addValues(toProto(obj));
-      }
-      builder.setListValue(list.build());
+      builder.setListValue(toProto((List<Object>) val));
     } else {
       throw new ClassCastException("不支持转换该类型: " + val);
+    }
+    return builder.build();
+  }
+
+  public static Struct toProto(Map<String, Object> map) {
+    Struct.Builder builder = Struct.newBuilder();
+    for (Map.Entry<String, Object> entry : map.entrySet()) {
+      builder.putFields(entry.getKey(), toProto(entry.getValue()));
+    }
+    return builder.build();
+  }
+
+  public static ListValue toProto(List<Object> list) {
+    ListValue.Builder builder = ListValue.newBuilder();
+    for (Object obj : list) {
+      builder.addValues(toProto(obj));
     }
     return builder.build();
   }
