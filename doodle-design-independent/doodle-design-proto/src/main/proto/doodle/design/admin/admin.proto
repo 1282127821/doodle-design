@@ -16,38 +16,9 @@
 
 syntax = "proto3";
 
-package doodle.broker.design.frame;
+package doodle.design.admin;
 
 option java_multiple_files = true;
-option java_package = "org.doodle.design.broker.frame";
-option java_outer_classname = "BrokerFrameProto";
+option java_package = "org.doodle.design.admin";
+option java_outer_classname = "AdminProto";
 
-message UUID {
-  string id = 1;
-}
-
-message Tags {
-  map<string, string> tag = 1;
-}
-
-message RouteSetup {
-  UUID routeId = 1;
-  Tags tags = 2;
-}
-
-enum RoutingType {
-  UNICAST = 0;
-  MULTICAST = 1;
-}
-
-message Address {
-  RoutingType routingType = 1;
-  Tags tags = 2;
-}
-
-message BrokerFrame {
-  oneof kind {
-    RouteSetup setup = 1;
-    Address address = 2;
-  }
-}

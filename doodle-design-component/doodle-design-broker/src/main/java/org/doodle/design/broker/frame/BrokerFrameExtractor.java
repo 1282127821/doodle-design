@@ -19,7 +19,8 @@ import io.rsocket.ConnectionSetupPayload;
 import io.rsocket.Payload;
 import io.rsocket.metadata.WellKnownMimeType;
 import java.util.Map;
-import org.springframework.cglib.core.internal.Function;
+import java.util.function.Function;
+
 import org.springframework.messaging.rsocket.MetadataExtractor;
 import org.springframework.messaging.rsocket.RSocketStrategies;
 import org.springframework.util.MimeType;
