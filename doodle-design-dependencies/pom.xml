@@ -91,11 +91,6 @@
       </dependency>
       <dependency>
         <groupId>org.doodle</groupId>
-        <artifactId>doodle-design-proto</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.doodle</groupId>
         <artifactId>doodle-design-socket</artifactId>
         <version>${project.version}</version>
       </dependency>
