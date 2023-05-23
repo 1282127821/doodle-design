@@ -15,4 +15,12 @@
  */
 package org.doodle.design.login;
 
-public interface LoginOperation {}
+import reactor.core.publisher.Mono;
+
+public interface LoginOperation {
+  Mono<AuthReply> auth(AuthRequest request);
+
+  Mono<VerifyReply> verify(VerifyRequest request);
+
+  Mono<Void> upload(UploadRequest request);
+}
