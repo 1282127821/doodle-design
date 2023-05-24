@@ -13,6 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.login;
+package org.doodle.design.login.model.dto;
 
-public interface LoginOperation extends LoginAccountOperation, LoginRoleOperation {}
+import java.util.Map;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
+import org.doodle.design.common.model.SdkBundle;
+
+@Builder
+@Data
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@AllArgsConstructor
+@NoArgsConstructor
+public class RoleInfoDto {
+  String roleId;
+  SdkBundle sdkBundle;
+  String roleName;
+  int roleLevel;
+  Map<String, Object> extraParams;
+}

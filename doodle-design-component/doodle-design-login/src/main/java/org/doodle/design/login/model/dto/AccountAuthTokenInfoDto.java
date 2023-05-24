@@ -13,6 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.login;
+package org.doodle.design.login.model.dto;
 
-public interface LoginOperation extends LoginAccountOperation, LoginRoleOperation {}
+import java.time.Instant;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
+
+@Builder
+@Data
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@AllArgsConstructor
+@NoArgsConstructor
+public class AccountAuthTokenInfoDto {
+  String token;
+  String accountId;
+  Instant timestamp;
+}

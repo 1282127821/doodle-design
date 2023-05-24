@@ -13,6 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.login;
+package org.doodle.design.login.model.payload.request;
 
-public interface LoginOperation extends LoginAccountOperation, LoginRoleOperation {}
+import lombok.*;
+import lombok.experimental.FieldDefaults;
+import org.doodle.design.common.model.SdkBundle;
+
+@Builder
+@Data
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@AllArgsConstructor
+@NoArgsConstructor
+public class AccountAuthRequest {
+  SdkBundle sdkBundle;
+}

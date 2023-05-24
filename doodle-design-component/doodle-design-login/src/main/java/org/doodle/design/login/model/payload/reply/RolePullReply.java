@@ -13,6 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.login;
+package org.doodle.design.login.model.payload.reply;
 
-public interface LoginOperation extends LoginAccountOperation, LoginRoleOperation {}
+import java.util.List;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
+import org.doodle.design.login.model.dto.RoleInfoDto;
+
+@Builder
+@Data
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@AllArgsConstructor
+@NoArgsConstructor
+public class RolePullReply {
+  List<RoleInfoDto> roleInfoList;
+}

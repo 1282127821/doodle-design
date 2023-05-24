@@ -20,54 +20,78 @@ package doodle.design.login;
 
 import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
+import "doodle/design/common/sdk.proto";
+import "doodle/design/common/status.proto";
 
 option java_multiple_files = true;
 option java_package = "org.doodle.design.login";
 option java_outer_classname = "LoginProto";
 
-enum SdkType {
-  EMBEDDED = 0;
+enum LoginStatusCode {
+  LOGIN_STATUS_CODE_UNSPECIFIED = 0;
+
+  ACCOUNT_AUTH_FAILED = 1;
 }
 
-message AccountDto {
-  string id = 1;
-  SdkType sdk_type = 2;
-  google.protobuf.Struct extra = 3;
+message AccountInfo {
+  string account_id = 1;
+  doodle.design.common.SdkBundleInfo sdk_bundle = 2;
+  google.protobuf.Struct extra_params = 3;
 }
 
-message RoleDto {
-  string id = 1;
-  string name = 3;
-  int32 level = 4;
-  google.protobuf.Struct extra = 5;
-}
-
-message AuthToken {
+message AccountAuthTokenInfo {
   string token = 1;
   string account_id = 2;
   google.protobuf.Timestamp timestamp = 3;
 }
 
-message AuthRequest {
-  SdkType sdk_type = 1;
-  string sdk_binding = 2;
-  google.protobuf.Struct sdk_params = 3;
+message AccountAuthRequest {
+  doodle.design.common.SdkBundleInfo sdk_bundle = 1;
 }
 
-message AuthReply {
-  AuthToken token = 1;
-  repeated RoleDto roles = 2;
+message AccountAuthReply {
+  oneof Result {
+    doodle.design.common.Status error = 1;
+    AccountAuthTokenInfo reply = 2;
+  }
 }
 
-message VerifyRequest {
-  AuthToken token = 1;
+message AccountVerifyRequest {
+  AccountAuthTokenInfo token = 1;
 }
 
-message VerifyReply {
-  AccountDto account = 1;
+message AccountVerifyReply {
+  oneof Result {
+    doodle.design.common.Status error = 1;
+    AccountInfo reply = 2;
+  }
 }
 
-message UploadRequest {
+message RoleInfo {
+  string role_id = 1;
+  doodle.design.common.SdkBundleInfo sdk_bundle = 2;
+  string role_name = 3;
+  int32 role_level = 4;
+  google.protobuf.Struct extra_params = 5;
+}
+
+message RoleInfoList {
+  repeated RoleInfo role_info = 2;
+}
+
+message RolePullRequest {
   string account_id = 1;
-  RoleDto role = 2;
 }
+
+message RolePullReply {
+  oneof Result {
+    doodle.design.common.Status error = 1;
+    RoleInfoList reply = 2;
+  }
+}
+
+message RoleUploadRequest {
+  string account_id = 1;
+  RoleInfo role_info = 2;
+}
+

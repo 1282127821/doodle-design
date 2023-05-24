@@ -13,6 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.login;
 
-public interface LoginOperation extends LoginAccountOperation, LoginRoleOperation {}
+syntax = "proto3";
+
+package doodle.design.common;
+
+import "google/protobuf/any.proto";
+
+option java_multiple_files = true;
+option java_package = "org.doodle.design.common";
+option java_outer_classname = "StatusProto";
+
+message Status {
+
+  int32 code = 1;
+
+  string message = 2;
+}

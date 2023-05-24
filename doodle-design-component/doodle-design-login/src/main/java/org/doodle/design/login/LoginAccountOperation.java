@@ -15,4 +15,17 @@
  */
 package org.doodle.design.login;
 
-public interface LoginOperation extends LoginAccountOperation, LoginRoleOperation {}
+import org.doodle.design.common.Result;
+import reactor.core.publisher.Mono;
+
+public interface LoginAccountOperation {
+  Mono<AccountAuthReply> auth(AccountAuthRequest request);
+
+  Mono<AccountVerifyReply> verify(AccountVerifyRequest request);
+
+  interface RestAuthOperation {
+
+    Result<org.doodle.design.login.model.payload.request.AccountAuthRequest> auth(
+        org.doodle.design.login.model.payload.request.AccountAuthRequest request);
+  }
+}

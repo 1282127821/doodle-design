@@ -17,41 +17,52 @@ package org.doodle.design.common;
 
 import java.util.Optional;
 import lombok.*;
+import lombok.experimental.FieldDefaults;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 
-@AllArgsConstructor
-@NoArgsConstructor
 @ToString
 @Getter
 @Setter
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@AllArgsConstructor
+@NoArgsConstructor
 public final class Result<T> {
-  public static final int OK = 0;
-  public static final int BAD = -1;
+  public static final int OK = Code.OK_VALUE;
+  public static final int BAD = Code.BAD_VALUE;
 
-  private int status;
-  private T body;
+  int code;
+  String message;
+  T body;
 
-  public static Builder status(int status) {
-    return new DefaultBuilder(status);
+  public static Builder code(int code, String message) {
+    return new DefaultBuilder(code, message);
   }
 
-  public static Builder ok() {
-    return status(OK);
+  public static Builder code(int code) {
+    return code(code, null);
   }
 
   public static <T> Result<T> ok(@Nullable T body) {
     return ok().body(body);
   }
 
-  public static <T> Result<T> bad() {
-    return status(BAD).body(null);
+  public static Builder ok() {
+    return code(OK);
   }
 
-  public static <T> Result<T> bad(int status) {
-    Assert.isTrue(status != OK, "bad 错误状态码不能和 OK 相同");
-    return status(status).body(null);
+  public static <T> Result<T> bad() {
+    return bad(BAD, null);
+  }
+
+  public static <T> Result<T> bad(int code) {
+    return bad(code, null);
+  }
+
+  public static <T> Result<T> bad(int code, String message) {
+    Assert.isTrue(code != OK, "bad bad 错误状态码不能和 OK 相同");
+    return code(code, message).body(null);
   }
 
   public static <T> Result<T> of(@NonNull Optional<T> body) {
@@ -64,13 +75,15 @@ public final class Result<T> {
     <T> Result<T> body(T body);
   }
 
+  @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
   @RequiredArgsConstructor
-  private static class DefaultBuilder implements Builder {
-    private final int status;
+  static class DefaultBuilder implements Builder {
+    int code;
+    String message;
 
     @Override
     public <T> Result<T> body(T body) {
-      return new Result<>(this.status, body);
+      return new Result<>(this.code, this.message, body);
     }
   }
 }

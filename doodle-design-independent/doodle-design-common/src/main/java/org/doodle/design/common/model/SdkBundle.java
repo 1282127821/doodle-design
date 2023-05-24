@@ -13,6 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.login;
+package org.doodle.design.common.model;
 
-public interface LoginOperation extends LoginAccountOperation, LoginRoleOperation {}
+import java.util.Map;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
+import org.doodle.design.common.SdkBundleInfo;
+
+@Builder
+@Data
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@AllArgsConstructor
+@NoArgsConstructor
+public class SdkBundle {
+  SdkBundleInfo.SdkType sdkType = SdkBundleInfo.SdkType.UNRECOGNIZED;
+  String sdkBinding;
+  String sdkGameId;
+  String sdkChannelId;
+  Map<String, Object> sdkExtraParams;
+}

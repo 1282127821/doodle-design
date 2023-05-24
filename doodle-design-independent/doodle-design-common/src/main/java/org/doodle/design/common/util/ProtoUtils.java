@@ -15,15 +15,31 @@
  */
 package org.doodle.design.common.util;
 
-import com.google.protobuf.ListValue;
-import com.google.protobuf.NullValue;
-import com.google.protobuf.Struct;
-import com.google.protobuf.Value;
+import com.google.protobuf.*;
+import java.time.Instant;
 import java.util.*;
 import lombok.experimental.UtilityClass;
+import org.doodle.design.common.Result;
+import org.doodle.design.common.Status;
 
 @UtilityClass
 public final class ProtoUtils {
+
+  public static Instant fromProto(Timestamp any) {
+    return Instant.ofEpochSecond(any.getSeconds(), any.getNanos());
+  }
+
+  public static Timestamp toProto(Instant val) {
+    return Timestamp.newBuilder().setSeconds(val.getEpochSecond()).setNanos(val.getNano()).build();
+  }
+
+  public static <T> Result<T> fromProto(Status any) {
+    return Result.code(any.getCode(), any.getMessage()).body(null);
+  }
+
+  public static <T> Status toProto(Result<T> val) {
+    return Status.newBuilder().setCode(val.getCode()).setMessage(val.getMessage()).build();
+  }
 
   public static Object fromProto(Value any) {
     switch (any.getKindCase()) {

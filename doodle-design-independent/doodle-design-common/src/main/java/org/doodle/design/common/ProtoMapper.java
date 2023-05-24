@@ -15,16 +15,66 @@
  */
 package org.doodle.design.common;
 
+import com.google.protobuf.ListValue;
+import com.google.protobuf.Struct;
+import com.google.protobuf.Timestamp;
 import com.google.protobuf.Value;
+import java.time.Instant;
+import java.util.List;
+import java.util.Map;
+import org.doodle.design.common.model.SdkBundle;
 import org.doodle.design.common.util.ProtoUtils;
 
 public interface ProtoMapper {
+
+  default SdkBundle fromProto(SdkBundleInfo info) {
+    return SdkBundle.builder()
+        .sdkType(info.getSdkType())
+        .sdkBinding(info.getSdkBinding())
+        .sdkGameId(info.getSdkGameId())
+        .sdkChannelId(info.getSdkChannelId())
+        .build();
+  }
+
+  default SdkBundleInfo toProto(SdkBundle bundle) {
+    return SdkBundleInfo.newBuilder()
+        .setSdkType(bundle.getSdkType())
+        .setSdkBinding(bundle.getSdkBinding())
+        .setSdkGameId(bundle.getSdkGameId())
+        .setSdkChannelId(bundle.getSdkChannelId())
+        .setSdkExtraParams(toProto(bundle.getSdkExtraParams()))
+        .build();
+  }
+
+  default Instant fromProto(Timestamp any) {
+    return ProtoUtils.fromProto(any);
+  }
+
+  default Timestamp toProto(Instant instant) {
+    return ProtoUtils.toProto(instant);
+  }
 
   default Object fromProto(Value any) {
     return ProtoUtils.fromProto(any);
   }
 
+  default Map<String, Object> fromProto(Struct any) {
+    return ProtoUtils.fromProto(any);
+  }
+
+  default List<Object> fromProto(ListValue any) {
+    return ProtoUtils.fromProto(any);
+  }
+
   default Value toProto(Object val) {
+    return ProtoUtils.toProto(val);
+  }
+
+  default Struct toProto(Map<String, Object> val) {
+    return ProtoUtils.toProto(val);
+  }
+
+  default ListValue toProto(List<Object> val) {
     return ProtoUtils.toProto(val);
   }
 }

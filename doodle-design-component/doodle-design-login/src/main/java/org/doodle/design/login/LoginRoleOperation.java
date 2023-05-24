@@ -15,4 +15,18 @@
  */
 package org.doodle.design.login;
 
-public interface LoginOperation extends LoginAccountOperation, LoginRoleOperation {}
+import org.doodle.design.common.Result;
+import reactor.core.publisher.Mono;
+
+public interface LoginRoleOperation {
+
+  Mono<RolePullReply> pull(RolePullRequest request);
+
+  Mono<Void> upload(RoleUploadRequest request);
+
+  interface RestPullOperation {
+
+    Result<org.doodle.design.login.model.payload.reply.RolePullReply> pull(
+        org.doodle.design.login.model.payload.request.RolePullRequest request);
+  }
+}
