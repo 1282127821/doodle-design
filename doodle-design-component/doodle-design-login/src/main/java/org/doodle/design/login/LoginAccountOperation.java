@@ -25,7 +25,7 @@ public interface LoginAccountOperation {
 
   interface RestAuthOperation {
 
-    Result<org.doodle.design.login.model.payload.request.AccountAuthRequest> auth(
+    Result<org.doodle.design.login.model.payload.reply.AccountAuthReply> auth(
         org.doodle.design.login.model.payload.request.AccountAuthRequest request);
   }
 }
