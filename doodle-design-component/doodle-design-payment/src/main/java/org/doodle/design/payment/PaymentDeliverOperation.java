@@ -15,4 +15,9 @@
  */
 package org.doodle.design.payment;
 
-public interface PaymentOperation extends PaymentDeliverOperation {}
+import reactor.core.publisher.Mono;
+
+@FunctionalInterface
+public interface PaymentDeliverOperation {
+  Mono<OrderDeliverReply> deliver(OrderDeliverRequest request);
+}

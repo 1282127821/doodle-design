@@ -13,6 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.payment;
+package org.doodle.design.payment.model.dto;
 
-public interface PaymentOperation extends PaymentDeliverOperation {}
+import java.util.Map;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
+import org.doodle.design.common.model.SdkBundle;
+import org.doodle.design.payment.OrderInfo;
+
+@Builder
+@Data
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@AllArgsConstructor
+@NoArgsConstructor
+public class OrderInfoDto {
+  String orderId;
+  OrderInfo.OrderStatus orderStatus = OrderInfo.OrderStatus.UNRECOGNIZED;
+  String accountId;
+  String roleId;
+  SdkBundle sdkBundle;
+  Map<String, Object> extraParams;
+}

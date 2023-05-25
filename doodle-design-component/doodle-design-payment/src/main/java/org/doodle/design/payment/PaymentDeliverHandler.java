@@ -15,4 +15,8 @@
  */
 package org.doodle.design.payment;
 
-public interface PaymentOperation extends PaymentDeliverOperation {}
+import java.util.function.Function;
+import org.doodle.design.common.Result;
+
+@FunctionalInterface
+public interface PaymentDeliverHandler extends Function<OrderInfo, Result<Void>> {}
