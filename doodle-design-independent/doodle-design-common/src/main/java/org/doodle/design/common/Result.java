@@ -52,6 +52,10 @@ public final class Result<T> {
     return code(OK);
   }
 
+  public static <T1, T2> Result<T1> bad(Result<T2> r) {
+    return bad(r.getCode(), r.getMessage());
+  }
+
   public static <T> Result<T> bad() {
     return bad(BAD, null);
   }
