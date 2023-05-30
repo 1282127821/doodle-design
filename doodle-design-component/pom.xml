@@ -12,4 +12,7 @@
   </parent>
   <artifactId>doodle-design-component</artifactId>
   <packaging>pom</packaging>
+  <modules>
+    <module>doodle-design-auction</module>
+  </modules>
 </project>
