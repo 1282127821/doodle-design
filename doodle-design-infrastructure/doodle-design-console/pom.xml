@@ -6,11 +6,11 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.doodle</groupId>
-    <artifactId>doodle-design-component</artifactId>
+    <artifactId>doodle-design-infrastructure</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
-  <artifactId>doodle-design-security</artifactId>
+  <artifactId>doodle-design-console</artifactId>
   <properties>
     <spotless-maven-plugin.skip>false</spotless-maven-plugin.skip>
   </properties>
@@ -23,10 +23,6 @@
     <dependency>
       <groupId>org.doodle</groupId>
       <artifactId>doodle-design-common</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>io.projectreactor</groupId>
-      <artifactId>reactor-core</artifactId>
     </dependency>
   </dependencies>
   <build>

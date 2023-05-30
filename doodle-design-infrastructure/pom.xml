@@ -10,6 +10,18 @@
     <version>0.0.1-SNAPSHOT</version>
     <relativePath>../doodle-design-parent/pom.xml</relativePath>
   </parent>
-  <artifactId>doodle-design-component</artifactId>
+  <artifactId>doodle-design-infrastructure</artifactId>
   <packaging>pom</packaging>
+  <modules>
+    <module>doodle-design-admin</module>
+    <module>doodle-design-broker</module>
+    <module>doodle-design-config</module>
+    <module>doodle-design-console</module>
+    <module>doodle-design-excel</module>
+    <module>doodle-design-gateway</module>
+    <module>doodle-design-login</module>
+    <module>doodle-design-payment</module>
+    <module>doodle-design-pipeline</module>
+    <module>doodle-design-security</module>
+  </modules>
 </project>

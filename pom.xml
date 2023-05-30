@@ -20,6 +20,7 @@
     <module>doodle-design-component</module>
     <module>doodle-design-dependencies</module>
     <module>doodle-design-independent</module>
+    <module>doodle-design-infrastructure</module>
     <module>doodle-design-parent</module>
   </modules>
 </project>
