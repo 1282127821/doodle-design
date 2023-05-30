@@ -13,17 +13,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.config;
+package org.doodle.design.common.exception;
 
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.experimental.FieldDefaults;
+import org.doodle.design.common.Code;
 import org.doodle.design.common.Result;
-import reactor.core.publisher.Mono;
+import org.doodle.design.common.Status;
 
-@FunctionalInterface
-public interface ConfigPullOperation {
-  Mono<ConfigPullReply> pull(ConfigPullRequest request);
+@Getter
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+public class InvalidResultException extends RuntimeException {
+  int code;
 
-  interface RestPullOperation {
-    Result<org.doodle.design.config.model.payload.reply.ConfigPullReply> pull(
-        org.doodle.design.config.model.payload.request.ConfigPullRequest request);
+  public InvalidResultException() {
+    this.code = Code.BAD_VALUE;
+  }
+
+  public InvalidResultException(Status status) {
+    super(status.getMessage());
+    this.code = status.getCode();
+  }
+
+  public InvalidResultException(Result<?> r) {
+    super(r.getMessage());
+    this.code = r.getCode();
   }
 }

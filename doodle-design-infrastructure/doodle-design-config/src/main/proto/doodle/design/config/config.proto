@@ -18,19 +18,32 @@ syntax = "proto3";
 
 package doodle.design.config;
 
+import "doodle/design/common/status.proto";
 import "google/protobuf/struct.proto";
+
 
 option java_multiple_files = true;
 option java_package = "org.doodle.design.config";
 option java_outer_classname = "ConfigProto";
 
-message ConfigId {
+message ConfigIdInfo {
   string group = 1;
-  string dataId = 2;
+  string data_id = 2;
   string profile = 3;
 }
 
-message ConfigProps {
-  ConfigId id = 1;
+message ConfigPropsInfo {
+  ConfigIdInfo config_id = 1;
   google.protobuf.Struct props = 2;
+}
+
+message ConfigPullRequest {
+  ConfigIdInfo config_id = 1;
+}
+
+message ConfigPullReply {
+  oneof Result {
+    doodle.design.common.Status error = 1;
+    ConfigPropsInfo config_props = 2;
+  }
 }

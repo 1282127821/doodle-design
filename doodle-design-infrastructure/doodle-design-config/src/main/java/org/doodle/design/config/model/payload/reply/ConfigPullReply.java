@@ -13,17 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.config;
+package org.doodle.design.config.model.payload.reply;
 
-import org.doodle.design.common.Result;
-import reactor.core.publisher.Mono;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
+import org.doodle.design.config.model.dto.ConfigPropsInfoDto;
 
-@FunctionalInterface
-public interface ConfigPullOperation {
-  Mono<ConfigPullReply> pull(ConfigPullRequest request);
-
-  interface RestPullOperation {
-    Result<org.doodle.design.config.model.payload.reply.ConfigPullReply> pull(
-        org.doodle.design.config.model.payload.request.ConfigPullRequest request);
-  }
+@ToString
+@Builder
+@Data
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@NoArgsConstructor
+@AllArgsConstructor
+public class ConfigPullReply {
+  ConfigPropsInfoDto configProps;
 }
