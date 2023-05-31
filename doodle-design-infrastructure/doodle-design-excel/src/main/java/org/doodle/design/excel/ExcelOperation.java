@@ -15,4 +15,4 @@
  */
 package org.doodle.design.excel;
 
-public interface ExcelOperation {}
+public interface ExcelOperation extends ExcelPullOperation {}

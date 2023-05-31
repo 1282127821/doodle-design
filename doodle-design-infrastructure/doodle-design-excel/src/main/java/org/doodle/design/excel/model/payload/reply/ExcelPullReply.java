@@ -13,35 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.doodle.design.excel.model.payload.reply;
 
-syntax = "proto3";
+import lombok.*;
+import lombok.experimental.FieldDefaults;
+import org.doodle.design.excel.model.dto.ExcelPropsInfoDto;
 
-package doodle.design.excel;
-
-import "doodle/design/common/status.proto";
-import "google/protobuf/struct.proto";
-
-option java_multiple_files = true;
-option java_package = "org.doodle.design.excel";
-option java_outer_classname = "ExcelProto";
-
-message ExcelIdInfo {
-  string xlsx = 1;
-  string sheet = 2;
-}
-
-message ExcelPropsInfo {
-  ExcelIdInfo excel_id = 1;
-  google.protobuf.Struct excel_props = 2;
-}
-
-message ExcelPullRequest {
-  ExcelIdInfo excel_id = 1;
-}
-
-message ExcelPullReply {
-  oneof Result {
-    doodle.design.common.Status error = 1;
-    ExcelPropsInfo reply = 2;
-  }
+@ToString
+@Builder
+@Data
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@AllArgsConstructor
+@NoArgsConstructor
+public class ExcelPullReply {
+  ExcelPropsInfoDto excelProps;
 }

@@ -13,35 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.doodle.design.excel;
 
-syntax = "proto3";
+import org.doodle.design.common.Result;
+import reactor.core.publisher.Mono;
 
-package doodle.design.excel;
+public interface ExcelPullOperation {
 
-import "doodle/design/common/status.proto";
-import "google/protobuf/struct.proto";
+  Mono<ExcelPullReply> pull(ExcelPullRequest request);
 
-option java_multiple_files = true;
-option java_package = "org.doodle.design.excel";
-option java_outer_classname = "ExcelProto";
+  interface RestPullOperation {
 
-message ExcelIdInfo {
-  string xlsx = 1;
-  string sheet = 2;
-}
-
-message ExcelPropsInfo {
-  ExcelIdInfo excel_id = 1;
-  google.protobuf.Struct excel_props = 2;
-}
-
-message ExcelPullRequest {
-  ExcelIdInfo excel_id = 1;
-}
-
-message ExcelPullReply {
-  oneof Result {
-    doodle.design.common.Status error = 1;
-    ExcelPropsInfo reply = 2;
+    Result<org.doodle.design.excel.model.payload.reply.ExcelPullReply> pull(
+        org.doodle.design.excel.model.payload.request.ExcelPullRequest request);
   }
 }

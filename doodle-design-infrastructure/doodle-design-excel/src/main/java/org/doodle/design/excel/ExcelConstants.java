@@ -20,4 +20,10 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public final class ExcelConstants {
   public static final String CONFIG_PREFIX = "doodleExcel:";
+
+  public static final String CONFIG_XLSX = "xlsx";
+
+  public static final String CONFIG_SHEET = "sheet";
+
+  public static final String CONFIG_LOCAL = "isLocal";
 }
