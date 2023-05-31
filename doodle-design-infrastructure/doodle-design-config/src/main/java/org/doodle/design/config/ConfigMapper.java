@@ -16,10 +16,44 @@
 package org.doodle.design.config;
 
 import org.doodle.design.common.ProtoMapper;
+import org.doodle.design.common.Result;
+import org.doodle.design.common.Status;
+import org.doodle.design.common.util.ProtoUtils;
 import org.doodle.design.config.model.dto.ConfigIdInfoDto;
 import org.doodle.design.config.model.dto.ConfigPropsInfoDto;
 
 public abstract class ConfigMapper implements ProtoMapper {
+
+  public ConfigPullRequest toProto(
+      org.doodle.design.config.model.payload.request.ConfigPullRequest request) {
+    return ConfigPullRequest.newBuilder().setConfigId(toProto(request.getConfigId())).build();
+  }
+
+  public Result<org.doodle.design.config.model.payload.reply.ConfigPullReply> fromProto(
+      ConfigPullReply reply) {
+    switch (reply.getResultCase()) {
+      case ERROR -> {
+        return ProtoUtils.fromProto(reply.getError());
+      }
+      case CONFIG_PROPS -> {
+        return Result.ok(
+            org.doodle.design.config.model.payload.reply.ConfigPullReply.builder()
+                .configProps(fromProto(reply.getConfigProps()))
+                .build());
+      }
+      default -> {
+        return Result.bad();
+      }
+    }
+  }
+
+  public ConfigPullReply toError(Status status) {
+    return ConfigPullReply.newBuilder().setError(status).build();
+  }
+
+  public ConfigPullReply toReply(ConfigPropsInfo info) {
+    return ConfigPullReply.newBuilder().setConfigProps(info).build();
+  }
 
   public ConfigIdInfoDto fromProto(ConfigIdInfo info) {
     return ConfigIdInfoDto.builder()
