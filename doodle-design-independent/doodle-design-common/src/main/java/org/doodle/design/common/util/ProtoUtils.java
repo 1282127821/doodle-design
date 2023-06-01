@@ -38,7 +38,9 @@ public final class ProtoUtils {
   }
 
   public static <T> Status toProto(Result<T> val) {
-    return Status.newBuilder().setCode(val.getCode()).setMessage(val.getMessage()).build();
+    Status.Builder builder = Status.newBuilder().setCode(val.getCode());
+    Optional.ofNullable(val.getMessage()).ifPresent(builder::setMessage);
+    return builder.build();
   }
 
   public static Object fromProto(Value any) {

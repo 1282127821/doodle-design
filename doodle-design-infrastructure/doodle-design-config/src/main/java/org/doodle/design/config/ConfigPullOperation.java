@@ -23,7 +23,7 @@ public interface ConfigPullOperation {
   Mono<ConfigPullReply> pull(ConfigPullRequest request);
 
   interface RestPullOperation {
-    Result<org.doodle.design.config.model.payload.reply.ConfigPullReply> pull(
+    Mono<Result<org.doodle.design.config.model.payload.reply.ConfigPullReply>> pull(
         org.doodle.design.config.model.payload.request.ConfigPullRequest request);
   }
 }

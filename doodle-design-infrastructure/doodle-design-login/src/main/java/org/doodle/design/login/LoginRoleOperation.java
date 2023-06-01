@@ -26,7 +26,7 @@ public interface LoginRoleOperation {
 
   interface RestPullOperation {
 
-    Result<org.doodle.design.login.model.payload.reply.RolePullReply> pull(
+    Mono<Result<org.doodle.design.login.model.payload.reply.RolePullReply>> pull(
         org.doodle.design.login.model.payload.request.RolePullRequest request);
   }
 }

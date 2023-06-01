@@ -24,7 +24,7 @@ public interface ExcelPullOperation {
 
   interface RestPullOperation {
 
-    Result<org.doodle.design.excel.model.payload.reply.ExcelPullReply> pull(
+    Mono<Result<org.doodle.design.excel.model.payload.reply.ExcelPullReply>> pull(
         org.doodle.design.excel.model.payload.request.ExcelPullRequest request);
   }
 }
