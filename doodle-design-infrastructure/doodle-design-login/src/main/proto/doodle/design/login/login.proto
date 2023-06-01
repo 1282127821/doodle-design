@@ -27,12 +27,6 @@ option java_multiple_files = true;
 option java_package = "org.doodle.design.login";
 option java_outer_classname = "LoginProto";
 
-enum LoginStatusCode {
-  LOGIN_STATUS_CODE_UNSPECIFIED = 0;
-
-  ACCOUNT_AUTH_FAILED = 1;
-}
-
 message AccountInfo {
   string account_id = 1;
   doodle.design.common.SdkBundleInfo sdk_bundle = 2;
