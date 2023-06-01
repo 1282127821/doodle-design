@@ -20,5 +20,5 @@ import reactor.core.publisher.Mono;
 @FunctionalInterface
 public interface SecurityPullOperation {
 
-  Mono<UserDto> pull(String name);
+  Mono<SecurityPullReply> pull(SecurityPullRequest request);
 }

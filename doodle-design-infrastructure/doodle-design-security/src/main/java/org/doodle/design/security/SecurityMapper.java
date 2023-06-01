@@ -13,31 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.doodle.design.security;
 
-syntax = "proto3";
+import org.doodle.design.common.ProtoMapper;
+import org.doodle.design.common.Status;
 
-package doodle.design.security;
+public abstract class SecurityMapper implements ProtoMapper {
 
-import "doodle/design/common/status.proto";
+  public SecurityPullReply toError(Status status) {
+    return SecurityPullReply.newBuilder().setError(status).build();
+  }
 
-option java_multiple_files = true;
-option java_package = "org.doodle.design.security";
-option java_outer_classname = "SecurityProto";
-
-message UserDetailsInfo {
-  string username = 1;
-  string password = 2;
-  bool enable = 3;
-  repeated string authorities = 4;
-}
-
-message SecurityPullRequest {
-  string username = 1;
-}
-
-message SecurityPullReply {
-  oneof Result {
-    doodle.design.common.Status error = 1;
-    UserDetailsInfo reply = 2;
+  public SecurityPullReply toReply(UserDetailsInfo info) {
+    return SecurityPullReply.newBuilder().setReply(info).build();
   }
 }
