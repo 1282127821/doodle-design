@@ -64,3 +64,4 @@ message OrderDeliverRequest {
 message OrderDeliverReply {
   doodle.design.common.Status result = 1;
 }
+

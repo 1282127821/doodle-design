@@ -18,9 +18,38 @@ package org.doodle.design.payment;
 import org.doodle.design.common.ProtoMapper;
 import org.doodle.design.common.Result;
 import org.doodle.design.common.Status;
+import org.doodle.design.common.util.ProtoUtils;
 import org.doodle.design.payment.model.dto.OrderInfoDto;
 
 public class PaymentMapper implements ProtoMapper {
+
+  public Result<org.doodle.design.payment.model.payload.reply.OrderCreateReply> fromProto(
+      OrderCreateReply reply) {
+    switch (reply.getResultCase()) {
+      case ERROR -> {
+        return ProtoUtils.fromProto(reply.getError());
+      }
+      case REPLY -> {
+        return Result.ok(
+            org.doodle.design.payment.model.payload.reply.OrderCreateReply.builder()
+                .orderInfo(fromProto(reply.getReply()))
+                .build());
+      }
+      default -> {
+        return Result.bad();
+      }
+    }
+  }
+
+  public OrderCreateRequest toProto(
+      org.doodle.design.payment.model.payload.request.OrderCreateRequest request) {
+    return OrderCreateRequest.newBuilder()
+        .setSdkType(request.getSdkType())
+        .setAccountId(request.getAccountId())
+        .setRoleId(request.getRoleId())
+        .setExtraParams(toProto(request.getExtraParams()))
+        .build();
+  }
 
   public Result<Void> fromProto(OrderDeliverReply reply) {
     Status status = reply.getResult();

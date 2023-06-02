@@ -13,6 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.payment;
+package org.doodle.design.payment.model.payload.reply;
 
-public interface PaymentOperation extends PaymentDeliverOperation, PaymentOrderOperation {}
+import lombok.*;
+import lombok.experimental.FieldDefaults;
+import org.doodle.design.payment.model.dto.OrderInfoDto;
+
+@ToString
+@Builder
+@Data
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@AllArgsConstructor
+@NoArgsConstructor
+public class OrderCreateReply {
+  OrderInfoDto orderInfo;
+}

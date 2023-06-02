@@ -13,6 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.payment;
+package org.doodle.design.payment.model.payload.request;
 
-public interface PaymentOperation extends PaymentDeliverOperation, PaymentOrderOperation {}
+import java.util.Map;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
+import org.doodle.design.common.SdkBundleInfo;
+
+@ToString
+@Builder
+@Data
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@AllArgsConstructor
+@NoArgsConstructor
+public class OrderCreateRequest {
+  SdkBundleInfo.SdkType sdkType;
+  String accountId;
+  String roleId;
+  Map<String, Object> extraParams;
+}

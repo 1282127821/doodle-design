@@ -15,4 +15,15 @@
  */
 package org.doodle.design.payment;
 
-public interface PaymentOperation extends PaymentDeliverOperation, PaymentOrderOperation {}
+import org.doodle.design.common.Result;
+import reactor.core.publisher.Mono;
+
+public interface PaymentOrderOperation {
+
+  Mono<OrderCreateReply> create(OrderCreateRequest request);
+
+  interface RestCreateOperation {
+    Mono<Result<org.doodle.design.payment.model.payload.reply.OrderCreateReply>> create(
+        org.doodle.design.payment.model.payload.request.OrderCreateRequest request);
+  }
+}
