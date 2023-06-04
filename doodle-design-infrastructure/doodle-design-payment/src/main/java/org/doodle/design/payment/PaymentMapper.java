@@ -56,6 +56,10 @@ public class PaymentMapper implements ProtoMapper {
     return Result.code(status.getCode(), status.getMessage()).body(null);
   }
 
+  public OrderDeliverRequest toDeliverRequest(OrderInfo orderInfo) {
+    return OrderDeliverRequest.newBuilder().setOrder(orderInfo).build();
+  }
+
   public OrderDeliverReply fromProto(Status status) {
     return OrderDeliverReply.newBuilder().setResult(status).build();
   }
