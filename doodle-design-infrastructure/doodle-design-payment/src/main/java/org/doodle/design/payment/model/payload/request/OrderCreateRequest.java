@@ -18,7 +18,7 @@ package org.doodle.design.payment.model.payload.request;
 import java.util.Map;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.doodle.design.common.SdkBundleInfo;
+import org.doodle.design.common.model.SdkBundle;
 
 @ToString
 @Builder
@@ -27,8 +27,8 @@ import org.doodle.design.common.SdkBundleInfo;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderCreateRequest {
-  SdkBundleInfo.SdkType sdkType;
   String accountId;
   String roleId;
+  SdkBundle sdkBundle;
   Map<String, Object> extraParams;
 }

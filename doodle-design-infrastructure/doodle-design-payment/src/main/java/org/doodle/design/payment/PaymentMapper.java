@@ -44,9 +44,9 @@ public class PaymentMapper implements ProtoMapper {
   public OrderCreateRequest toProto(
       org.doodle.design.payment.model.payload.request.OrderCreateRequest request) {
     return OrderCreateRequest.newBuilder()
-        .setSdkType(request.getSdkType())
         .setAccountId(request.getAccountId())
         .setRoleId(request.getRoleId())
+        .setSdkBundle(toProto(request.getSdkBundle()))
         .setExtraParams(toProto(request.getExtraParams()))
         .build();
   }
