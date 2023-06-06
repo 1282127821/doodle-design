@@ -13,32 +13,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.doodle.design.payment.model.dto;
 
-syntax = "proto3";
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
-package doodle.design.common;
-
-import "google/protobuf/struct.proto";
-
-option java_multiple_files = true;
-option java_package = "org.doodle.design.common";
-option java_outer_classname = "SdkProto";
-
-message SdkBundleInfo {
-
-  enum SdkType {
-    EMBEDDED = 0;
-    JG = 1;
-  }
-
-  SdkType sdk_type = 1;
-
-  string sdk_binding = 2;
-
-  string sdk_game_id = 3;
-
-  string sdk_channel_id = 4;
-
-  google.protobuf.Struct sdk_extra_params = 5;
+@ToString
+@Builder
+@Data
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@AllArgsConstructor
+@NoArgsConstructor
+public class JgOrderInfoDto {
+  String callbackUrl;
+  String extension;
+  String orderId;
+  String partyName;
+  int perPrice;
+  String productDesc;
+  String productId;
+  String productName;
+  int ratio;
+  int remainCoinNum;
+  String roleId;
+  int roleLevel;
+  String roleName;
+  String serverId;
+  String serverName;
+  long time;
+  int totalPrice;
+  String vip;
 }
-
