@@ -15,18 +15,14 @@
  */
 package org.doodle.design.login;
 
-import org.doodle.design.common.Result;
 import reactor.core.publisher.Mono;
 
-public interface LoginRoleOperation {
+@FunctionalInterface
+public interface LoginRolePullOperationPb {
+  LoginRolePullReplyPb pull(LoginRolePullRequestPb requestPb);
 
-  Mono<RolePullReply> pull(RolePullRequest request);
-
-  Mono<Void> upload(RoleUploadRequest request);
-
-  interface RestPullOperation {
-
-    Mono<Result<org.doodle.design.login.model.payload.reply.RolePullReply>> pull(
-        org.doodle.design.login.model.payload.request.RolePullRequest request);
+  @FunctionalInterface
+  interface Reactive {
+    Mono<LoginRolePullReplyPb> pull(LoginRolePullRequestPb requestPb);
   }
 }

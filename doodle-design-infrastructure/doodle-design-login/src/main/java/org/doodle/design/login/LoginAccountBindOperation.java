@@ -13,18 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.login.model.payload.reply;
+package org.doodle.design.login;
 
-import java.util.List;
-import lombok.*;
-import lombok.experimental.FieldDefaults;
-import org.doodle.design.login.model.dto.RoleInfoDto;
+import reactor.core.publisher.Mono;
 
-@Builder
-@Data
-@FieldDefaults(level = AccessLevel.PRIVATE)
-@AllArgsConstructor
-@NoArgsConstructor
-public class RolePullReply {
-  List<RoleInfoDto> roleInfoList;
+@FunctionalInterface
+public interface LoginAccountBindOperation {
+  LoginAccountBindReply bind(LoginAccountBindRequest request);
+
+  @FunctionalInterface
+  interface Reactive {
+    Mono<LoginAccountBindReply> bind(LoginAccountBindRequest request);
+  }
 }

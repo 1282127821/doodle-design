@@ -13,16 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.login.model.payload.request;
+package org.doodle.design.login;
 
-import lombok.*;
-import lombok.experimental.FieldDefaults;
+import reactor.core.publisher.Mono;
 
-@Builder
-@Data
-@FieldDefaults(level = AccessLevel.PRIVATE)
-@AllArgsConstructor
-@NoArgsConstructor
-public class RolePullRequest {
-  String accountId;
+@FunctionalInterface
+public interface LoginAccountAuthOperationPb {
+  LoginAccountAuthReplyPb auth(LoginAccountAuthRequestPb requestPb);
+
+  @FunctionalInterface
+  interface Reactive {
+    Mono<LoginAccountAuthReplyPb> auth(LoginAccountAuthRequestPb requestPb);
+  }
 }

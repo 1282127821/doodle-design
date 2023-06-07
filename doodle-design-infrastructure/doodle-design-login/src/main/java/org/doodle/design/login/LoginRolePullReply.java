@@ -13,17 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.login.model.payload.request;
+package org.doodle.design.login;
 
+import java.util.List;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.doodle.design.common.model.SdkBundle;
 
 @Builder
+@ToString
+@EqualsAndHashCode
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @AllArgsConstructor
 @NoArgsConstructor
-public class AccountAuthRequest {
-  SdkBundle sdkBundle;
+public class LoginRolePullReply {
+  List<LoginRoleDto> roles;
 }

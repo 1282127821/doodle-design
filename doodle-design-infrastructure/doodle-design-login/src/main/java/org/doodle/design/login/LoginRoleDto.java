@@ -15,17 +15,19 @@
  */
 package org.doodle.design.login;
 
-import org.doodle.design.common.Result;
-import reactor.core.publisher.Mono;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
-public interface LoginAccountOperation {
-  Mono<AccountAuthReply> auth(AccountAuthRequest request);
-
-  Mono<AccountVerifyReply> verify(AccountVerifyRequest request);
-
-  interface RestAuthOperation {
-
-    Mono<Result<org.doodle.design.login.model.payload.reply.AccountAuthReply>> auth(
-        org.doodle.design.login.model.payload.request.AccountAuthRequest request);
-  }
+@Builder
+@ToString
+@EqualsAndHashCode
+@Data
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@AllArgsConstructor
+@NoArgsConstructor
+public class LoginRoleDto {
+  String accountId;
+  String roleId;
+  String roleName;
+  int roleLevel;
 }

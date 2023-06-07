@@ -15,4 +15,18 @@
  */
 package org.doodle.design.login;
 
-public interface LoginOperation extends LoginAccountOperation, LoginRoleOperation {}
+import lombok.*;
+import lombok.experimental.FieldDefaults;
+
+@Builder
+@ToString
+@EqualsAndHashCode
+@Data
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@AllArgsConstructor
+@NoArgsConstructor
+public class EmbeddedAccountSignReply {
+  String signToken;
+  String accountId;
+  long timestamp;
+}

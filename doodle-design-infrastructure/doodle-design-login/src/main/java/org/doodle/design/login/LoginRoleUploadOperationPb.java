@@ -13,22 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.login.model.dto;
+package org.doodle.design.login;
 
-import java.util.Map;
-import lombok.*;
-import lombok.experimental.FieldDefaults;
-import org.doodle.design.common.model.SdkBundle;
+import reactor.core.publisher.Mono;
 
-@Builder
-@Data
-@FieldDefaults(level = AccessLevel.PRIVATE)
-@AllArgsConstructor
-@NoArgsConstructor
-public class RoleInfoDto {
-  String roleId;
-  SdkBundle sdkBundle;
-  String roleName;
-  int roleLevel;
-  Map<String, Object> extraParams;
+@FunctionalInterface
+public interface LoginRoleUploadOperationPb {
+
+  void upload(LoginRoleUploadNotificationPb notificationPb);
+
+  @FunctionalInterface
+  interface Reactive {
+
+    Mono<Void> upload(LoginRoleUploadNotificationPb notificationPb);
+  }
 }

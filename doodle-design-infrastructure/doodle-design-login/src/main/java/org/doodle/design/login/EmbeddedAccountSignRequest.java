@@ -13,19 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.login.model.dto;
+package org.doodle.design.login;
 
-import java.time.Instant;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 @Builder
+@ToString
+@EqualsAndHashCode
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @AllArgsConstructor
 @NoArgsConstructor
-public class AccountAuthTokenInfoDto {
-  String token;
+public class EmbeddedAccountSignRequest {
   String accountId;
-  Instant timestamp;
 }

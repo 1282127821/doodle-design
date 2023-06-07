@@ -13,40 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.doodle.design.login;
 
-syntax = "proto3";
-
-package doodle.design.login;
-
-option java_multiple_files = true;
-option java_package = "org.doodle.design.login";
-option java_outer_classname = "LoginProto";
-
-message LoginAccountBindRequestPb {
-
-}
-
-message LoginAccountBindReplyPb {
-
-}
-
-message LoginAccountAuthRequestPb {
-
-}
-
-message LoginAccountAuthReplyPb {
-
-}
-
-message LoginRolePullRequestPb {
-
-}
-
-message LoginRolePullReplyPb {
-
-}
-
-
-message LoginRoleUploadNotificationPb {
-
-}
+public class LoginException extends Exception {}

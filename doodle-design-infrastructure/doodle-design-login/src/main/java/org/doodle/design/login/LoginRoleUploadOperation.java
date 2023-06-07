@@ -13,40 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.doodle.design.login;
 
-syntax = "proto3";
+import reactor.core.publisher.Mono;
 
-package doodle.design.login;
+@FunctionalInterface
+public interface LoginRoleUploadOperation {
+  void upload(LoginRoleUploadNotification notification);
 
-option java_multiple_files = true;
-option java_package = "org.doodle.design.login";
-option java_outer_classname = "LoginProto";
+  @FunctionalInterface
+  interface Reactive {
 
-message LoginAccountBindRequestPb {
-
-}
-
-message LoginAccountBindReplyPb {
-
-}
-
-message LoginAccountAuthRequestPb {
-
-}
-
-message LoginAccountAuthReplyPb {
-
-}
-
-message LoginRolePullRequestPb {
-
-}
-
-message LoginRolePullReplyPb {
-
-}
-
-
-message LoginRoleUploadNotificationPb {
-
+    Mono<Void> upload(LoginRoleUploadNotification notification);
+  }
 }

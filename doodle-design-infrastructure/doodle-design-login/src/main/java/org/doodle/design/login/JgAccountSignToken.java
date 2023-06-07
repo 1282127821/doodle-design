@@ -13,17 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.login.model.payload.reply;
+package org.doodle.design.login;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.doodle.design.login.model.dto.AccountAuthTokenInfoDto;
 
 @Builder
+@ToString
+@EqualsAndHashCode
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @AllArgsConstructor
 @NoArgsConstructor
-public class AccountAuthReply {
-  AccountAuthTokenInfoDto token;
+public class JgAccountSignToken {
+  @JsonAlias("sign")
+  String sign;
+
+  @JsonAlias("user_id")
+  String userId;
+
+  String time;
+  String guid;
+
+  @JsonAlias("cp_ext")
+  String cpExt;
 }
