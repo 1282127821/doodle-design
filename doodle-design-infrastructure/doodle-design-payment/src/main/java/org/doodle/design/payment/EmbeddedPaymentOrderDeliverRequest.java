@@ -15,15 +15,15 @@
  */
 package org.doodle.design.payment;
 
-import org.doodle.design.common.Result;
-import reactor.core.publisher.Mono;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
-public interface PaymentOrderOperation {
-
-  Mono<OrderCreateReply> create(OrderCreateRequest request);
-
-  interface RestCreateOperation {
-    Mono<Result<org.doodle.design.payment.model.payload.reply.OrderCreateReply>> create(
-        org.doodle.design.payment.model.payload.request.OrderCreateRequest request);
-  }
+@Builder
+@ToString
+@Data
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@AllArgsConstructor
+@NoArgsConstructor
+public class EmbeddedPaymentOrderDeliverRequest {
+  String orderId;
 }

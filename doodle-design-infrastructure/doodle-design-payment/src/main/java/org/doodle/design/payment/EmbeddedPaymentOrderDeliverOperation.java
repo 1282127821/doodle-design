@@ -13,18 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.payment.model.payload.reply;
+package org.doodle.design.payment;
 
-import lombok.*;
-import lombok.experimental.FieldDefaults;
-import org.doodle.design.payment.model.dto.OrderInfoDto;
+import reactor.core.publisher.Mono;
 
-@ToString
-@Builder
-@Data
-@FieldDefaults(level = AccessLevel.PRIVATE)
-@AllArgsConstructor
-@NoArgsConstructor
-public class OrderCreateReply {
-  OrderInfoDto orderInfo;
+@FunctionalInterface
+public interface EmbeddedPaymentOrderDeliverOperation {
+  EmbeddedPaymentOrderDeliverReply deliver(EmbeddedPaymentOrderDeliverRequest request);
+
+  @FunctionalInterface
+  interface Reactive {
+    Mono<EmbeddedPaymentOrderDeliverReply> deliver(EmbeddedPaymentOrderDeliverRequest request);
+  }
 }

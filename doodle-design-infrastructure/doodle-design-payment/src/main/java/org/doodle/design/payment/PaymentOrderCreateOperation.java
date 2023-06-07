@@ -18,6 +18,12 @@ package org.doodle.design.payment;
 import reactor.core.publisher.Mono;
 
 @FunctionalInterface
-public interface PaymentDeliverOperation {
-  Mono<OrderDeliverReply> deliver(OrderDeliverRequest request);
+public interface PaymentOrderCreateOperation {
+
+  PaymentOrderCreateReply create(PaymentOrderCreateRequest request);
+
+  @FunctionalInterface
+  interface Reactive {
+    Mono<PaymentOrderCreateReply> create(PaymentOrderCreateRequest request);
+  }
 }

@@ -13,34 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.payment.model.dto;
+package org.doodle.design.payment;
 
-import lombok.*;
-import lombok.experimental.FieldDefaults;
+import reactor.core.publisher.Mono;
 
-@ToString
-@Builder
-@Data
-@FieldDefaults(level = AccessLevel.PRIVATE)
-@AllArgsConstructor
-@NoArgsConstructor
-public class JgOrderInfoDto {
-  String callbackUrl;
-  String extension;
-  String orderId;
-  String partyName;
-  int perPrice;
-  String productDesc;
-  String productId;
-  String productName;
-  int ratio;
-  int remainCoinNum;
-  String roleId;
-  int roleLevel;
-  String roleName;
-  String serverId;
-  String serverName;
-  long time;
-  int totalPrice;
-  String vip;
+@FunctionalInterface
+public interface PaymentOrderCreateOperationPb {
+  PaymentOrderCreateReplyPb create(PaymentOrderCreateRequestPb requestPb);
+
+  @FunctionalInterface
+  interface Reactive {
+    Mono<PaymentOrderCreateReplyPb> create(PaymentOrderCreateRequestPb requestPb);
+  }
 }

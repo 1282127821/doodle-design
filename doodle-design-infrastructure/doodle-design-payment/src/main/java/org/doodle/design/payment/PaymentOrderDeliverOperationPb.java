@@ -15,9 +15,14 @@
  */
 package org.doodle.design.payment;
 
-import java.util.function.Function;
-import org.doodle.design.common.Result;
 import reactor.core.publisher.Mono;
 
 @FunctionalInterface
-public interface PaymentDeliverHandler extends Function<OrderInfo, Mono<Result<Void>>> {}
+public interface PaymentOrderDeliverOperationPb {
+  PaymentOrderDeliverReply deliver(PaymentOrderDeliverRequestPb requestPb);
+
+  @FunctionalInterface
+  interface Reactive {
+    Mono<PaymentOrderDeliverReply> deliver(PaymentOrderDeliverRequestPb requestPb);
+  }
+}

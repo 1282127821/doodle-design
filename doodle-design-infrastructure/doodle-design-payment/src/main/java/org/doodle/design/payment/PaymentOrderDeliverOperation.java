@@ -13,34 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.doodle.design.payment;
 
-syntax = "proto3";
+import reactor.core.publisher.Mono;
 
-package doodle.design.payment;
+@FunctionalInterface
+public interface PaymentOrderDeliverOperation {
 
-option java_multiple_files = true;
-option java_package = "org.doodle.design.payment";
-option java_outer_classname = "PaymentProto";
+  PaymentOrderDeliverReply deliver(PaymentOrderDeliverRequest request);
 
-enum PaymentOrderStatus {
-  PENDING = 0;
-  COMPLETED = 1;
-}
-
-message PaymentOrderCreateRequestPb {
-
-}
-
-message PaymentOrderCreateReplyPb {
-
-}
-
-
-message PaymentOrderDeliverRequestPb {
-
-}
-
-enum PaymentOrderDeliverReply {
-  FAILURE = 0;
-  SUCCESS = 1;
+  @FunctionalInterface
+  interface Reactive {
+    Mono<PaymentOrderDeliverReply> deliver(PaymentOrderDeliverRequest request);
+  }
 }

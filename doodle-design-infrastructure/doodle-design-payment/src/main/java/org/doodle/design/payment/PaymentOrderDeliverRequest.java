@@ -15,4 +15,17 @@
  */
 package org.doodle.design.payment;
 
-public interface PaymentOperation extends PaymentDeliverOperation, PaymentOrderOperation {}
+import java.util.Map;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
+
+@Builder
+@ToString
+@Data
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@AllArgsConstructor
+@NoArgsConstructor
+public class PaymentOrderDeliverRequest {
+  PaymentOrderDto orderDto;
+  Map<String, Object> ext;
+}

@@ -13,22 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.payment.model.payload.request;
+package org.doodle.design.payment;
 
 import java.util.Map;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.doodle.design.common.model.SdkBundle;
 
-@ToString
 @Builder
+@ToString
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrderCreateRequest {
-  String accountId;
-  String roleId;
-  SdkBundle sdkBundle;
-  Map<String, Object> extraParams;
+public class PaymentOrderCreateRequest {
+  PaymentOrderDto order;
+  Map<String, Object> ext;
 }

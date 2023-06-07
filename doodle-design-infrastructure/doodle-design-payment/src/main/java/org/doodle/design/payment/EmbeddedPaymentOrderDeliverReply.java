@@ -13,34 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.doodle.design.payment;
 
-syntax = "proto3";
-
-package doodle.design.payment;
-
-option java_multiple_files = true;
-option java_package = "org.doodle.design.payment";
-option java_outer_classname = "PaymentProto";
-
-enum PaymentOrderStatus {
-  PENDING = 0;
-  COMPLETED = 1;
-}
-
-message PaymentOrderCreateRequestPb {
-
-}
-
-message PaymentOrderCreateReplyPb {
-
-}
-
-
-message PaymentOrderDeliverRequestPb {
-
-}
-
-enum PaymentOrderDeliverReply {
-  FAILURE = 0;
-  SUCCESS = 1;
+public enum EmbeddedPaymentOrderDeliverReply {
+  FAILURE,
+  SUCCESS;
 }

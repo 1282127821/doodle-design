@@ -13,34 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.doodle.design.payment;
 
-syntax = "proto3";
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
-package doodle.design.payment;
-
-option java_multiple_files = true;
-option java_package = "org.doodle.design.payment";
-option java_outer_classname = "PaymentProto";
-
-enum PaymentOrderStatus {
-  PENDING = 0;
-  COMPLETED = 1;
-}
-
-message PaymentOrderCreateRequestPb {
-
-}
-
-message PaymentOrderCreateReplyPb {
-
-}
-
-
-message PaymentOrderDeliverRequestPb {
-
-}
-
-enum PaymentOrderDeliverReply {
-  FAILURE = 0;
-  SUCCESS = 1;
+@Builder
+@ToString
+@Data
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@AllArgsConstructor
+@NoArgsConstructor
+public class JgPaymentCallbackDto {
+  String orderId;
+  String accountId;
 }
