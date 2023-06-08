@@ -17,4 +17,25 @@ package org.doodle.design.login;
 
 import org.doodle.design.common.ProtoMapper;
 
-public class LoginMapper implements ProtoMapper {}
+public abstract class LoginMapper implements ProtoMapper {
+
+  public LoginRoleInfo toProto(org.doodle.design.login.model.info.LoginRoleInfo info) {
+    return LoginRoleInfo.newBuilder()
+        .setRoleId(info.getRoleId())
+        .setAccountId(info.getAccountId())
+        .setRoleName(info.getRoleName())
+        .setRoleLevel(info.getRoleLevel())
+        .setServerId(info.getServerId())
+        .build();
+  }
+
+  public org.doodle.design.login.model.info.LoginRoleInfo fromProto(LoginRoleInfo info) {
+    return org.doodle.design.login.model.info.LoginRoleInfo.builder()
+        .roleId(info.getRoleId())
+        .accountId(info.getAccountId())
+        .roleName(info.getRoleName())
+        .roleLevel(info.getRoleLevel())
+        .serverId(info.getServerId())
+        .build();
+  }
+}

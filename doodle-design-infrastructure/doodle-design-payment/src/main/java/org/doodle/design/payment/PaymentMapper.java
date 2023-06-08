@@ -17,4 +17,4 @@ package org.doodle.design.payment;
 
 import org.doodle.design.common.ProtoMapper;
 
-public class PaymentMapper implements ProtoMapper {}
+public abstract class PaymentMapper implements ProtoMapper {}
