@@ -22,31 +22,70 @@ option java_multiple_files = true;
 option java_package = "org.doodle.design.login";
 option java_outer_classname = "LoginProto";
 
-message LoginAccountBindRequestPb {
-
+enum LoginErrorCode {
+  FAILURE = 0;
+  BAD_REQUEST = 1;
 }
 
-message LoginAccountBindReplyPb {
-
+message LoginAccountInfo {
+  string account_id = 1;
 }
 
-message LoginAccountAuthRequestPb {
-
+message LoginRoleInfo {
+  string account_id = 1;
+  string role_id = 2;
+  string role_name = 3;
+  int32 role_level = 4;
+  string server_id = 5;
 }
 
-message LoginAccountAuthReplyPb {
-
+message LoginRoleInfoList {
+  repeated LoginRoleInfo role_info = 1;
 }
 
-message LoginRolePullRequestPb {
-
+message LoginAccountAuthToken {
+  string sign_token = 1;
+  string account_id = 2;
+  int64 timestamp = 3;
 }
 
-message LoginRolePullReplyPb {
-
+message LoginAccountAuthRequest {
+  LoginAccountAuthToken auth_token = 1;
 }
 
+message LoginAccountAuthReply {
+  oneof Result {
+    LoginErrorCode error = 1;
+    LoginAccountInfo payload = 2;
+  }
+}
 
-message LoginRoleUploadNotificationPb {
+message EmbeddedLoginAccountBindRequest {
+  string account_id = 1;
+}
 
+message JgLoginAccountBindRequest {
+  string sign_token = 1;
+}
+
+message LoginAccountBindReply {
+  oneof Result {
+    LoginErrorCode error = 1;
+    LoginAccountAuthToken payload = 2;
+  }
+}
+
+message LoginRolePullRequest {
+  string account_id = 1;
+}
+
+message LoginRolePullReply {
+  oneof Result {
+    LoginErrorCode error = 1;
+    LoginRoleInfoList payload = 2;
+  }
+}
+
+message LoginRoleUploadRequest {
+  LoginRoleInfoList role_info = 1;
 }
