@@ -18,12 +18,16 @@ package org.doodle.design.config;
 import org.doodle.design.common.Result;
 import reactor.core.publisher.Mono;
 
-@FunctionalInterface
-public interface ConfigPullOperation {
-  Mono<ConfigPullReply> pull(ConfigPullRequest request);
+public interface ConfigPullOps {
 
-  interface RestPullOperation {
-    Mono<Result<org.doodle.design.config.model.payload.reply.ConfigPullReply>> pull(
+  @FunctionalInterface
+  interface RSocket {
+    Mono<ConfigPullReply> pull(ConfigPullRequest request);
+  }
+
+  @FunctionalInterface
+  interface Servlet {
+    Result<org.doodle.design.config.model.payload.reply.ConfigPullReply> pull(
         org.doodle.design.config.model.payload.request.ConfigPullRequest request);
   }
 }
