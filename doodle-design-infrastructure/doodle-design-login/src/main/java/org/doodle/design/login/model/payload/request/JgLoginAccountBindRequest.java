@@ -27,4 +27,12 @@ import lombok.experimental.FieldDefaults;
 public class JgLoginAccountBindRequest {
   // 签名token
   String signToken;
+  // 用户ID
+  String userId;
+  // 时间戳
+  String time;
+  // 玩家应用ID
+  String guid;
+  // 扩展参数
+  String cpExt;
 }

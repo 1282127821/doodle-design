@@ -66,6 +66,10 @@ message EmbeddedLoginAccountBindRequest {
 
 message JgLoginAccountBindRequest {
   string sign_token = 1;
+  string user_id = 2;
+  string time = 3;
+  string guid = 4;
+  string cp_ext = 5;
 }
 
 message LoginAccountBindReply {
