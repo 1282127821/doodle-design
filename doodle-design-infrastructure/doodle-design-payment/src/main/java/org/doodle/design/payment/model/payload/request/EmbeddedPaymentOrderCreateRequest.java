@@ -17,6 +17,7 @@ package org.doodle.design.payment.model.payload.request;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.doodle.design.payment.model.info.PaymentOrderDeliverRouteInfo;
 
 @Builder
 @ToString
@@ -45,4 +46,6 @@ public class EmbeddedPaymentOrderCreateRequest {
   String productName;
   // 商品价格
   String productPrice;
+  // 兑现路由
+  PaymentOrderDeliverRouteInfo route;
 }

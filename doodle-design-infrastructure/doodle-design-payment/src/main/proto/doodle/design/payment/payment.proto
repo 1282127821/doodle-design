@@ -22,6 +22,20 @@ option java_multiple_files = true;
 option java_package = "org.doodle.design.payment";
 option java_outer_classname = "PaymentProto";
 
+
+message PaymentOrderDeliverRoute {
+  message ServletDeliverRoute {
+    string uri = 1;
+  }
+  message RSocketDeliverRoute {
+    map<string, string> tags = 1;
+  }
+  oneof RouteMethod {
+    ServletDeliverRoute servlet = 1;
+    RSocketDeliverRoute rsocket = 2;
+  }
+}
+
 message PaymentOrderInfo {
   string order_id = 1;
   string account_id = 2;
@@ -79,7 +93,7 @@ message EmbeddedPaymentOrderCreateRequest {
   string product_id = 8;
   string product_name = 9;
   string product_price = 10;
-
+  PaymentOrderDeliverRoute route = 11;
 }
 
 message EmbeddedPaymentOrderCreateReply {
@@ -102,6 +116,7 @@ message JgPaymentOrderCreateRequest {
   string server_name = 13;
   int32 total_price = 14;
   string vip = 15;
+  PaymentOrderDeliverRoute route = 16;
 }
 
 message JgPaymentOrderCreateReply {

@@ -13,21 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.payment;
+package org.doodle.design.payment.model.info;
 
-import org.doodle.design.common.Result;
-import reactor.core.publisher.Mono;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
-public interface PaymentOrderDeliverOps {
-
-  @FunctionalInterface
-  interface RSocket {
-    Mono<PaymentOrderDeliverReply> deliver(PaymentOrderDeliverRequest request);
-  }
-
-  @FunctionalInterface
-  interface Servlet {
-    Result<PaymentOrderDeliverReply> deliver(
-        org.doodle.design.payment.model.payload.request.PaymentOrderDeliverRequest request);
-  }
+@Builder
+@ToString
+@Data
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@AllArgsConstructor
+@NoArgsConstructor
+public class PaymentOrderDeliverRouteInfo {
+  PaymentOrderServletRouteInfo servlet;
+  PaymentOrderRSocketRouteInfo rsocket;
 }

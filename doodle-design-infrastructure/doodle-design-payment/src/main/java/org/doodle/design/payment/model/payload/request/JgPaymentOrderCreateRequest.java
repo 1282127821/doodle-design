@@ -16,9 +16,9 @@
 package org.doodle.design.payment.model.payload.request;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
-import java.util.Map;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.doodle.design.payment.model.info.PaymentOrderDeliverRouteInfo;
 
 @Builder
 @ToString
@@ -27,7 +27,7 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @NoArgsConstructor
 public class JgPaymentOrderCreateRequest {
-  // 龙猫订单UID
+  // 订单UID
   @JsonAlias("order_id")
   String orderId;
   // 公会名称
@@ -70,6 +70,6 @@ public class JgPaymentOrderCreateRequest {
   int totalPrice;
 
   String vip;
-  // 订单兑现路由
-  Map<String, String> routingTags;
+  // 兑现路由
+  PaymentOrderDeliverRouteInfo route;
 }

@@ -15,7 +15,6 @@
  */
 package org.doodle.design.payment.model.info;
 
-import java.util.Map;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -28,7 +27,4 @@ import lombok.experimental.FieldDefaults;
 public class JgPaymentCallbackInfo {
   // 订单UID
   String orderId;
-
-  // 订单兑现路由
-  Map<String, String> routingTags;
 }
