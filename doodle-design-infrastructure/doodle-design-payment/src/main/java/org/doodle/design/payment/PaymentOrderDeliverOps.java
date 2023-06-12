@@ -22,12 +22,12 @@ public interface PaymentOrderDeliverOps {
 
   @FunctionalInterface
   interface RSocket {
-    Mono<PaymentOrderDeliverReply> deliver(PaymentOrderDeliverRequest request);
+    Mono<PaymentErrorCode> deliver(PaymentOrderDeliverRequest request);
   }
 
   @FunctionalInterface
   interface Servlet {
-    Result<PaymentOrderDeliverReply> deliver(
+    Result<PaymentErrorCode> deliver(
         org.doodle.design.payment.model.payload.request.PaymentOrderDeliverRequest request);
   }
 }

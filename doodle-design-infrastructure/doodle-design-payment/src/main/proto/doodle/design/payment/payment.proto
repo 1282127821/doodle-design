@@ -97,7 +97,10 @@ message EmbeddedPaymentOrderCreateRequest {
 }
 
 message EmbeddedPaymentOrderCreateReply {
-  EmbeddedPaymentOrderInfo order_info = 1;
+  oneof Result {
+    PaymentErrorCode error = 1;
+    EmbeddedPaymentOrderInfo payload = 2;
+  }
 }
 
 message JgPaymentOrderCreateRequest {
@@ -120,14 +123,19 @@ message JgPaymentOrderCreateRequest {
 }
 
 message JgPaymentOrderCreateReply {
-  JgPaymentOrderInfo order_info = 1;
+  oneof Result {
+    PaymentErrorCode error = 1;
+    JgPaymentOrderInfo payload = 2;
+  }
 }
 
 message PaymentOrderDeliverRequest {
   PaymentOrderInfo order_info = 1;
 }
 
-enum PaymentOrderDeliverReply {
-  FAILURE = 0;
-  SUCCESS = 1;
+enum PaymentErrorCode {
+  SUCCESS = 0;
+  EMBEDDED_ORDER_CREATE_FAILURE = 1;
+  JG_ORDER_CREATE_FAILURE = 2;
+  DELIVER_ORDER_FAILURE = 3;
 }
