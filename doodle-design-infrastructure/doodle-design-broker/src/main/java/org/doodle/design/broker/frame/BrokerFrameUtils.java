@@ -20,9 +20,15 @@ import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public final class BrokerFrameUtils {
-
   public static BrokerFrame setup(Map<String, String> tags) {
-    RouteSetup.Builder setup = RouteSetup.newBuilder().setTags(Tags.newBuilder().putAllTag(tags));
+    return setup(tags, java.util.UUID.randomUUID().toString());
+  }
+
+  public static BrokerFrame setup(Map<String, String> tags, String routeId) {
+    RouteSetup.Builder setup =
+        RouteSetup.newBuilder()
+            .setRouteId(UUID.newBuilder().setId(routeId).build())
+            .setTags(Tags.newBuilder().putAllTag(tags));
     return BrokerFrame.newBuilder().setSetup(setup).build();
   }
 
