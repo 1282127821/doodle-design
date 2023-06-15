@@ -17,10 +17,11 @@ package org.doodle.design.broker.rsocket;
 
 import io.rsocket.RSocket;
 import java.util.List;
+import org.doodle.design.broker.frame.QueryType;
 import org.doodle.design.broker.frame.Tags;
 
 @FunctionalInterface
 public interface BrokerRSocketQuery {
 
-  List<RSocket> query(Tags tags);
+  List<RSocket> query(Tags tags, QueryType queryType);
 }

@@ -31,7 +31,7 @@ message Tags {
 }
 
 message RouteSetup {
-  UUID routeId = 1;
+  UUID route_id = 1;
   Tags tags = 2;
 }
 
@@ -40,9 +40,15 @@ enum RoutingType {
   MULTICAST = 1;
 }
 
+enum QueryType {
+  AND = 0;
+  XOR = 1;
+}
+
 message Address {
-  RoutingType routingType = 1;
-  Tags tags = 2;
+  QueryType query_type = 1;
+  RoutingType routing_type = 2;
+  Tags tags = 3;
 }
 
 message BrokerFrame {

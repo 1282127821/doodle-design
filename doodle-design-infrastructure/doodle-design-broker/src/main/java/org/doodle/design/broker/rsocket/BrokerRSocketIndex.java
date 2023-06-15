@@ -66,8 +66,8 @@ public class BrokerRSocketIndex implements IndexedMap<UUID, RSocket, Tags> {
   }
 
   @Override
-  public List<RSocket> query(Tags tags) {
-    List<RSocket> query = this.indexedMap.query(tags.getTagMap());
+  public List<RSocket> query(Tags tags, QueryOps queryOps) {
+    List<RSocket> query = this.indexedMap.query(tags.getTagMap(), queryOps);
     log.info("索引检索 TAG: {} 结果: {}", tags, query);
     return query;
   }

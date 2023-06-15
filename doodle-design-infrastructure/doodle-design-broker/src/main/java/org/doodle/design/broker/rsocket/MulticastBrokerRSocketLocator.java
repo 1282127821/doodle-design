@@ -31,6 +31,6 @@ public class MulticastBrokerRSocketLocator implements BrokerRSocketLocator {
 
   @Override
   public RSocket locate(Address address) {
-    return new MulticastBrokerRSocket(() -> query.query(address.getTags()));
+    return new MulticastBrokerRSocket(() -> query.query(address.getTags(), address.getQueryType()));
   }
 }

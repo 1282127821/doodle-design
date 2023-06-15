@@ -19,6 +19,12 @@ import java.util.Collection;
 import java.util.List;
 
 public interface IndexedMap<K, V, TAG> {
+  enum QueryOps {
+    /** 交集 */
+    AND,
+    /** 并集 */
+    XOR
+  }
 
   V get(K key);
 
@@ -34,5 +40,5 @@ public interface IndexedMap<K, V, TAG> {
 
   Collection<V> values();
 
-  List<V> query(TAG tag);
+  List<V> query(TAG tag, QueryOps queryOps);
 }

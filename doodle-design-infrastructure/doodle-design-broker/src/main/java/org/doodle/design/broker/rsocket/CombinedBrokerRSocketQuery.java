@@ -20,6 +20,8 @@ import java.util.List;
 import java.util.Objects;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.doodle.design.bitmap.IndexedMap;
+import org.doodle.design.broker.frame.QueryType;
 import org.doodle.design.broker.frame.Tags;
 import org.springframework.util.CollectionUtils;
 
@@ -30,10 +32,14 @@ public class CombinedBrokerRSocketQuery implements BrokerRSocketQuery {
   private final BrokerRSocketIndex rSocketIndex;
 
   @Override
-  public List<RSocket> query(Tags tags) {
+  public List<RSocket> query(Tags tags, QueryType queryType) {
     if (Objects.isNull(tags) || CollectionUtils.isEmpty(tags.getTagMap())) {
       throw new IllegalArgumentException("索引查询 TAG 不能为空");
     }
-    return rSocketIndex.query(tags);
+    IndexedMap.QueryOps queryOps =
+        (Objects.nonNull(queryType) && queryType == QueryType.XOR)
+            ? IndexedMap.QueryOps.XOR
+            : IndexedMap.QueryOps.AND;
+    return rSocketIndex.query(tags, queryOps);
   }
 }

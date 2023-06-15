@@ -33,7 +33,7 @@ public class UnicastBrokerRSocketLocator implements BrokerRSocketLocator {
 
   @Override
   public RSocket locate(Address address) {
-    List<RSocket> found = query.query(address.getTags());
+    List<RSocket> found = query.query(address.getTags(), address.getQueryType());
     if (CollectionUtils.isEmpty(found)) {
       throw new IllegalArgumentException("检索不到路由");
     }

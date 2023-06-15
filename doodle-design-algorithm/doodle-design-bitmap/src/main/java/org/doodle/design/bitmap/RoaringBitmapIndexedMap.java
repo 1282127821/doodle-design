@@ -114,7 +114,7 @@ public class RoaringBitmapIndexedMap<K, V> implements IndexedMap<K, V, Map<Strin
   }
 
   @Override
-  public List<V> query(Map<String, String> tags) {
+  public List<V> query(Map<String, String> tags, QueryOps queryOps) {
     if (tags == null || tags.isEmpty()) {
       return new ArrayList<>(indexToValue.values());
     }
@@ -128,7 +128,11 @@ public class RoaringBitmapIndexedMap<K, V> implements IndexedMap<K, V, Map<Strin
         result = new RoaringBitmap();
         result.or(bitmap);
       } else {
-        result.and(bitmap);
+        if (queryOps == QueryOps.AND) {
+          result.and(bitmap);
+        } else if (queryOps == QueryOps.XOR) {
+          result.xor(bitmap);
+        }
       }
 
       if (result.isEmpty()) {
