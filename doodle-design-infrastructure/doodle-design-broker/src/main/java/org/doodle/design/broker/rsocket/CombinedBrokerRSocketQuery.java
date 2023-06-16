@@ -37,8 +37,8 @@ public class CombinedBrokerRSocketQuery implements BrokerRSocketQuery {
       throw new IllegalArgumentException("索引查询 TAG 不能为空");
     }
     IndexedMap.QueryOps queryOps =
-        (Objects.nonNull(queryType) && queryType == QueryType.XOR)
-            ? IndexedMap.QueryOps.XOR
+        (Objects.nonNull(queryType) && queryType == QueryType.OR)
+            ? IndexedMap.QueryOps.OR
             : IndexedMap.QueryOps.AND;
     return rSocketIndex.query(tags, queryOps);
   }

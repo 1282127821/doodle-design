@@ -23,7 +23,7 @@ public interface IndexedMap<K, V, TAG> {
     /** 交集 */
     AND,
     /** 并集 */
-    XOR
+    OR
   }
 
   V get(K key);

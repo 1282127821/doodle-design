@@ -42,7 +42,7 @@ enum RoutingType {
 
 enum QueryType {
   AND = 0;
-  XOR = 1;
+  OR = 1;
 }
 
 message Address {
