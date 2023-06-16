@@ -37,6 +37,7 @@ message LoginRoleInfo {
   string role_name = 3;
   int32 role_level = 4;
   string server_id = 5;
+  int64 timestamp = 6;
 }
 
 message LoginRoleInfoList {

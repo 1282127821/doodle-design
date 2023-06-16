@@ -26,6 +26,7 @@ public abstract class LoginMapper implements ProtoMapper {
         .setRoleName(info.getRoleName())
         .setRoleLevel(info.getRoleLevel())
         .setServerId(info.getServerId())
+        .setTimestamp(info.getTimestamp())
         .build();
   }
 
@@ -36,6 +37,7 @@ public abstract class LoginMapper implements ProtoMapper {
         .roleName(info.getRoleName())
         .roleLevel(info.getRoleLevel())
         .serverId(info.getServerId())
+        .timestamp(info.getTimestamp())
         .build();
   }
 }

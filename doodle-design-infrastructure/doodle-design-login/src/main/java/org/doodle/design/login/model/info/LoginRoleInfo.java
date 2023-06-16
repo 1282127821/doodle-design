@@ -35,4 +35,6 @@ public class LoginRoleInfo {
   int roleLevel;
   // 区服等级
   String serverId;
+  // 最近登录时间戳
+  long timestamp;
 }
