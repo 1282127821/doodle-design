@@ -17,7 +17,7 @@ package org.doodle.design.payment.model.payload.reply;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.doodle.design.payment.model.info.PaymentOrderInfo;
+import org.doodle.design.payment.PaymentErrorCode;
 
 @Builder
 @ToString
@@ -26,6 +26,5 @@ import org.doodle.design.payment.model.info.PaymentOrderInfo;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PaymentOrderDeliverReply {
-  // 订单信息
-  PaymentOrderInfo orderInfo;
+  PaymentErrorCode errorCode;
 }

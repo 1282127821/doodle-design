@@ -133,6 +133,10 @@ message PaymentOrderDeliverRequest {
   PaymentOrderInfo order_info = 1;
 }
 
+message PaymentOrderDeliverReply {
+  PaymentErrorCode error_code = 1;
+}
+
 enum PaymentErrorCode {
   SUCCESS = 0;
   EMBEDDED_ORDER_CREATE_FAILURE = 1;
