@@ -27,11 +27,11 @@ jobs:
           repository: org-doodle/doodle-build
           path: org-doodle/doodle-build
       - name: Install doodle-build
-        run: mvnd install
+        run: ${{steps.install-mvnd.outputs.mvnd-dir}}/mvnd install
         working-directory: org-doodle/doodle-build
 
       - name: Checkout coding style
-        run: mvnd spotless:check
+        run: ${{steps.install-mvnd.outputs.mvnd-dir}}/mvnd spotless:check
 
       - name: Build with Maven
-        run: mvnd package -B
+        run: ${{steps.install-mvnd.outputs.mvnd-dir}}/mvnd package -B
