@@ -15,23 +15,18 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
           cache: 'maven'
-      - name: Fetch install-mvnd action
-        run: |
-          mkdir -p .github/actions/install-mvnd
-          curl -o .github/actions/install-mvnd/action.yml https://raw.githubusercontent.com/apache/camel/main/.github/actions/install-mvnd/action.yml
-      - id: install-mvnd
-        uses: ./.github/actions/install-mvnd
+
       - name: Checkout doodle-build
         uses: actions/checkout@v3
         with:
           repository: org-doodle/doodle-build
           path: org-doodle/doodle-build
       - name: Install doodle-build
-        run: ${{steps.install-mvnd.outputs.mvnd-dir}}/mvnd install
+        run: ./mvnw install
         working-directory: org-doodle/doodle-build
 
       - name: Checkout coding style
-        run: ${{steps.install-mvnd.outputs.mvnd-dir}}/mvnd spotless:check
+        run: ./mvnw spotless:check
 
       - name: Build with Maven
-        run: ${{steps.install-mvnd.outputs.mvnd-dir}}/mvnd package -B
+        run: ./mvnw package -B
