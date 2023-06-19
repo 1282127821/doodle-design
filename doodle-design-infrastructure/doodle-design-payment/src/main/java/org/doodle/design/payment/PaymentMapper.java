@@ -17,4 +17,28 @@ package org.doodle.design.payment;
 
 import org.doodle.design.common.ProtoMapper;
 
-public abstract class PaymentMapper implements ProtoMapper {}
+public abstract class PaymentMapper implements ProtoMapper {
+
+  public org.doodle.design.payment.model.info.PaymentOrderInfo fromProto(
+      PaymentOrderInfo orderInfo) {
+    return org.doodle.design.payment.model.info.PaymentOrderInfo.builder()
+        .orderId(orderInfo.getOrderId())
+        .accountId(orderInfo.getAccountId())
+        .roleId(orderInfo.getRoleId())
+        .roleName(orderInfo.getRoleName())
+        .serverId(orderInfo.getServerId())
+        .serverName(orderInfo.getServerName())
+        .amount(orderInfo.getAmount())
+        .productId(orderInfo.getProductId())
+        .productName(orderInfo.getProductName())
+        .productPrice(orderInfo.getProductPrice())
+        .build();
+  }
+
+  public org.doodle.design.payment.model.payload.request.PaymentOrderDeliverRequest fromProto(
+      PaymentOrderDeliverRequest request) {
+    return org.doodle.design.payment.model.payload.request.PaymentOrderDeliverRequest.builder()
+        .orderInfo(fromProto(request.getOrderInfo()))
+        .build();
+  }
+}
