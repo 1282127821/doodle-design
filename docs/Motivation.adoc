@@ -1,1 +1,1 @@
-include::https://raw.githubusercontent.com/org-doodle/.github/main/profile/README.adoc[]
+= Doodle 设计综述

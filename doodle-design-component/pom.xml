@@ -14,5 +14,6 @@
   <packaging>pom</packaging>
   <modules>
     <module>doodle-design-auction</module>
+    <module>doodle-design-chat</module>
   </modules>
 </project>
