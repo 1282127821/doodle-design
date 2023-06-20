@@ -17,6 +17,7 @@ package org.doodle.design.login.model.info;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.doodle.design.common.SdkBundleInfo;
 
 @Builder
 @ToString
@@ -27,4 +28,7 @@ import lombok.experimental.FieldDefaults;
 public class LoginAccountInfo {
   // 帐号UID
   String accountId;
+
+  // SDK类型
+  SdkBundleInfo.SdkType sdkType;
 }

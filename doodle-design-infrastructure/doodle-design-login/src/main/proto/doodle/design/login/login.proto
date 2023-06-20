@@ -18,6 +18,8 @@ syntax = "proto3";
 
 package doodle.design.login;
 
+import "doodle/design/common/sdk.proto";
+
 option java_multiple_files = true;
 option java_package = "org.doodle.design.login";
 option java_outer_classname = "LoginProto";
@@ -29,6 +31,7 @@ enum LoginErrorCode {
 
 message LoginAccountInfo {
   string account_id = 1;
+  doodle.design.common.SdkBundleInfo.SdkType sdk_type = 2;
 }
 
 message LoginRoleInfo {
