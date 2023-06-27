@@ -26,8 +26,6 @@ import org.doodle.design.payment.model.info.PaymentOrderDeliverRouteInfo;
 @AllArgsConstructor
 @NoArgsConstructor
 public class EmbeddedPaymentOrderCreateRequest {
-  // 支付订单UID
-  String orderId;
   // 帐号UID
   String accountId;
   // 角色UID

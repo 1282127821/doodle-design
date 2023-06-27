@@ -15,7 +15,6 @@
  */
 package org.doodle.design.payment.model.payload.request;
 
-import com.fasterxml.jackson.annotation.JsonAlias;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.doodle.design.payment.model.info.PaymentOrderDeliverRouteInfo;
@@ -27,49 +26,24 @@ import org.doodle.design.payment.model.info.PaymentOrderDeliverRouteInfo;
 @AllArgsConstructor
 @NoArgsConstructor
 public class JgPaymentOrderCreateRequest {
-  // 订单UID
-  @JsonAlias("order_id")
-  String orderId;
-  // 公会名称
-  @JsonAlias("party_name")
-  String partyName;
-  // 单价
-  @JsonAlias("per_price")
-  int perPrice;
-  // 商品描述
-  @JsonAlias("product_desc")
-  String productDesc;
-  // 商品UID
-  @JsonAlias("product_id")
-  String productId;
-  // 商品名称
-  @JsonAlias("product_name")
-  String productName;
-
-  int ratio;
-
-  @JsonAlias("remain_coin_num")
-  int remainCoinNum;
+  // 帐号UID
+  String accountId;
   // 角色UID
-  @JsonAlias("role_id")
   String roleId;
-  // 角色等级
-  @JsonAlias("role_level")
-  int roleLevel;
   // 据色昵称
-  @JsonAlias("role_name")
   String roleName;
   // 区服UID
-  @JsonAlias("server_id")
   String serverId;
   // 区服名称
-  @JsonAlias("server_name")
   String serverName;
+  // 商品单价
+  int perPrice;
   // 总计价格
-  @JsonAlias("total_price")
   int totalPrice;
-
-  String vip;
+  // 商品UID
+  String productId;
+  // 商品名称
+  String productName;
   // 兑现路由
   PaymentOrderDeliverRouteInfo route;
 }
