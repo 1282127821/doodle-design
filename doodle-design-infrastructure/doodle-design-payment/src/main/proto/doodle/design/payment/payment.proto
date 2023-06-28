@@ -67,7 +67,7 @@ message JgPaymentOrderInfo {
   string extension = 2;
   string order_id = 3;
   string party_name = 4;
-  string per_price = 5;
+  int32 per_price = 5;
   string product_desc = 6;
   string product_id = 7;
   string product_name = 8;
