@@ -19,6 +19,7 @@
     <module>doodle-design-console</module>
     <module>doodle-design-excel</module>
     <module>doodle-design-gateway</module>
+    <module>doodle-design-kvstore</module>
     <module>doodle-design-login</module>
     <module>doodle-design-payment</module>
     <module>doodle-design-pipeline</module>
