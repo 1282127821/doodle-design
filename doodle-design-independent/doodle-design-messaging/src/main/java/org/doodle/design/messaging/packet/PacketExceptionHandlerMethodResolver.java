@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.messaging;
+package org.doodle.design.messaging.packet;
 
 import java.lang.reflect.Method;
 import java.util.*;

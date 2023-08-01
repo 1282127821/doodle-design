@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.messaging;
+package org.doodle.design.messaging.packet;
 
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageDeliveryException;

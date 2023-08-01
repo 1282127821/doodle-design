@@ -13,77 +13,50 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.messaging.reactive;
+package org.doodle.design.messaging.operation.reactive;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import lombok.Getter;
-import org.doodle.design.messaging.PacketAdviceBean;
-import org.doodle.design.messaging.PacketDeliveryException;
-import org.doodle.design.messaging.PacketExceptionHandlerMethodResolver;
-import org.doodle.design.messaging.PacketMapping;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.KotlinDetector;
 import org.springframework.core.annotation.AnnotatedElementUtils;
-import org.springframework.core.codec.Decoder;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.format.support.DefaultFormattingConversionService;
 import org.springframework.lang.Nullable;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.handler.CompositeMessageCondition;
 import org.springframework.messaging.handler.DestinationPatternsMessageCondition;
-import org.springframework.messaging.handler.HandlerMethod;
 import org.springframework.messaging.handler.annotation.reactive.*;
 import org.springframework.messaging.handler.invocation.AbstractExceptionHandlerMethodResolver;
 import org.springframework.messaging.handler.invocation.reactive.AbstractMethodMessageHandler;
 import org.springframework.messaging.handler.invocation.reactive.HandlerMethodArgumentResolver;
 import org.springframework.messaging.handler.invocation.reactive.HandlerMethodReturnValueHandler;
-import org.springframework.stereotype.Controller;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.Assert;
 import org.springframework.util.RouteMatcher;
 import org.springframework.util.SimpleRouteMatcher;
-import org.springframework.validation.Validator;
 import reactor.core.publisher.Mono;
 
-public class PacketMappingMessageHandler
+public abstract class OperationMessageHandler
     extends AbstractMethodMessageHandler<CompositeMessageCondition> {
 
-  private final List<Decoder<?>> decoders = new ArrayList<>();
+  private final List<Class<? extends Annotation>> annotations = new ArrayList<>();
 
-  @Nullable private Validator validator;
+  @Getter
+  private final Map<Class<? extends Annotation>, Set<Class<?>>> handlerMap = new HashMap<>();
 
   @Nullable private RouteMatcher routeMatcher;
 
   @Getter private ConversionService conversionService = new DefaultFormattingConversionService();
 
-  public PacketMappingMessageHandler() {
-    setHandlerPredicate(type -> AnnotatedElementUtils.hasAnnotation(type, Controller.class));
-  }
-
-  public void setDecoders(List<? extends Decoder<?>> decoders) {
-    this.decoders.clear();
-    this.decoders.addAll(decoders);
-  }
-
-  public List<? extends Decoder<?>> getDecoders() {
-    return this.decoders;
-  }
-
-  public void setValidator(@Nullable Validator validator) {
-    this.validator = validator;
-  }
-
-  @Nullable
-  public Validator getValidator() {
-    return this.validator;
+  public void setAnnotations(List<Class<? extends Annotation>> annotations) {
+    this.annotations.clear();
+    this.annotations.addAll(annotations);
   }
 
   public void setRouteMatcher(@Nullable RouteMatcher routeMatcher) {
@@ -103,20 +76,6 @@ public class PacketMappingMessageHandler
 
   public void setConversionService(ConversionService conversionService) {
     this.conversionService = conversionService;
-  }
-
-  public void registerMessagingAdvice(PacketAdviceBean bean) {
-    Class<?> type = bean.getBeanType();
-    if (type != null) {
-      PacketExceptionHandlerMethodResolver resolver =
-          new PacketExceptionHandlerMethodResolver(type);
-      if (resolver.hasExceptionMappings()) {
-        registerExceptionHandlerAdvice(bean, resolver);
-        if (logger.isTraceEnabled()) {
-          logger.trace("Detected @PacketExceptionHandler methods in " + bean);
-        }
-      }
-    }
   }
 
   @Override
@@ -148,10 +107,6 @@ public class PacketMappingMessageHandler
 
     resolvers.addAll(getArgumentResolverConfigurer().getCustomResolvers());
 
-    resolvers.add(
-        new PayloadMethodArgumentResolver(
-            getDecoders(), this.validator, getReactiveAdapterRegistry(), true));
-
     return resolvers;
   }
 
@@ -172,15 +127,37 @@ public class PacketMappingMessageHandler
     return methodCondition;
   }
 
+  protected abstract CompositeMessageCondition getOperationCondition(AnnotatedElement element);
+
+  public abstract Mono<Void> handleAnnotation(Class<? extends Annotation> aClass);
+
   @Nullable
   protected CompositeMessageCondition getCondition(AnnotatedElement element) {
-    PacketMapping ann = AnnotatedElementUtils.findMergedAnnotation(element, PacketMapping.class);
-    if (ann == null) {
-      return null;
+    CompositeMessageCondition operationCondition = getOperationCondition(element);
+    if (Objects.nonNull(operationCondition)) {
+      return operationCondition;
     }
-    return new CompositeMessageCondition(
-        new DestinationPatternsMessageCondition(
-            new String[] {String.valueOf(ann.value())}, obtainRouteMatcher()));
+
+    for (Class<? extends Annotation> annotation : this.annotations) {
+      CompositeMessageCondition condition = getCondition(element, annotation);
+      if (Objects.nonNull(condition)) {
+        return condition;
+      }
+    }
+
+    return null;
+  }
+
+  protected <A extends Annotation> CompositeMessageCondition getCondition(
+      AnnotatedElement element, Class<A> aClass) {
+    if (Objects.nonNull(AnnotatedElementUtils.findMergedAnnotation(element, aClass))) {
+      handlerMap
+          .computeIfAbsent(aClass, key -> new HashSet<>())
+          .add(((Method) element).getDeclaringClass());
+      return new CompositeMessageCondition(
+          new DestinationPatternsMessageCondition(aClass.getName()));
+    }
+    return null;
   }
 
   @Override
@@ -215,17 +192,6 @@ public class PacketMappingMessageHandler
   @Override
   protected AbstractExceptionHandlerMethodResolver createExceptionMethodResolverFor(
       Class<?> beanType) {
-    return new PacketExceptionHandlerMethodResolver(beanType);
-  }
-
-  @Override
-  protected Mono<Void> handleMatch(
-      CompositeMessageCondition mapping, HandlerMethod handlerMethod, Message<?> message) {
-    return super.handleMatch(mapping, handlerMethod, message);
-  }
-
-  @Override
-  protected void handleNoMatch(RouteMatcher.Route destination, Message<?> message) {
-    throw new PacketDeliveryException(message, "找不到对应路由目的地: {}" + destination);
+    return null;
   }
 }

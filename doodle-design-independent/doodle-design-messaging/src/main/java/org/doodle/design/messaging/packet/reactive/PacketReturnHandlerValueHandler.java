@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.messaging.reactive;
+package org.doodle.design.messaging.packet.reactive;
 
 import org.springframework.core.MethodParameter;
 import org.springframework.messaging.Message;
