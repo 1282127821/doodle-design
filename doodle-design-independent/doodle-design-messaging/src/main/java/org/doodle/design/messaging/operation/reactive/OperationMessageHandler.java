@@ -42,6 +42,11 @@ import org.springframework.util.RouteMatcher;
 import org.springframework.util.SimpleRouteMatcher;
 import reactor.core.publisher.Mono;
 
+/**
+ * 自定义注解操作行为处理器
+ *
+ * @author tingyanshen
+ */
 public abstract class OperationMessageHandler
     extends AbstractMethodMessageHandler<CompositeMessageCondition> {
 
@@ -86,6 +91,8 @@ public abstract class OperationMessageHandler
       pathMatcher.setPathSeparator(".");
       this.routeMatcher = new SimpleRouteMatcher(pathMatcher);
     }
+
+    getReturnValueHandlerConfigurer().addCustomHandler(new OperationReturnHandlerValueHandler());
 
     super.afterPropertiesSet();
   }
