@@ -36,10 +36,11 @@ import org.springframework.messaging.handler.invocation.AbstractExceptionHandler
 import org.springframework.messaging.handler.invocation.reactive.AbstractMethodMessageHandler;
 import org.springframework.messaging.handler.invocation.reactive.HandlerMethodArgumentResolver;
 import org.springframework.messaging.handler.invocation.reactive.HandlerMethodReturnValueHandler;
-import org.springframework.util.AntPathMatcher;
-import org.springframework.util.Assert;
-import org.springframework.util.RouteMatcher;
-import org.springframework.util.SimpleRouteMatcher;
+import org.springframework.messaging.support.MessageBuilder;
+import org.springframework.messaging.support.MessageHeaderAccessor;
+import org.springframework.messaging.support.MessageHeaderInitializer;
+import org.springframework.util.*;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 /**
@@ -50,18 +51,20 @@ import reactor.core.publisher.Mono;
 public abstract class OperationMessageHandler
     extends AbstractMethodMessageHandler<CompositeMessageCondition> {
 
-  private final List<Class<? extends Annotation>> annotations = new ArrayList<>();
+  private final Class<? extends Annotation> annotation;
+  private final List<Class<? extends Annotation>> annotations;
 
-  @Getter
-  private final Map<Class<? extends Annotation>, Set<Class<?>>> handlerMap = new HashMap<>();
+  private final Map<Class<? extends Annotation>, List<Class<?>>> handlerMap = new HashMap<>();
 
   @Nullable private RouteMatcher routeMatcher;
 
   @Getter private ConversionService conversionService = new DefaultFormattingConversionService();
 
-  public void setAnnotations(List<Class<? extends Annotation>> annotations) {
-    this.annotations.clear();
-    this.annotations.addAll(annotations);
+  public OperationMessageHandler(
+      Class<? extends Annotation> annotation, List<Class<? extends Annotation>> annotations) {
+    this.annotation = annotation;
+    this.annotations = Collections.unmodifiableList(annotations);
+    setHandlerPredicate(type -> AnnotatedElementUtils.hasAnnotation(type, annotation));
   }
 
   public void setRouteMatcher(@Nullable RouteMatcher routeMatcher) {
@@ -134,9 +137,56 @@ public abstract class OperationMessageHandler
     return methodCondition;
   }
 
-  protected abstract CompositeMessageCondition getOperationCondition(AnnotatedElement element);
+  protected CompositeMessageCondition getOperationCondition(AnnotatedElement element) {
+    if (Objects.nonNull(AnnotatedElementUtils.findMergedAnnotation(element, this.annotation))) {
+      return new CompositeMessageCondition(
+          new DestinationPatternsMessageCondition(((Class<?>) element).getName()));
+    }
+    return null;
+  }
 
-  public abstract Mono<Void> handleAnnotation(Class<? extends Annotation> aClass);
+  protected Mono<Void> handleAnnotation(Class<? extends Annotation> annotation) {
+    return handleAnnotation(annotation, null);
+  }
+
+  protected Mono<Void> handleAnnotation(
+      Class<? extends Annotation> annotation, List<Class<?>> handlers) {
+    return handleAnnotation(annotation, handlers, null);
+  }
+
+  protected Mono<Void> handleAnnotation(
+      Class<? extends Annotation> annotation,
+      List<Class<?>> handlers,
+      List<MessageHeaderInitializer> initializer) {
+    if (CollectionUtils.isEmpty(handlers)) {
+      handlers = handlerMap.get(annotation);
+    }
+
+    if (CollectionUtils.isEmpty(handlers)) {
+      return Mono.empty();
+    }
+    return Flux.fromIterable(handlers)
+        .map(handler -> createMessage(handler, annotation, initializer))
+        .flatMap(this::handleMessage)
+        .then();
+  }
+
+  static final byte[] EMPTY_PAYLOAD = new byte[0];
+
+  protected Message<?> createMessage(
+      Class<?> handler,
+      Class<? extends Annotation> annotation,
+      List<MessageHeaderInitializer> initializers) {
+    MessageHeaderAccessor header = new MessageHeaderAccessor();
+    header.setLeaveMutable(true);
+    if (!CollectionUtils.isEmpty(initializers)) {
+      initializers.forEach(initializer -> initializer.initHeaders(header));
+    }
+    header.setHeader(
+        DestinationPatternsMessageCondition.LOOKUP_DESTINATION_HEADER,
+        obtainRouteMatcher().parseRoute("/" + handler.getName() + "/" + annotation.getName()));
+    return MessageBuilder.createMessage(EMPTY_PAYLOAD, header.getMessageHeaders());
+  }
 
   @Nullable
   protected CompositeMessageCondition getCondition(AnnotatedElement element) {
@@ -159,7 +209,7 @@ public abstract class OperationMessageHandler
       AnnotatedElement element, Class<A> aClass) {
     if (Objects.nonNull(AnnotatedElementUtils.findMergedAnnotation(element, aClass))) {
       handlerMap
-          .computeIfAbsent(aClass, key -> new HashSet<>())
+          .computeIfAbsent(aClass, key -> new ArrayList<>())
           .add(((Method) element).getDeclaringClass());
       return new CompositeMessageCondition(
           new DestinationPatternsMessageCondition(aClass.getName()));
@@ -197,8 +247,6 @@ public abstract class OperationMessageHandler
   }
 
   @Override
-  protected AbstractExceptionHandlerMethodResolver createExceptionMethodResolverFor(
-      Class<?> beanType) {
-    return null;
-  }
+  protected abstract AbstractExceptionHandlerMethodResolver createExceptionMethodResolverFor(
+      Class<?> beanType);
 }
