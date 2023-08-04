@@ -38,14 +38,14 @@ public final class OperationRequester {
   @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
   public final class RequestSpec {
     Class<? extends Annotation> annotation;
-    List<Class<?>> handlers = new ArrayList<>();
+    List<Object> handlers = new ArrayList<>();
     List<MessageHeaderInitializer> headerInitializers = new ArrayList<>();
 
     RequestSpec(Class<? extends Annotation> annotation) {
       this.annotation = Objects.requireNonNull(annotation);
     }
 
-    public RequestSpec handlers(List<Class<?>> handlers) {
+    public RequestSpec handlers(List<Object> handlers) {
       if (!CollectionUtils.isEmpty(handlers)) {
         this.handlers.clear();
         this.handlers.addAll(handlers);

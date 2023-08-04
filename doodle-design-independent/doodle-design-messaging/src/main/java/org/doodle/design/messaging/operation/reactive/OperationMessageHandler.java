@@ -54,7 +54,7 @@ public abstract class OperationMessageHandler
   private final Class<? extends Annotation> annotation;
   private final List<Class<? extends Annotation>> annotations;
 
-  private final Map<Class<? extends Annotation>, List<Class<?>>> handlerMap = new HashMap<>();
+  private final Map<Class<? extends Annotation>, List<Object>> handlerMap = new HashMap<>();
 
   @Nullable private RouteMatcher routeMatcher;
 
@@ -150,13 +150,13 @@ public abstract class OperationMessageHandler
   }
 
   protected Mono<Void> handleAnnotation(
-      Class<? extends Annotation> annotation, List<Class<?>> handlers) {
+      Class<? extends Annotation> annotation, List<Object> handlers) {
     return handleAnnotation(annotation, handlers, null);
   }
 
   protected Mono<Void> handleAnnotation(
       Class<? extends Annotation> annotation,
-      List<Class<?>> handlers,
+      List<Object> handlers,
       List<MessageHeaderInitializer> initializer) {
     if (CollectionUtils.isEmpty(handlers)) {
       handlers = handlerMap.get(annotation);
@@ -166,7 +166,12 @@ public abstract class OperationMessageHandler
       return Mono.empty();
     }
     return Flux.fromIterable(handlers)
-        .map(handler -> createMessage(handler, annotation, initializer))
+        .map(
+            handler ->
+                createMessage(
+                    handler instanceof Class<?> ? (Class<?>) handler : handler.getClass(),
+                    annotation,
+                    initializer))
         .flatMap(this::handleMessage)
         .then();
   }
