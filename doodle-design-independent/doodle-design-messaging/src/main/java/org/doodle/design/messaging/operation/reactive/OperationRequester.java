@@ -15,8 +15,10 @@
  */
 package org.doodle.design.messaging.operation.reactive;
 
+import com.google.common.collect.Lists;
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import lombok.AccessLevel;
@@ -60,12 +62,13 @@ public final class OperationRequester {
       return this;
     }
 
-    public Mono<Void> natureOrder() {
+    public Mono<Void> naturalOrder() {
       return messageHandler.handleAnnotation(this.annotation, this.handlers, headerInitializers);
     }
 
-    public Mono<Void> reversedOrder() {
-      return messageHandler.handleAnnotation(this.annotation, this.handlers, headerInitializers);
+    public Mono<Void> reverseOrder() {
+      return messageHandler.handleAnnotation(
+          this.annotation, Lists.reverse(this.handlers), headerInitializers);
     }
   }
 }
