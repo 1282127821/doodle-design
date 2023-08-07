@@ -18,7 +18,6 @@ package org.doodle.design.messaging.operation.reactive;
 import com.google.common.collect.Lists;
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import lombok.AccessLevel;
