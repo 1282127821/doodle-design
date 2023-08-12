@@ -20,5 +20,28 @@
       <artifactId>lombok</artifactId>
       <scope>provided</scope>
     </dependency>
+    <dependency>
+      <groupId>org.doodle</groupId>
+      <artifactId>doodle-design-common</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.doodle</groupId>
+      <artifactId>doodle-design-messaging</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-messaging</artifactId>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>io.rsocket</groupId>
+      <artifactId>rsocket-core</artifactId>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>io.projectreactor.netty</groupId>
+      <artifactId>reactor-netty-core</artifactId>
+      <optional>true</optional>
+    </dependency>
   </dependencies>
 </project>
