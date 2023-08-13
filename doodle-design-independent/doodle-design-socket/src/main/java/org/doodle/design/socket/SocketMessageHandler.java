@@ -15,10 +15,8 @@
  */
 package org.doodle.design.socket;
 
-import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.doodle.design.messaging.packet.reactive.PacketMappingMessageHandler;
-import org.springframework.core.codec.StringDecoder;
 
 @Slf4j
 public class SocketMessageHandler extends PacketMappingMessageHandler {
@@ -41,11 +39,5 @@ public class SocketMessageHandler extends PacketMappingMessageHandler {
                     log.info(
                         "连接关闭: ID: {}",
                         socketConnection.connection().channel().id().asShortText()));
-  }
-
-  @Override
-  public void afterPropertiesSet() {
-    setDecoders(List.of(StringDecoder.allMimeTypes()));
-    super.afterPropertiesSet();
   }
 }
