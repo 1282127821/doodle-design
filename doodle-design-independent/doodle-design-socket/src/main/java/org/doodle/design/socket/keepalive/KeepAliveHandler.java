@@ -13,16 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.socket;
+package org.doodle.design.socket.keepalive;
 
-import java.util.function.BiFunction;
-import org.reactivestreams.Publisher;
-import reactor.core.publisher.Mono;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
+import org.doodle.design.socket.SocketConnection;
 
-@FunctionalInterface
-public interface SocketServerAcceptor
-    extends BiFunction<SocketConnectionSetupPayload, SocketConnection, Publisher<Void>> {
-
-  @Override
-  Mono<Void> apply(SocketConnectionSetupPayload setupPayload, SocketConnection socketConnection);
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@RequiredArgsConstructor
+public final class KeepAliveHandler {
+  SocketConnection connection;
 }

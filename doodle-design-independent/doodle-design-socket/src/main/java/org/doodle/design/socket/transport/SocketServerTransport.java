@@ -13,16 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.socket;
+package org.doodle.design.socket.transport;
 
-import java.util.function.BiFunction;
-import org.reactivestreams.Publisher;
+import io.rsocket.Closeable;
+import io.rsocket.transport.Transport;
+import org.doodle.design.socket.SocketConnectionAcceptor;
 import reactor.core.publisher.Mono;
 
 @FunctionalInterface
-public interface SocketServerAcceptor
-    extends BiFunction<SocketConnectionSetupPayload, SocketConnection, Publisher<Void>> {
+public interface SocketServerTransport<T extends Closeable> extends Transport {
 
-  @Override
-  Mono<Void> apply(SocketConnectionSetupPayload setupPayload, SocketConnection socketConnection);
+  Mono<T> start(SocketConnectionAcceptor connectionAcceptor);
 }

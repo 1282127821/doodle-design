@@ -15,14 +15,12 @@
  */
 package org.doodle.design.socket;
 
-import java.util.function.BiFunction;
+import java.util.function.Function;
 import org.reactivestreams.Publisher;
 import reactor.core.publisher.Mono;
 
 @FunctionalInterface
-public interface SocketServerAcceptor
-    extends BiFunction<SocketConnectionSetupPayload, SocketConnection, Publisher<Void>> {
-
+public interface SocketConnectionAcceptor extends Function<SocketConnection, Publisher<Void>> {
   @Override
-  Mono<Void> apply(SocketConnectionSetupPayload setupPayload, SocketConnection socketConnection);
+  Mono<Void> apply(SocketConnection socketConnection);
 }

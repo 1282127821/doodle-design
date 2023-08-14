@@ -15,14 +15,19 @@
  */
 package org.doodle.design.socket;
 
-import java.util.function.BiFunction;
-import org.reactivestreams.Publisher;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
+import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Mono;
 
-@FunctionalInterface
-public interface SocketServerAcceptor
-    extends BiFunction<SocketConnectionSetupPayload, SocketConnection, Publisher<Void>> {
+@Slf4j
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@RequiredArgsConstructor
+public final class MessagingSocket {
+  SocketMessageHandler messageHandler;
 
-  @Override
-  Mono<Void> apply(SocketConnectionSetupPayload setupPayload, SocketConnection socketConnection);
+  public Mono<Void> handleConnectionSetupPayload(SocketConnectionSetupPayload setupPayload) {
+    return Mono.never();
+  }
 }

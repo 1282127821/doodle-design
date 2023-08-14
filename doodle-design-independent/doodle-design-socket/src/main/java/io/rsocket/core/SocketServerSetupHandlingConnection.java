@@ -13,16 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.socket;
+package io.rsocket.core;
 
-import java.util.function.BiFunction;
-import org.reactivestreams.Publisher;
-import reactor.core.publisher.Mono;
+import io.netty.buffer.ByteBuf;
+import io.rsocket.DuplexConnection;
+import org.doodle.design.socket.SocketConnection;
+import reactor.core.publisher.MonoSink;
+import reactor.util.function.Tuple2;
 
-@FunctionalInterface
-public interface SocketServerAcceptor
-    extends BiFunction<SocketConnectionSetupPayload, SocketConnection, Publisher<Void>> {
+public class SocketServerSetupHandlingConnection extends SetupHandlingDuplexConnection {
 
-  @Override
-  Mono<Void> apply(SocketConnectionSetupPayload setupPayload, SocketConnection socketConnection);
+  public SocketServerSetupHandlingConnection(
+      SocketConnection source, MonoSink<Tuple2<ByteBuf, DuplexConnection>> sink) {
+    super(source, sink);
+  }
 }

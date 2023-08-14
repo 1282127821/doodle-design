@@ -22,7 +22,7 @@ import org.doodle.design.messaging.packet.reactive.PacketMappingMessageHandler;
 public class SocketMessageHandler extends PacketMappingMessageHandler {
 
   public SocketServerAcceptor serverAcceptor() {
-    return socketConnection ->
+    return (setupPayload, socketConnection) ->
         socketConnection
             .onClose()
             .doFirst(
