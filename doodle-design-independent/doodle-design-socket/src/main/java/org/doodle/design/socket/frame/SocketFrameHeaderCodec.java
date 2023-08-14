@@ -24,9 +24,9 @@ import lombok.experimental.UtilityClass;
 public final class SocketFrameHeaderCodec {
 
   /** (M)etadata flag: 标识是否包含元数据 */
-  public static final int FLAGS_M = 0b10_0000;
+  public static final int FLAGS_M = 0b0000_1000;
 
-  private static final int FRAME_TYPE_BITS = 2;
+  private static final int FRAME_TYPE_BITS = 4;
   private static final int FRAME_TYPE_SHIFT = Byte.SIZE - FRAME_TYPE_BITS;
 
   public static ByteBuf encode(ByteBufAllocator allocator, SocketFrameType frameType, int flags) {

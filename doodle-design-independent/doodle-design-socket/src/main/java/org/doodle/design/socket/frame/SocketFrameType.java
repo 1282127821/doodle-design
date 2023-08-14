@@ -22,8 +22,10 @@ import lombok.experimental.FieldDefaults;
 @Getter
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public enum SocketFrameType {
+  RESERVED(0x00),
   SETUP(0x01),
-  KEEP_ALIVE(0x02);
+  KEEP_ALIVE(0x02),
+  REQUEST_REPLY(0x03);
 
   private static final SocketFrameType[] FRAME_TYPES_BY_ENCODED_TYPE;
 
