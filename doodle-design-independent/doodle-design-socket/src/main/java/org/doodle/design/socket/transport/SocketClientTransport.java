@@ -13,16 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.socket;
+package org.doodle.design.socket.transport;
 
-import lombok.extern.slf4j.Slf4j;
-import org.doodle.design.messaging.packet.reactive.PacketMappingMessageHandler;
+import io.rsocket.transport.Transport;
+import org.doodle.design.socket.SocketConnection;
 import reactor.core.publisher.Mono;
 
-@Slf4j
-public class SocketMessageHandler extends PacketMappingMessageHandler {
-
-  public SocketAcceptor serverAcceptor() {
-    return (setupPayload, sendingSocket) -> Mono.just(new Socket() {});
-  }
+public interface SocketClientTransport extends Transport {
+  Mono<SocketConnection> connect();
 }

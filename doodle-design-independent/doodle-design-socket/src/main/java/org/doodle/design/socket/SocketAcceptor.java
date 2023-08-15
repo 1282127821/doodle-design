@@ -20,9 +20,9 @@ import org.reactivestreams.Publisher;
 import reactor.core.publisher.Mono;
 
 @FunctionalInterface
-public interface SocketServerAcceptor
-    extends BiFunction<SocketConnectionSetupPayload, SocketConnection, Publisher<Void>> {
+public interface SocketAcceptor
+    extends BiFunction<SocketConnectionSetupPayload, Socket, Publisher<Socket>> {
 
   @Override
-  Mono<Void> apply(SocketConnectionSetupPayload setupPayload, SocketConnection socketConnection);
+  Mono<Socket> apply(SocketConnectionSetupPayload setupPayload, Socket sendingSocket);
 }

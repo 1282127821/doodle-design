@@ -15,14 +15,16 @@
  */
 package org.doodle.design.socket;
 
-import lombok.extern.slf4j.Slf4j;
-import org.doodle.design.messaging.packet.reactive.PacketMappingMessageHandler;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 import reactor.core.publisher.Mono;
+import reactor.util.function.Tuple2;
+import reactor.util.function.Tuples;
 
-@Slf4j
-public class SocketMessageHandler extends PacketMappingMessageHandler {
+public class SocketClientSetup {
 
-  public SocketAcceptor serverAcceptor() {
-    return (setupPayload, sendingSocket) -> Mono.just(new Socket() {});
+  public Mono<Tuple2<ByteBuf, SocketConnection>> init(SocketConnection connection) {
+    return Mono.create(
+        sink -> sink.onRequest(__ -> sink.success(Tuples.of(Unpooled.EMPTY_BUFFER, connection))));
   }
 }

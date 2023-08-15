@@ -15,14 +15,26 @@
  */
 package org.doodle.design.socket;
 
-import lombok.extern.slf4j.Slf4j;
-import org.doodle.design.messaging.packet.reactive.PacketMappingMessageHandler;
+import io.rsocket.Closeable;
+import io.rsocket.Payload;
 import reactor.core.publisher.Mono;
 
-@Slf4j
-public class SocketMessageHandler extends PacketMappingMessageHandler {
+public interface Socket extends Closeable {
 
-  public SocketAcceptor serverAcceptor() {
-    return (setupPayload, sendingSocket) -> Mono.just(new Socket() {});
+  default Mono<Void> oneway(Payload payload) {
+    return SocketAdapter.oneway(payload);
+  }
+
+  @Override
+  default void dispose() {}
+
+  @Override
+  default boolean isDisposed() {
+    return false;
+  }
+
+  @Override
+  default Mono<Void> onClose() {
+    return Mono.never();
   }
 }

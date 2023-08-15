@@ -15,14 +15,23 @@
  */
 package org.doodle.design.socket;
 
-import lombok.extern.slf4j.Slf4j;
-import org.doodle.design.messaging.packet.reactive.PacketMappingMessageHandler;
+import io.rsocket.Payload;
 import reactor.core.publisher.Mono;
 
-@Slf4j
-public class SocketMessageHandler extends PacketMappingMessageHandler {
+public class SocketAdapter {
 
-  public SocketAcceptor serverAcceptor() {
-    return (setupPayload, sendingSocket) -> Mono.just(new Socket() {});
+  private static final Mono<Void> UNSUPPORTED_FIRE_AND_FORGET =
+      Mono.error(new UnsupportedInteractionException("Fire-and-Forget"));
+
+  static Mono<Void> oneway(Payload payload) {
+    payload.release();
+    return SocketAdapter.UNSUPPORTED_FIRE_AND_FORGET;
+  }
+
+  private static class UnsupportedInteractionException extends RuntimeException {
+
+    UnsupportedInteractionException(String interactionName) {
+      super(interactionName + "未实现", null, false, false);
+    }
   }
 }

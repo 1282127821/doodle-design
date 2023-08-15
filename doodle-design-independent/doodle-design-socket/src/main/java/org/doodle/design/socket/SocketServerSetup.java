@@ -43,8 +43,6 @@ public final class SocketServerSetup {
       ByteBuf startFrame,
       SocketConnection connection,
       BiFunction<SocketKeepAliveHandler, SocketConnection, Mono<Void>> then) {
-    SocketConnectionSetupPayload setupPayload =
-        new SocketConnectionSetupPayload(startFrame.retain());
     return then.apply(new SocketKeepAliveHandler(connection), connection);
   }
 
