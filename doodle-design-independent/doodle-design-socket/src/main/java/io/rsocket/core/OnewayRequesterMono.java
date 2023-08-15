@@ -64,8 +64,7 @@ public final class OnewayRequesterMono extends Mono<Void> implements Subscriptio
   public void subscribe(CoreSubscriber<? super Void> actual) {
     long previousState = markSubscribed(STATE, this);
     if (isSubscribedOrTerminated(previousState)) {
-      final IllegalStateException e =
-          new IllegalStateException("FireAndForgetMono allows only a single Subscriber");
+      final IllegalStateException e = new IllegalStateException("OnewayRequesterMono 只允许单订阅");
       Operators.error(actual, e);
       return;
     }
@@ -128,7 +127,7 @@ public final class OnewayRequesterMono extends Mono<Void> implements Subscriptio
   public Void block() {
     long previousState = markSubscribed(STATE, this);
     if (isSubscribedOrTerminated(previousState)) {
-      throw new IllegalStateException("FireAndForgetMono allows only a single Subscriber");
+      throw new IllegalStateException("OnewayRequesterMono 只允许单订阅");
     }
 
     final Payload p = this.payload;

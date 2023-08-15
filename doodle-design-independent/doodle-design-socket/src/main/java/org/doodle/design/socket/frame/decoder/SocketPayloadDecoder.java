@@ -19,7 +19,7 @@ import io.netty.buffer.ByteBuf;
 import io.rsocket.Payload;
 import io.rsocket.frame.decoder.PayloadDecoder;
 
-public class DefaultPayloadDecoder implements PayloadDecoder {
+public class SocketPayloadDecoder implements PayloadDecoder {
 
   @Override
   public Payload apply(ByteBuf byteBuf) {

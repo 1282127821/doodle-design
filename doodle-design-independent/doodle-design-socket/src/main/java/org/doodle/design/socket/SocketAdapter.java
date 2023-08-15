@@ -20,12 +20,12 @@ import reactor.core.publisher.Mono;
 
 public class SocketAdapter {
 
-  private static final Mono<Void> UNSUPPORTED_FIRE_AND_FORGET =
-      Mono.error(new UnsupportedInteractionException("Fire-and-Forget"));
+  private static final Mono<Void> UNSUPPORTED_ONEWAY =
+      Mono.error(new UnsupportedInteractionException("ONEWAY"));
 
   static Mono<Void> oneway(Payload payload) {
     payload.release();
-    return SocketAdapter.UNSUPPORTED_FIRE_AND_FORGET;
+    return SocketAdapter.UNSUPPORTED_ONEWAY;
   }
 
   private static class UnsupportedInteractionException extends RuntimeException {
