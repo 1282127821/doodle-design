@@ -15,13 +15,9 @@
  */
 package org.doodle.design.socket.keepalive;
 
-import lombok.AccessLevel;
-import lombok.RequiredArgsConstructor;
-import lombok.experimental.FieldDefaults;
-import org.doodle.design.socket.SocketConnection;
+import io.netty.buffer.ByteBuf;
+import reactor.core.Disposable;
 
-@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-@RequiredArgsConstructor
-public final class KeepAliveHandler {
-  SocketConnection connection;
+public interface SocketKeepAliveFrameAcceptor extends Disposable {
+  void receive(ByteBuf keepAliveFrame);
 }

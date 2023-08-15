@@ -74,7 +74,9 @@ public final class SocketServer {
 
           @Override
           public Mono<T> get() {
-            return transport.start(socketConnection -> acceptor(serverSetup, socketConnection));
+            return transport
+                .start(socketConnection -> acceptor(serverSetup, socketConnection))
+                .doOnNext(c -> c.onClose().doFinally(v -> serverSetup.dispose()).subscribe());
           }
         });
   }

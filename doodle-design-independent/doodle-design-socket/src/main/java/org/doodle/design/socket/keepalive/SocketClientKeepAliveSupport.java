@@ -13,25 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.socket.frame;
+package org.doodle.design.socket.keepalive;
 
-import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
-import io.rsocket.frame.SocketFrameBodyCodec;
-import lombok.experimental.UtilityClass;
+import io.netty.buffer.Unpooled;
+import org.doodle.design.socket.frame.SocketKeepAliveFrameCodec;
 
-@UtilityClass
-public final class SocketKeepAliveFrameCodec {
+public class SocketClientKeepAliveSupport extends SocketKeepAliveSupport {
 
-  public static ByteBuf encode(ByteBufAllocator allocator, ByteBuf data) {
-    ByteBuf header = SocketFrameHeaderCodec.encode(allocator, SocketFrameType.KEEP_ALIVE, 0);
-    return SocketFrameBodyCodec.encode(allocator, header, null, false, data);
+  public SocketClientKeepAliveSupport(
+      ByteBufAllocator allocator, int keepAliveInterval, int keepAliveTimeout) {
+    super(allocator, keepAliveInterval, keepAliveTimeout);
   }
 
-  public static ByteBuf data(ByteBuf byteBuf) {
-    byteBuf.markReaderIndex();
-    ByteBuf slice = byteBuf.skipBytes(4).slice();
-    byteBuf.resetReaderIndex();
-    return slice;
+  @Override
+  void onIntervalTick() {
+    tryTimeout();
+    send(SocketKeepAliveFrameCodec.encode(allocator, Unpooled.EMPTY_BUFFER));
   }
 }

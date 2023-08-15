@@ -21,7 +21,7 @@ import io.rsocket.core.SocketServerSetupHandlingConnection;
 import java.nio.channels.ClosedChannelException;
 import java.time.Duration;
 import java.util.function.BiFunction;
-import org.doodle.design.socket.keepalive.KeepAliveHandler;
+import org.doodle.design.socket.keepalive.SocketKeepAliveHandler;
 import reactor.core.publisher.Mono;
 import reactor.util.function.Tuple2;
 
@@ -42,9 +42,11 @@ public final class SocketServerSetup {
   public Mono<Void> acceptSetup(
       ByteBuf startFrame,
       SocketConnection connection,
-      BiFunction<KeepAliveHandler, SocketConnection, Mono<Void>> then) {
+      BiFunction<SocketKeepAliveHandler, SocketConnection, Mono<Void>> then) {
     SocketConnectionSetupPayload setupPayload =
         new SocketConnectionSetupPayload(startFrame.retain());
-    return then.apply(new KeepAliveHandler(connection), connection);
+    return then.apply(new SocketKeepAliveHandler(connection), connection);
   }
+
+  void dispose() {}
 }
