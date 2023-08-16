@@ -16,11 +16,28 @@
 package io.rsocket.frame;
 
 import io.netty.buffer.ByteBuf;
+import io.netty.buffer.ByteBufAllocator;
 import lombok.experimental.UtilityClass;
 import reactor.util.annotation.Nullable;
 
 @UtilityClass
 public final class SocketGenericFrameCodec {
+
+  static ByteBuf encode(
+      final ByteBufAllocator allocator,
+      final SocketFrameType frameType,
+      @Nullable ByteBuf metadata,
+      ByteBuf data) {
+    final boolean hasMetadata = metadata != null;
+    int flags = 0;
+
+    if (hasMetadata) {
+      flags |= SocketFrameHeaderCodec.FLAGS_M;
+    }
+
+    final ByteBuf header = SocketFrameHeaderCodec.encode(allocator, frameType, flags);
+    return FrameBodyCodec.encode(allocator, header, metadata, hasMetadata, data);
+  }
 
   public static ByteBuf data(ByteBuf byteBuf) {
     boolean hasMetadata = SocketFrameHeaderCodec.hasMetadata(byteBuf);

@@ -52,7 +52,7 @@ public class SocketRequester extends SocketRequesterResponderSupport implements 
         .onClose()
         .subscribe(null, this::tryTerminateOnConnectionError, this::tryShutdown);
 
-    socketConnection.receive().subscribe(this::handleIncomingFrames, e -> {});
+    //    socketConnection.receive().subscribe(this::handleIncomingFrames, e -> {});
 
     if (keepAliveTickPeriod != 0 && keepAliveHandler != null) {
       SocketKeepAliveSupport keepAliveSupport =

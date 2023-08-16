@@ -15,8 +15,10 @@
  */
 package org.doodle.design.socket;
 
+import io.rsocket.Payload;
 import io.rsocket.Socket;
 import io.rsocket.SocketAcceptor;
+import io.rsocket.util.DefaultPayload;
 import lombok.extern.slf4j.Slf4j;
 import org.doodle.design.messaging.packet.reactive.PacketMappingMessageHandler;
 import reactor.core.publisher.Mono;
@@ -25,6 +27,21 @@ import reactor.core.publisher.Mono;
 public class SocketMessageHandler extends PacketMappingMessageHandler {
 
   public SocketAcceptor serverAcceptor() {
-    return (setupPayload, sendingSocket) -> Mono.just(new Socket() {});
+    return (setupPayload, sendingSocket) -> {
+      sendingSocket
+          .oneway(DefaultPayload.create("hi"))
+          .doOnNext(p -> log.info("给客户端发送 hi 消息"))
+          .subscribe();
+      return Mono.just(
+          new Socket() {
+
+            @Override
+            public Mono<Void> oneway(Payload payload) {
+              log.info(
+                  "收到来自客户端的消息: {}", DefaultPayload.create(payload.data().retain()).getDataUtf8());
+              return Mono.never();
+            }
+          });
+    };
   }
 }

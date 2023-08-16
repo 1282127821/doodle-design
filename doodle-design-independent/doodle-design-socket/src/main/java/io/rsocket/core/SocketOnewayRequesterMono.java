@@ -19,11 +19,12 @@ import static io.rsocket.core.PayloadValidationUtils.INVALID_PAYLOAD_ERROR_MESSA
 import static io.rsocket.core.PayloadValidationUtils.isValid;
 import static io.rsocket.core.StateUtils.*;
 
+import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
 import io.netty.util.IllegalReferenceCountException;
 import io.rsocket.Payload;
 import io.rsocket.SocketConnection;
-import io.rsocket.frame.SocketFrameType;
+import io.rsocket.frame.SocketOnewayFrameCodec;
 import java.time.Duration;
 import java.util.concurrent.atomic.AtomicLongFieldUpdater;
 import org.reactivestreams.Subscription;
@@ -94,7 +95,7 @@ public final class SocketOnewayRequesterMono extends Mono<Void> implements Subsc
         return;
       }
 
-      sendReleasingPayload(SocketFrameType.ONEWAY, mtu, p, this.connection, this.allocator, true);
+      sendReleasingPayload(p, this.connection, this.allocator, true);
     } catch (Throwable e) {
       lazyTerminate(STATE, this);
       actual.onError(e);
@@ -145,8 +146,7 @@ public final class SocketOnewayRequesterMono extends Mono<Void> implements Subsc
     }
 
     try {
-      sendReleasingPayload(
-          SocketFrameType.ONEWAY, this.mtu, this.payload, this.connection, this.allocator, true);
+      sendReleasingPayload(this.payload, this.connection, this.allocator, true);
     } catch (Throwable e) {
       lazyTerminate(STATE, this);
       throw Exceptions.propagate(e);
@@ -162,10 +162,15 @@ public final class SocketOnewayRequesterMono extends Mono<Void> implements Subsc
   }
 
   static void sendReleasingPayload(
-      SocketFrameType frameType,
-      int mtu,
-      Payload payload,
-      SocketConnection connection,
-      ByteBufAllocator allocator,
-      boolean requester) {}
+      Payload payload, SocketConnection connection, ByteBufAllocator allocator, boolean requester) {
+    final boolean hasMetadata = payload.hasMetadata();
+    final ByteBuf metadata = hasMetadata ? payload.metadata() : null;
+    final ByteBuf data = payload.data();
+    final ByteBuf dataRetainedSlice = data.retainedSlice();
+    final ByteBuf metadataRetainedSlice = hasMetadata ? metadata.retainedSlice() : null;
+    payload.release();
+    ByteBuf onewayFrame =
+        SocketOnewayFrameCodec.encode(allocator, metadataRetainedSlice, dataRetainedSlice);
+    connection.sendFrame(0, onewayFrame);
+  }
 }

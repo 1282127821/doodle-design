@@ -64,7 +64,7 @@ public abstract class SocketKeepAliveSupport implements SocketKeepAliveFrameAcce
   }
 
   public SocketKeepAliveSupport start() {
-    if (this.state == STOPPED_STATE && STATE.compareAndSet(this, STOPPED_STATE, STARTED_STATE)) {
+    if (this.state == STOPPED_STATE && STATE.compareAndSet(this, STOPPED_STATE, STARTING_STATE)) {
       this.lastReceivedMillis = scheduler.now(TimeUnit.MICROSECONDS);
     }
 

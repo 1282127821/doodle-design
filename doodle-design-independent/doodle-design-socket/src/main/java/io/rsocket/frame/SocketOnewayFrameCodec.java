@@ -16,11 +16,17 @@
 package io.rsocket.frame;
 
 import io.netty.buffer.ByteBuf;
+import io.netty.buffer.ByteBufAllocator;
 import lombok.experimental.UtilityClass;
 import reactor.util.annotation.Nullable;
 
 @UtilityClass
 public final class SocketOnewayFrameCodec {
+
+  public static ByteBuf encode(
+      ByteBufAllocator allocator, @Nullable ByteBuf metadata, ByteBuf data) {
+    return SocketGenericFrameCodec.encode(allocator, SocketFrameType.ONEWAY, metadata, data);
+  }
 
   public static ByteBuf data(ByteBuf byteBuf) {
     return SocketGenericFrameCodec.data(byteBuf);
