@@ -27,6 +27,7 @@ public final class SocketSetupFrameCodec {
   public static final int KEEP_ALIVE_INTERVAL_OFFSET = Byte.BYTES;
   public static final int KEEP_ALIVE_MAX_LIFETIME_OFFSET =
       KEEP_ALIVE_INTERVAL_OFFSET + Integer.BYTES;
+  public static final int VARIABLE_DATA_OFFSET = KEEP_ALIVE_MAX_LIFETIME_OFFSET + Integer.BYTES;
 
   public static ByteBuf encode(
       ByteBufAllocator allocator,
@@ -66,6 +67,7 @@ public final class SocketSetupFrameCodec {
   public static ByteBuf data(ByteBuf byteBuf) {
     boolean hasMetadata = SocketFrameHeaderCodec.hasMetadata(byteBuf);
     byteBuf.markReaderIndex();
+    byteBuf.skipBytes(VARIABLE_DATA_OFFSET);
     ByteBuf data = FrameBodyCodec.dataWithoutMarking(byteBuf, hasMetadata);
     byteBuf.resetReaderIndex();
     return data;
@@ -78,6 +80,7 @@ public final class SocketSetupFrameCodec {
       return null;
     }
     byteBuf.markReaderIndex();
+    byteBuf.skipBytes(VARIABLE_DATA_OFFSET);
     ByteBuf metadata = FrameBodyCodec.metadataWithoutMarking(byteBuf);
     byteBuf.resetReaderIndex();
     return metadata;
