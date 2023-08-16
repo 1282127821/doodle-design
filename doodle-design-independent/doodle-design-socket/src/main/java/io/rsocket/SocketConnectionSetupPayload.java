@@ -17,7 +17,6 @@ package io.rsocket;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
-import io.rsocket.frame.SocketFrameCodec;
 import io.rsocket.frame.SocketFrameHeaderCodec;
 import io.rsocket.frame.SocketSetupFrameCodec;
 import lombok.AccessLevel;
@@ -93,7 +92,7 @@ public class SocketConnectionSetupPayload extends ConnectionSetupPayload {
 
   @Override
   public ByteBuf sliceData() {
-    return SocketFrameCodec.data(setupFrame);
+    return SocketSetupFrameCodec.data(setupFrame);
   }
 
   @Override

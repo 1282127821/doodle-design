@@ -13,18 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.rsocket.frame;
+package io.rsocket.frame.decoder;
 
-import io.netty.buffer.ByteBuf;
-import lombok.experimental.UtilityClass;
-
-@UtilityClass
-public final class SocketFrameCodec {
-
-  public static ByteBuf data(ByteBuf byteBuf) {
-    boolean hasMetadata = SocketFrameHeaderCodec.hasMetadata(byteBuf);
-    byteBuf.markReaderIndex();
-    byteBuf.resetReaderIndex();
-    return null;
-  }
+public interface SocketPayloadDecoder extends PayloadDecoder {
+  SocketPayloadDecoder ZERO_COPY = new ZeroCopySocketPayloadDecoder();
 }

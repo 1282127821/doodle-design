@@ -17,6 +17,7 @@ package io.rsocket.frame;
 
 import io.netty.buffer.ByteBuf;
 import lombok.experimental.UtilityClass;
+import reactor.util.annotation.Nullable;
 
 @UtilityClass
 public final class SocketOnewayFrameCodec {
@@ -25,6 +26,7 @@ public final class SocketOnewayFrameCodec {
     return SocketGenericFrameCodec.data(byteBuf);
   }
 
+  @Nullable
   public static ByteBuf metadata(ByteBuf byteBuf) {
     return SocketGenericFrameCodec.metadata(byteBuf);
   }

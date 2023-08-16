@@ -24,12 +24,12 @@ public final class SocketKeepAliveFrameCodec {
 
   public static ByteBuf encode(ByteBufAllocator allocator, ByteBuf data) {
     ByteBuf header = SocketFrameHeaderCodec.encode(allocator, SocketFrameType.KEEP_ALIVE, 0);
-    return SocketFrameBodyCodec.encode(allocator, header, null, false, data);
+    return FrameBodyCodec.encode(allocator, header, null, false, data);
   }
 
   public static ByteBuf data(ByteBuf byteBuf) {
     byteBuf.markReaderIndex();
-    ByteBuf slice = byteBuf.skipBytes(4).slice();
+    ByteBuf slice = byteBuf.skipBytes(SocketFrameHeaderCodec.FRAME_HEADER_SIZE).slice();
     byteBuf.resetReaderIndex();
     return slice;
   }

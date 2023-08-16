@@ -13,10 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.rsocket.frame;
+package io.rsocket.frame.decoder;
 
 import io.netty.buffer.ByteBuf;
 import io.rsocket.Payload;
+import io.rsocket.frame.SocketFrameHeaderCodec;
+import io.rsocket.frame.SocketFrameType;
+import io.rsocket.frame.SocketOnewayFrameCodec;
 import io.rsocket.util.ByteBufPayload;
 
 public class ZeroCopySocketPayloadDecoder implements SocketPayloadDecoder {

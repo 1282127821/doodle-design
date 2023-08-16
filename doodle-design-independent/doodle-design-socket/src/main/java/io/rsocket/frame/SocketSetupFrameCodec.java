@@ -19,6 +19,7 @@ import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
 import io.rsocket.Payload;
 import lombok.experimental.UtilityClass;
+import reactor.util.annotation.Nullable;
 
 @UtilityClass
 public final class SocketSetupFrameCodec {
@@ -45,7 +46,7 @@ public final class SocketSetupFrameCodec {
     ByteBuf header = SocketFrameHeaderCodec.encode(allocator, SocketFrameType.SETUP, flags);
     header.writeInt(keepAliveInterval).writeInt(keepAliveMaxLifeTime);
 
-    return SocketFrameBodyCodec.encode(allocator, header, metadata, hasMetadata, data);
+    return FrameBodyCodec.encode(allocator, header, metadata, hasMetadata, data);
   }
 
   public static int keepAliveInterval(ByteBuf byteBuf) {
@@ -62,14 +63,23 @@ public final class SocketSetupFrameCodec {
     return keepAliveMaxLifetime;
   }
 
+  public static ByteBuf data(ByteBuf byteBuf) {
+    boolean hasMetadata = SocketFrameHeaderCodec.hasMetadata(byteBuf);
+    byteBuf.markReaderIndex();
+    ByteBuf data = FrameBodyCodec.dataWithoutMarking(byteBuf, hasMetadata);
+    byteBuf.resetReaderIndex();
+    return data;
+  }
+
+  @Nullable
   public static ByteBuf metadata(ByteBuf byteBuf) {
     boolean hasMetadata = SocketFrameHeaderCodec.hasMetadata(byteBuf);
     if (!hasMetadata) {
       return null;
     }
     byteBuf.markReaderIndex();
-    // TODO: 2023/8/16 读取 metadata
+    ByteBuf metadata = FrameBodyCodec.metadataWithoutMarking(byteBuf);
     byteBuf.resetReaderIndex();
-    return null;
+    return metadata;
   }
 }

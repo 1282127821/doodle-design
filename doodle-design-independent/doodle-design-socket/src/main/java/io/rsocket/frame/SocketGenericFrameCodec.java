@@ -17,6 +17,7 @@ package io.rsocket.frame;
 
 import io.netty.buffer.ByteBuf;
 import lombok.experimental.UtilityClass;
+import reactor.util.annotation.Nullable;
 
 @UtilityClass
 public final class SocketGenericFrameCodec {
@@ -25,18 +26,19 @@ public final class SocketGenericFrameCodec {
     boolean hasMetadata = SocketFrameHeaderCodec.hasMetadata(byteBuf);
     byteBuf.markReaderIndex();
     byteBuf.skipBytes(SocketFrameHeaderCodec.FRAME_HEADER_SIZE);
-    ByteBuf data = SocketFrameBodyCodec.dataWithoutMarking(byteBuf, hasMetadata);
+    ByteBuf data = FrameBodyCodec.dataWithoutMarking(byteBuf, hasMetadata);
     byteBuf.resetReaderIndex();
     return data;
   }
 
+  @Nullable
   public static ByteBuf metadata(ByteBuf byteBuf) {
     boolean hasMetadata = SocketFrameHeaderCodec.hasMetadata(byteBuf);
     if (!hasMetadata) {
       return null;
     }
     byteBuf.markReaderIndex();
-    ByteBuf metadata = SocketFrameBodyCodec.metadataWithoutMarking(byteBuf);
+    ByteBuf metadata = FrameBodyCodec.metadataWithoutMarking(byteBuf);
     byteBuf.resetReaderIndex();
     return metadata;
   }
