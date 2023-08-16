@@ -60,7 +60,11 @@ public class SocketConnector {
                         SocketClientSetup clientSetup = new SocketClientSetup();
 
                         ByteBuf setupFrame =
-                            SocketSetupFrameCodec.encode(socketConnection.alloc(), setupPayload);
+                            SocketSetupFrameCodec.encode(
+                                socketConnection.alloc(),
+                                setupPayload,
+                                (int) keepAliveInterval.toMillis(),
+                                (int) keepAliveMaxLifeTime.toMillis());
                         socketConnection.sendFrame(0, setupFrame.retainedSlice());
 
                         return clientSetup

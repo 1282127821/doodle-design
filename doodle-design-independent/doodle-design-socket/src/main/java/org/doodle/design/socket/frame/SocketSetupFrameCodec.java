@@ -24,7 +24,11 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public final class SocketSetupFrameCodec {
 
-  public static ByteBuf encode(ByteBufAllocator allocator, Payload setupPayload) {
+  public static ByteBuf encode(
+      ByteBufAllocator allocator,
+      Payload setupPayload,
+      int keepaliveInterval,
+      int keepAliveMaxLifeTime) {
     ByteBuf data = setupPayload.sliceData();
     boolean hasMetadata = setupPayload.hasMetadata();
     ByteBuf metadata = hasMetadata ? setupPayload.sliceMetadata() : null;

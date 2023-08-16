@@ -17,7 +17,6 @@ package org.doodle.design.socket.frame;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
-import io.rsocket.frame.FrameLengthCodec;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
@@ -36,7 +35,6 @@ public final class SocketFrameHeaderCodec {
 
   public static int flags(ByteBuf byteBuf) {
     byteBuf.markReaderIndex();
-    byteBuf.skipBytes(FrameLengthCodec.FRAME_LENGTH_SIZE);
     int typeAndFlags = byteBuf.readByte() & 0xFF;
     byteBuf.resetReaderIndex();
     return typeAndFlags;

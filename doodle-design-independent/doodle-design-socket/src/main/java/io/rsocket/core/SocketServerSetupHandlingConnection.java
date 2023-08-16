@@ -19,12 +19,19 @@ import io.netty.buffer.ByteBuf;
 import io.rsocket.DuplexConnection;
 import org.doodle.design.socket.SocketConnection;
 import reactor.core.publisher.MonoSink;
+import reactor.netty.Connection;
 import reactor.util.function.Tuple2;
 
-public class SocketServerSetupHandlingConnection extends SetupHandlingDuplexConnection {
+public class SocketServerSetupHandlingConnection extends SetupHandlingDuplexConnection
+    implements SocketConnection {
 
   public SocketServerSetupHandlingConnection(
       SocketConnection source, MonoSink<Tuple2<ByteBuf, DuplexConnection>> sink) {
     super(source, sink);
+  }
+
+  @Override
+  public Connection connection() {
+    return ((SocketConnection) source).connection();
   }
 }
