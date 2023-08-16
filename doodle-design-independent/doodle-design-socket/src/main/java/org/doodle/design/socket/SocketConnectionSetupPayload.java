@@ -16,11 +16,100 @@
 package org.doodle.design.socket;
 
 import io.netty.buffer.ByteBuf;
-import io.rsocket.core.DefaultConnectionSetupPayload;
+import io.netty.buffer.Unpooled;
+import io.rsocket.ConnectionSetupPayload;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
+import org.doodle.design.socket.frame.SocketFrameCodec;
+import org.doodle.design.socket.frame.SocketFrameHeaderCodec;
+import org.doodle.design.socket.frame.SocketSetupFrameCodec;
 
-public class SocketConnectionSetupPayload extends DefaultConnectionSetupPayload {
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@RequiredArgsConstructor
+public class SocketConnectionSetupPayload extends ConnectionSetupPayload {
+  ByteBuf setupFrame;
 
-  public SocketConnectionSetupPayload(ByteBuf setupFrame) {
-    super(setupFrame);
+  @Override
+  public String metadataMimeType() {
+    return null;
+  }
+
+  @Override
+  public String dataMimeType() {
+    return null;
+  }
+
+  @Override
+  public int keepAliveInterval() {
+    return SocketSetupFrameCodec.keepAliveInterval(setupFrame);
+  }
+
+  @Override
+  public int keepAliveMaxLifetime() {
+    return SocketSetupFrameCodec.keepAliveMaxLifetime(setupFrame);
+  }
+
+  @Override
+  public int getFlags() {
+    return SocketFrameHeaderCodec.flags(setupFrame);
+  }
+
+  @Override
+  public boolean willClientHonorLease() {
+    return false;
+  }
+
+  @Override
+  public boolean isResumeEnabled() {
+    return false;
+  }
+
+  @Override
+  public ByteBuf resumeToken() {
+    return null;
+  }
+
+  @Override
+  public SocketConnectionSetupPayload touch() {
+    setupFrame.touch();
+    return this;
+  }
+
+  @Override
+  protected void deallocate() {
+    setupFrame.release();
+  }
+
+  @Override
+  public boolean hasMetadata() {
+    return SocketFrameHeaderCodec.hasMetadata(setupFrame);
+  }
+
+  @Override
+  public ByteBuf sliceMetadata() {
+    final ByteBuf metadata = SocketSetupFrameCodec.metadata(setupFrame);
+    return metadata == null ? Unpooled.EMPTY_BUFFER : metadata;
+  }
+
+  @Override
+  public ByteBuf sliceData() {
+    return SocketFrameCodec.data(setupFrame);
+  }
+
+  @Override
+  public ByteBuf data() {
+    return sliceData();
+  }
+
+  @Override
+  public ByteBuf metadata() {
+    return sliceMetadata();
+  }
+
+  @Override
+  public SocketConnectionSetupPayload touch(Object hint) {
+    setupFrame.touch(hint);
+    return this;
   }
 }

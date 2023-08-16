@@ -43,4 +43,8 @@ public final class SocketFrameHeaderCodec {
   public static SocketFrameType frameType(ByteBuf byteBuf) {
     return SocketFrameType.fromEncodedType(flags(byteBuf) >> FRAME_TYPE_SHIFT);
   }
+
+  public static boolean hasMetadata(ByteBuf byteBuf) {
+    return (flags(byteBuf) & FLAGS_M) == FLAGS_M;
+  }
 }

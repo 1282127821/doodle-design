@@ -24,10 +24,14 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public final class SocketSetupFrameCodec {
 
+  public static final int KEEP_ALIVE_INTERVAL_OFFSET = Byte.BYTES;
+  public static final int KEEP_ALIVE_MAX_LIFETIME_OFFSET =
+      KEEP_ALIVE_INTERVAL_OFFSET + Integer.BYTES;
+
   public static ByteBuf encode(
       ByteBufAllocator allocator,
       Payload setupPayload,
-      int keepaliveInterval,
+      int keepAliveInterval,
       int keepAliveMaxLifeTime) {
     ByteBuf data = setupPayload.sliceData();
     boolean hasMetadata = setupPayload.hasMetadata();
@@ -40,7 +44,33 @@ public final class SocketSetupFrameCodec {
     }
 
     ByteBuf header = SocketFrameHeaderCodec.encode(allocator, SocketFrameType.SETUP, flags);
+    header.writeInt(keepAliveInterval).writeInt(keepAliveMaxLifeTime);
 
     return SocketFrameBodyCodec.encode(allocator, header, metadata, hasMetadata, data);
+  }
+
+  public static int keepAliveInterval(ByteBuf byteBuf) {
+    byteBuf.markReaderIndex();
+    int keepAliveInterval = byteBuf.skipBytes(KEEP_ALIVE_INTERVAL_OFFSET).readInt();
+    byteBuf.resetReaderIndex();
+    return keepAliveInterval;
+  }
+
+  public static int keepAliveMaxLifetime(ByteBuf byteBuf) {
+    byteBuf.markReaderIndex();
+    int keepAliveMaxLifetime = byteBuf.skipBytes(KEEP_ALIVE_MAX_LIFETIME_OFFSET).readInt();
+    byteBuf.resetReaderIndex();
+    return keepAliveMaxLifetime;
+  }
+
+  public static ByteBuf metadata(ByteBuf byteBuf) {
+    boolean hasMetadata = SocketFrameHeaderCodec.hasMetadata(byteBuf);
+    if (!hasMetadata) {
+      return null;
+    }
+    byteBuf.markReaderIndex();
+    // TODO: 2023/8/16 读取 metadata
+    byteBuf.resetReaderIndex();
+    return null;
   }
 }
