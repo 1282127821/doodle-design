@@ -18,17 +18,17 @@ package io.rsocket.core;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
 import io.netty.buffer.CompositeByteBuf;
+import io.rsocket.Socket;
 import io.rsocket.frame.decoder.PayloadDecoder;
 import lombok.extern.slf4j.Slf4j;
-import org.doodle.design.socket.Socket;
-import org.doodle.design.socket.SocketRequesterResponderSupport;
 import org.reactivestreams.Subscription;
 import reactor.core.CoreSubscriber;
 
 @Slf4j
-public class OnewayResponderSubscriber implements CoreSubscriber<Void>, ResponderFrameHandler {
+public class SocketOnewayResponderSubscriber
+    implements CoreSubscriber<Void>, ResponderFrameHandler {
 
-  public static OnewayResponderSubscriber INSTANCE = new OnewayResponderSubscriber();
+  public static SocketOnewayResponderSubscriber INSTANCE = new SocketOnewayResponderSubscriber();
 
   final ByteBufAllocator allocator;
   final PayloadDecoder payloadDecoder;
@@ -38,7 +38,7 @@ public class OnewayResponderSubscriber implements CoreSubscriber<Void>, Responde
 
   CompositeByteBuf frames;
 
-  OnewayResponderSubscriber() {
+  SocketOnewayResponderSubscriber() {
     this.allocator = null;
     this.payloadDecoder = null;
     this.maxInboundPayloadSize = 0;

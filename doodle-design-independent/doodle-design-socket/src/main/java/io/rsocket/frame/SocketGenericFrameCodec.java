@@ -16,27 +16,28 @@
 package io.rsocket.frame;
 
 import io.netty.buffer.ByteBuf;
-import io.netty.buffer.ByteBufAllocator;
 import lombok.experimental.UtilityClass;
-import reactor.util.annotation.Nullable;
 
 @UtilityClass
-public final class SocketFrameBodyCodec {
+public final class SocketGenericFrameCodec {
 
-  public static ByteBuf encode(
-      ByteBufAllocator allocator,
-      final ByteBuf header,
-      @Nullable ByteBuf metadata,
-      boolean hasMetadata,
-      @Nullable ByteBuf data) {
-    return FrameBodyCodec.encode(allocator, header, metadata, hasMetadata, data);
+  public static ByteBuf data(ByteBuf byteBuf) {
+    boolean hasMetadata = SocketFrameHeaderCodec.hasMetadata(byteBuf);
+    byteBuf.markReaderIndex();
+    byteBuf.skipBytes(SocketFrameHeaderCodec.FRAME_HEADER_SIZE);
+    ByteBuf data = SocketFrameBodyCodec.dataWithoutMarking(byteBuf, hasMetadata);
+    byteBuf.resetReaderIndex();
+    return data;
   }
 
-  public static ByteBuf metadataWithoutMarking(ByteBuf byteBuf) {
-    return FrameBodyCodec.metadataWithoutMarking(byteBuf);
-  }
-
-  public static ByteBuf dataWithoutMarking(ByteBuf byteBuf, boolean hasMetadata) {
-    return FrameBodyCodec.dataWithoutMarking(byteBuf, hasMetadata);
+  public static ByteBuf metadata(ByteBuf byteBuf) {
+    boolean hasMetadata = SocketFrameHeaderCodec.hasMetadata(byteBuf);
+    if (!hasMetadata) {
+      return null;
+    }
+    byteBuf.markReaderIndex();
+    ByteBuf metadata = SocketFrameBodyCodec.metadataWithoutMarking(byteBuf);
+    byteBuf.resetReaderIndex();
+    return metadata;
   }
 }

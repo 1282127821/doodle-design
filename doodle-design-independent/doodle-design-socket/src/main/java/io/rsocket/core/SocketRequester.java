@@ -13,19 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.socket;
+package io.rsocket.core;
 
 import io.netty.buffer.ByteBuf;
 import io.rsocket.Payload;
-import io.rsocket.core.OnewayRequesterMono;
+import io.rsocket.Socket;
+import io.rsocket.SocketConnection;
 import io.rsocket.frame.decoder.PayloadDecoder;
+import io.rsocket.keepalive.SocketClientKeepAliveSupport;
+import io.rsocket.keepalive.SocketKeepAliveFrameAcceptor;
+import io.rsocket.keepalive.SocketKeepAliveHandler;
+import io.rsocket.keepalive.SocketKeepAliveSupport;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.doodle.design.socket.keepalive.SocketClientKeepAliveSupport;
-import org.doodle.design.socket.keepalive.SocketKeepAliveFrameAcceptor;
-import org.doodle.design.socket.keepalive.SocketKeepAliveHandler;
-import org.doodle.design.socket.keepalive.SocketKeepAliveSupport;
 import reactor.core.publisher.Mono;
 import reactor.core.publisher.Sinks;
 
@@ -77,7 +78,7 @@ public class SocketRequester extends SocketRequesterResponderSupport implements 
 
   @Override
   public Mono<Void> oneway(Payload payload) {
-    return new OnewayRequesterMono(payload, this);
+    return new SocketOnewayRequesterMono(payload, this);
   }
 
   @Override

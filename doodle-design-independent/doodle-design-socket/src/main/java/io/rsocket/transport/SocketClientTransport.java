@@ -13,14 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.socket;
+package io.rsocket.transport;
 
-import java.util.function.Function;
-import org.reactivestreams.Publisher;
+import io.rsocket.SocketConnection;
 import reactor.core.publisher.Mono;
 
-@FunctionalInterface
-public interface SocketConnectionAcceptor extends Function<SocketConnection, Publisher<Void>> {
-  @Override
-  Mono<Void> apply(SocketConnection socketConnection);
+public interface SocketClientTransport extends Transport {
+  Mono<SocketConnection> connect();
 }

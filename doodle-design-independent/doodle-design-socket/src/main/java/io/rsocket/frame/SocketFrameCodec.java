@@ -13,25 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.socket.frame;
+package io.rsocket.frame;
 
 import io.netty.buffer.ByteBuf;
-import io.netty.buffer.ByteBufAllocator;
-import io.rsocket.frame.SocketFrameBodyCodec;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
-public final class SocketKeepAliveFrameCodec {
-
-  public static ByteBuf encode(ByteBufAllocator allocator, ByteBuf data) {
-    ByteBuf header = SocketFrameHeaderCodec.encode(allocator, SocketFrameType.KEEP_ALIVE, 0);
-    return SocketFrameBodyCodec.encode(allocator, header, null, false, data);
-  }
+public final class SocketFrameCodec {
 
   public static ByteBuf data(ByteBuf byteBuf) {
+    boolean hasMetadata = SocketFrameHeaderCodec.hasMetadata(byteBuf);
     byteBuf.markReaderIndex();
-    ByteBuf slice = byteBuf.skipBytes(4).slice();
     byteBuf.resetReaderIndex();
-    return slice;
+    return null;
   }
 }

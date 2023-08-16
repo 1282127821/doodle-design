@@ -13,32 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.socket;
+package io.rsocket.keepalive;
 
-import io.netty.buffer.ByteBufAllocator;
-import io.rsocket.frame.decoder.PayloadDecoder;
+import io.netty.buffer.ByteBuf;
+import io.rsocket.SocketConnection;
+import java.util.function.Consumer;
 import lombok.AccessLevel;
-import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
-@Getter
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class SocketRequesterResponderSupport {
-  int mtu;
-  int maxFrameLength;
-  SocketConnection socketConnection;
-  PayloadDecoder payloadDecoder;
-  ByteBufAllocator allocator;
+@RequiredArgsConstructor
+public final class SocketKeepAliveHandler {
+  SocketConnection connection;
 
-  public SocketRequesterResponderSupport(
-      int mtu,
-      int maxFrameLength,
-      SocketConnection socketConnection,
-      PayloadDecoder payloadDecoder) {
-    this.mtu = mtu;
-    this.maxFrameLength = maxFrameLength;
-    this.socketConnection = socketConnection;
-    this.payloadDecoder = payloadDecoder;
-    this.allocator = socketConnection.alloc();
+  public SocketKeepAliveFrameAcceptor start(
+      SocketKeepAliveSupport keepAliveSupport,
+      Consumer<ByteBuf> onSendKeepAliveFrame,
+      Consumer<SocketKeepAliveSupport.KeepAlive> onTimeout) {
+    connection.onClose().doFinally(s -> keepAliveSupport.stop()).subscribe();
+    return keepAliveSupport.onSendKeepAliveFrame(onSendKeepAliveFrame).onTimeout(onTimeout).start();
   }
 }

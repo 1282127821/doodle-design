@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.socket.frame;
+package io.rsocket.frame;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
@@ -27,6 +27,8 @@ public final class SocketFrameHeaderCodec {
 
   private static final int FRAME_TYPE_BITS = 4;
   private static final int FRAME_TYPE_SHIFT = Byte.SIZE - FRAME_TYPE_BITS;
+
+  public static final int FRAME_HEADER_SIZE = Byte.BYTES;
 
   public static ByteBuf encode(ByteBufAllocator allocator, SocketFrameType frameType, int flags) {
     byte typeAndFlags = (byte) (frameType.getEncodedType() << FRAME_TYPE_SHIFT | (byte) flags);

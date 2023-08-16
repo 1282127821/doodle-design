@@ -13,22 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.socket.keepalive;
+package io.rsocket.core;
 
-import io.netty.buffer.ByteBufAllocator;
+import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
-import org.doodle.design.socket.frame.SocketKeepAliveFrameCodec;
+import io.rsocket.SocketConnection;
+import reactor.core.publisher.Mono;
+import reactor.util.function.Tuple2;
+import reactor.util.function.Tuples;
 
-public class SocketClientKeepAliveSupport extends SocketKeepAliveSupport {
+public class SocketClientSetup {
 
-  public SocketClientKeepAliveSupport(
-      ByteBufAllocator allocator, int keepAliveInterval, int keepAliveTimeout) {
-    super(allocator, keepAliveInterval, keepAliveTimeout);
-  }
-
-  @Override
-  void onIntervalTick() {
-    tryTimeout();
-    send(SocketKeepAliveFrameCodec.encode(allocator, Unpooled.EMPTY_BUFFER));
+  public Mono<Tuple2<ByteBuf, SocketConnection>> init(SocketConnection connection) {
+    return Mono.create(
+        sink -> sink.onRequest(__ -> sink.success(Tuples.of(Unpooled.EMPTY_BUFFER, connection))));
   }
 }

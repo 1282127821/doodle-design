@@ -13,17 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.socket;
+package io.rsocket;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
-import io.rsocket.ConnectionSetupPayload;
+import io.rsocket.frame.SocketFrameCodec;
+import io.rsocket.frame.SocketFrameHeaderCodec;
+import io.rsocket.frame.SocketSetupFrameCodec;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.doodle.design.socket.frame.SocketFrameCodec;
-import org.doodle.design.socket.frame.SocketFrameHeaderCodec;
-import org.doodle.design.socket.frame.SocketSetupFrameCodec;
 
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequiredArgsConstructor

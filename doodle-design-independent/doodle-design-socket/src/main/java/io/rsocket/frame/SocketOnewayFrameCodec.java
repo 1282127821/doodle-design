@@ -13,12 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.socket.transport;
+package io.rsocket.frame;
 
-import io.rsocket.transport.Transport;
-import org.doodle.design.socket.SocketConnection;
-import reactor.core.publisher.Mono;
+import io.netty.buffer.ByteBuf;
+import lombok.experimental.UtilityClass;
 
-public interface SocketClientTransport extends Transport {
-  Mono<SocketConnection> connect();
+@UtilityClass
+public final class SocketOnewayFrameCodec {
+
+  public static ByteBuf data(ByteBuf byteBuf) {
+    return SocketGenericFrameCodec.data(byteBuf);
+  }
+
+  public static ByteBuf metadata(ByteBuf byteBuf) {
+    return SocketGenericFrameCodec.metadata(byteBuf);
+  }
 }

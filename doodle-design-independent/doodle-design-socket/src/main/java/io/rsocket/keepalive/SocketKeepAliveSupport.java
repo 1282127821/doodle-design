@@ -13,10 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.socket.keepalive;
+package io.rsocket.keepalive;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
+import io.rsocket.frame.SocketKeepAliveFrameCodec;
 import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicIntegerFieldUpdater;
@@ -25,7 +26,6 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.doodle.design.socket.frame.SocketKeepAliveFrameCodec;
 import reactor.core.Disposable;
 import reactor.core.publisher.Flux;
 import reactor.core.scheduler.Scheduler;

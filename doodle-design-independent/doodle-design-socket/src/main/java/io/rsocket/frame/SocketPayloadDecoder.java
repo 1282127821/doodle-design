@@ -13,12 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.socket;
+package io.rsocket.frame;
 
-import io.rsocket.DuplexConnection;
-import reactor.netty.Connection;
+import io.rsocket.frame.decoder.PayloadDecoder;
 
-public interface SocketConnection extends DuplexConnection {
-
-  Connection connection();
+public interface SocketPayloadDecoder extends PayloadDecoder {
+  SocketPayloadDecoder ZERO_COPY = new ZeroCopySocketPayloadDecoder();
 }

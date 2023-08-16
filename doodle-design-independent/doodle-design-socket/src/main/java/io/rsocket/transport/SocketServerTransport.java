@@ -13,16 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.socket.frame.decoder;
+package io.rsocket.transport;
 
-import io.netty.buffer.ByteBuf;
-import io.rsocket.Payload;
-import io.rsocket.frame.decoder.PayloadDecoder;
+import io.rsocket.Closeable;
+import io.rsocket.core.SocketConnectionAcceptor;
+import reactor.core.publisher.Mono;
 
-public class SocketPayloadDecoder implements PayloadDecoder {
+@FunctionalInterface
+public interface SocketServerTransport<T extends Closeable> extends Transport {
 
-  @Override
-  public Payload apply(ByteBuf byteBuf) {
-    return null;
-  }
+  Mono<T> start(SocketConnectionAcceptor connectionAcceptor);
 }

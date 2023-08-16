@@ -22,11 +22,10 @@ import static io.rsocket.core.StateUtils.*;
 import io.netty.buffer.ByteBufAllocator;
 import io.netty.util.IllegalReferenceCountException;
 import io.rsocket.Payload;
+import io.rsocket.SocketConnection;
+import io.rsocket.frame.SocketFrameType;
 import java.time.Duration;
 import java.util.concurrent.atomic.AtomicLongFieldUpdater;
-import org.doodle.design.socket.SocketConnection;
-import org.doodle.design.socket.SocketRequesterResponderSupport;
-import org.doodle.design.socket.frame.SocketFrameType;
 import org.reactivestreams.Subscription;
 import reactor.core.CoreSubscriber;
 import reactor.core.Exceptions;
@@ -35,12 +34,12 @@ import reactor.core.publisher.Mono;
 import reactor.core.publisher.Operators;
 import reactor.util.annotation.Nullable;
 
-public final class OnewayRequesterMono extends Mono<Void> implements Subscription, Scannable {
+public final class SocketOnewayRequesterMono extends Mono<Void> implements Subscription, Scannable {
 
   volatile long state;
 
-  static final AtomicLongFieldUpdater<OnewayRequesterMono> STATE =
-      AtomicLongFieldUpdater.newUpdater(OnewayRequesterMono.class, "state");
+  static final AtomicLongFieldUpdater<SocketOnewayRequesterMono> STATE =
+      AtomicLongFieldUpdater.newUpdater(SocketOnewayRequesterMono.class, "state");
 
   final Payload payload;
 
@@ -50,7 +49,7 @@ public final class OnewayRequesterMono extends Mono<Void> implements Subscriptio
   final SocketRequesterResponderSupport requesterResponderSupport;
   final SocketConnection connection;
 
-  public OnewayRequesterMono(
+  public SocketOnewayRequesterMono(
       Payload payload, SocketRequesterResponderSupport requesterResponderSupport) {
     this.allocator = requesterResponderSupport.getAllocator();
     this.payload = payload;
@@ -64,7 +63,7 @@ public final class OnewayRequesterMono extends Mono<Void> implements Subscriptio
   public void subscribe(CoreSubscriber<? super Void> actual) {
     long previousState = markSubscribed(STATE, this);
     if (isSubscribedOrTerminated(previousState)) {
-      final IllegalStateException e = new IllegalStateException("OnewayRequesterMono 只允许单订阅");
+      final IllegalStateException e = new IllegalStateException("SocketOnewayRequesterMono 只允许单订阅");
       Operators.error(actual, e);
       return;
     }
@@ -127,7 +126,7 @@ public final class OnewayRequesterMono extends Mono<Void> implements Subscriptio
   public Void block() {
     long previousState = markSubscribed(STATE, this);
     if (isSubscribedOrTerminated(previousState)) {
-      throw new IllegalStateException("OnewayRequesterMono 只允许单订阅");
+      throw new IllegalStateException("SocketOnewayRequesterMono 只允许单订阅");
     }
 
     final Payload p = this.payload;

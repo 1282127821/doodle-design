@@ -13,28 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.socket;
+package io.rsocket;
 
-import io.rsocket.Closeable;
-import io.rsocket.Payload;
+import java.util.function.BiFunction;
+import org.reactivestreams.Publisher;
 import reactor.core.publisher.Mono;
 
-public interface Socket extends Closeable {
-
-  default Mono<Void> oneway(Payload payload) {
-    return SocketAdapter.oneway(payload);
-  }
+@FunctionalInterface
+public interface SocketAcceptor
+    extends BiFunction<SocketConnectionSetupPayload, Socket, Publisher<Socket>> {
 
   @Override
-  default void dispose() {}
-
-  @Override
-  default boolean isDisposed() {
-    return false;
-  }
-
-  @Override
-  default Mono<Void> onClose() {
-    return Mono.never();
-  }
+  Mono<Socket> apply(SocketConnectionSetupPayload setupPayload, Socket sendingSocket);
 }

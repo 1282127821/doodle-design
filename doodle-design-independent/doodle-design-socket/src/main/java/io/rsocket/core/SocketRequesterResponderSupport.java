@@ -13,25 +13,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.socket.keepalive;
+package io.rsocket.core;
 
-import io.netty.buffer.ByteBuf;
-import java.util.function.Consumer;
+import io.netty.buffer.ByteBufAllocator;
+import io.rsocket.SocketConnection;
+import io.rsocket.frame.decoder.PayloadDecoder;
 import lombok.AccessLevel;
-import lombok.RequiredArgsConstructor;
+import lombok.Getter;
 import lombok.experimental.FieldDefaults;
-import org.doodle.design.socket.SocketConnection;
 
+@Getter
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-@RequiredArgsConstructor
-public final class SocketKeepAliveHandler {
-  SocketConnection connection;
+public class SocketRequesterResponderSupport {
+  int mtu;
+  int maxFrameLength;
+  SocketConnection socketConnection;
+  PayloadDecoder payloadDecoder;
+  ByteBufAllocator allocator;
 
-  public SocketKeepAliveFrameAcceptor start(
-      SocketKeepAliveSupport keepAliveSupport,
-      Consumer<ByteBuf> onSendKeepAliveFrame,
-      Consumer<SocketKeepAliveSupport.KeepAlive> onTimeout) {
-    connection.onClose().doFinally(s -> keepAliveSupport.stop()).subscribe();
-    return keepAliveSupport.onSendKeepAliveFrame(onSendKeepAliveFrame).onTimeout(onTimeout).start();
+  public SocketRequesterResponderSupport(
+      int mtu,
+      int maxFrameLength,
+      SocketConnection socketConnection,
+      PayloadDecoder payloadDecoder) {
+    this.mtu = mtu;
+    this.maxFrameLength = maxFrameLength;
+    this.socketConnection = socketConnection;
+    this.payloadDecoder = payloadDecoder;
+    this.allocator = socketConnection.alloc();
   }
 }

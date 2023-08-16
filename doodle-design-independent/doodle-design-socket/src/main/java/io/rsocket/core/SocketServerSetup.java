@@ -13,15 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.socket;
+package io.rsocket.core;
 
 import io.netty.buffer.ByteBuf;
 import io.rsocket.DuplexConnection;
-import io.rsocket.core.SocketServerSetupHandlingConnection;
+import io.rsocket.SocketConnection;
+import io.rsocket.keepalive.SocketKeepAliveHandler;
 import java.nio.channels.ClosedChannelException;
 import java.time.Duration;
 import java.util.function.BiFunction;
-import org.doodle.design.socket.keepalive.SocketKeepAliveHandler;
 import reactor.core.publisher.Mono;
 import reactor.util.function.Tuple2;
 

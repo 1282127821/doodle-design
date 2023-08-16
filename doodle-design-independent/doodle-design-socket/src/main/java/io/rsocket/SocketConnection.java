@@ -13,18 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.socket;
+package io.rsocket;
 
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
-import reactor.core.publisher.Mono;
-import reactor.util.function.Tuple2;
-import reactor.util.function.Tuples;
+import reactor.netty.Connection;
 
-public class SocketClientSetup {
+public interface SocketConnection extends DuplexConnection {
 
-  public Mono<Tuple2<ByteBuf, SocketConnection>> init(SocketConnection connection) {
-    return Mono.create(
-        sink -> sink.onRequest(__ -> sink.success(Tuples.of(Unpooled.EMPTY_BUFFER, connection))));
-  }
+  Connection connection();
 }

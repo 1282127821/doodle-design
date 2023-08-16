@@ -13,15 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.socket.transport;
+package io.rsocket;
 
-import io.rsocket.Closeable;
-import io.rsocket.transport.Transport;
-import org.doodle.design.socket.SocketConnectionAcceptor;
 import reactor.core.publisher.Mono;
 
-@FunctionalInterface
-public interface SocketServerTransport<T extends Closeable> extends Transport {
+public interface Socket extends Closeable {
 
-  Mono<T> start(SocketConnectionAcceptor connectionAcceptor);
+  default Mono<Void> oneway(Payload payload) {
+    return SocketAdapter.oneway(payload);
+  }
+
+  @Override
+  default void dispose() {}
+
+  @Override
+  default boolean isDisposed() {
+    return false;
+  }
+
+  @Override
+  default Mono<Void> onClose() {
+    return Mono.never();
+  }
 }

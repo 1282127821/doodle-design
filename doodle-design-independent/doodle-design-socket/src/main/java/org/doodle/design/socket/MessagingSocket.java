@@ -15,6 +15,7 @@
  */
 package org.doodle.design.socket;
 
+import io.rsocket.SocketConnectionSetupPayload;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;

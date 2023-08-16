@@ -13,12 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.socket.frame;
+package io.rsocket.frame;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
 import io.rsocket.Payload;
-import io.rsocket.frame.SocketFrameBodyCodec;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass

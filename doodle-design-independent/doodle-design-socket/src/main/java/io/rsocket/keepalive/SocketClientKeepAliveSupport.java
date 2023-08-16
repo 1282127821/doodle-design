@@ -13,25 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.rsocket.core;
+package io.rsocket.keepalive;
 
-import io.netty.buffer.ByteBuf;
-import io.rsocket.DuplexConnection;
-import io.rsocket.SocketConnection;
-import reactor.core.publisher.MonoSink;
-import reactor.netty.Connection;
-import reactor.util.function.Tuple2;
+import io.netty.buffer.ByteBufAllocator;
+import io.netty.buffer.Unpooled;
+import io.rsocket.frame.SocketKeepAliveFrameCodec;
 
-public class SocketServerSetupHandlingConnection extends SetupHandlingDuplexConnection
-    implements SocketConnection {
+public class SocketClientKeepAliveSupport extends SocketKeepAliveSupport {
 
-  public SocketServerSetupHandlingConnection(
-      SocketConnection source, MonoSink<Tuple2<ByteBuf, DuplexConnection>> sink) {
-    super(source, sink);
+  public SocketClientKeepAliveSupport(
+      ByteBufAllocator allocator, int keepAliveInterval, int keepAliveTimeout) {
+    super(allocator, keepAliveInterval, keepAliveTimeout);
   }
 
   @Override
-  public Connection connection() {
-    return ((SocketConnection) source).connection();
+  void onIntervalTick() {
+    tryTimeout();
+    send(SocketKeepAliveFrameCodec.encode(allocator, Unpooled.EMPTY_BUFFER));
   }
 }

@@ -13,17 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.socket;
+package io.rsocket.core;
 
 import io.netty.buffer.ByteBuf;
 import io.rsocket.Payload;
-import io.rsocket.core.OnewayResponderSubscriber;
+import io.rsocket.Socket;
+import io.rsocket.SocketConnection;
+import io.rsocket.frame.SocketFrameHeaderCodec;
+import io.rsocket.frame.SocketFrameType;
 import io.rsocket.frame.decoder.PayloadDecoder;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.doodle.design.socket.frame.SocketFrameHeaderCodec;
-import org.doodle.design.socket.frame.SocketFrameType;
 import reactor.core.publisher.Mono;
 
 @Slf4j
@@ -60,7 +61,8 @@ public class SocketResponder extends SocketRequesterResponderSupport implements 
   }
 
   private void handleOneWay(ByteBuf frame) {
-    oneway(super.getPayloadDecoder().apply(frame)).subscribe(OnewayResponderSubscriber.INSTANCE);
+    oneway(super.getPayloadDecoder().apply(frame))
+        .subscribe(SocketOnewayResponderSubscriber.INSTANCE);
   }
 
   private void tryTerminateOnConnectionClose() {}

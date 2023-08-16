@@ -13,11 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.socket.keepalive;
+package io.rsocket.frame;
 
 import io.netty.buffer.ByteBuf;
-import reactor.core.Disposable;
+import io.netty.buffer.ByteBufAllocator;
+import lombok.experimental.UtilityClass;
 
-public interface SocketKeepAliveFrameAcceptor extends Disposable {
-  void receive(ByteBuf keepAliveFrame);
+@UtilityClass
+public final class SocketKeepAliveFrameCodec {
+
+  public static ByteBuf encode(ByteBufAllocator allocator, ByteBuf data) {
+    ByteBuf header = SocketFrameHeaderCodec.encode(allocator, SocketFrameType.KEEP_ALIVE, 0);
+    return SocketFrameBodyCodec.encode(allocator, header, null, false, data);
+  }
+
+  public static ByteBuf data(ByteBuf byteBuf) {
+    byteBuf.markReaderIndex();
+    ByteBuf slice = byteBuf.skipBytes(4).slice();
+    byteBuf.resetReaderIndex();
+    return slice;
+  }
 }
