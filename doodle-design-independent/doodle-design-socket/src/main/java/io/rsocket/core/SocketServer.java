@@ -71,9 +71,12 @@ public final class SocketServer {
           SocketConnectionSetupPayload setupPayload =
               new SocketConnectionSetupPayload(startFrame.retain());
 
+          SocketClientServerInputMultiplexer multiplexer =
+              new SocketClientServerInputMultiplexer(socketConnection, false);
+
           SocketRequester requester =
               new SocketRequester(
-                  socketConnection,
+                  multiplexer.asServerConnection(),
                   payloadDecoder,
                   mtu,
                   maxFrameLength,
@@ -87,7 +90,11 @@ public final class SocketServer {
                   socketHandler -> {
                     SocketResponder responder =
                         new SocketResponder(
-                            mtu, maxFrameLength, socketConnection, socketHandler, payloadDecoder);
+                            mtu,
+                            maxFrameLength,
+                            multiplexer.asClientConnection(),
+                            socketHandler,
+                            payloadDecoder);
                   })
               .doFinally(signalType -> setupPayload.release())
               .then();

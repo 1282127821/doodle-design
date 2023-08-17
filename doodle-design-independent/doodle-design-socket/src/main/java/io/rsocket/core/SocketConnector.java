@@ -73,10 +73,12 @@ public class SocketConnector {
                                 tuple -> {
                                   ByteBuf serverResponse = tuple.getT1();
                                   SocketConnection connection = tuple.getT2();
+                                  SocketClientServerInputMultiplexer multiplexer =
+                                      new SocketClientServerInputMultiplexer(connection, true);
 
                                   SocketRequester requester =
                                       new SocketRequester(
-                                          connection,
+                                          multiplexer.asClientConnection(),
                                           payloadDecoder,
                                           mtu,
                                           maxFrameLength,
@@ -94,7 +96,7 @@ public class SocketConnector {
                                                 new SocketResponder(
                                                     mtu,
                                                     maxFrameLength,
-                                                    connection,
+                                                    multiplexer.asServerConnection(),
                                                     socketHandler,
                                                     payloadDecoder);
                                             return socketHandler;

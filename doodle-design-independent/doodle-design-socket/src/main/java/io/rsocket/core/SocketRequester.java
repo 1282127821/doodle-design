@@ -19,6 +19,8 @@ import io.netty.buffer.ByteBuf;
 import io.rsocket.Payload;
 import io.rsocket.Socket;
 import io.rsocket.SocketConnection;
+import io.rsocket.frame.SocketFrameHeaderCodec;
+import io.rsocket.frame.SocketFrameType;
 import io.rsocket.frame.decoder.PayloadDecoder;
 import io.rsocket.keepalive.SocketClientKeepAliveSupport;
 import io.rsocket.keepalive.SocketKeepAliveFrameAcceptor;
@@ -52,7 +54,7 @@ public class SocketRequester extends SocketRequesterResponderSupport implements 
         .onClose()
         .subscribe(null, this::tryTerminateOnConnectionError, this::tryShutdown);
 
-    //    socketConnection.receive().subscribe(this::handleIncomingFrames, e -> {});
+    socketConnection.receive().subscribe(this::handleIncomingFrames, e -> {});
 
     if (keepAliveTickPeriod != 0 && keepAliveHandler != null) {
       SocketKeepAliveSupport keepAliveSupport =
@@ -70,7 +72,16 @@ public class SocketRequester extends SocketRequesterResponderSupport implements 
 
   private void tryTerminateOnKeepAlive(SocketKeepAliveSupport.KeepAlive keepAlive) {}
 
-  private void handleIncomingFrames(ByteBuf byteBuf) {}
+  private void handleIncomingFrames(ByteBuf frame) {
+    SocketFrameType frameType = SocketFrameHeaderCodec.frameType(frame);
+    if (frameType == SocketFrameType.KEEP_ALIVE) {
+      if (keepAliveFrameAcceptor != null) {
+        keepAliveFrameAcceptor.receive(frame);
+      }
+    } else {
+      log.error("暂不支持的协议类型: {}", frameType);
+    }
+  }
 
   private void tryShutdown() {}
 
