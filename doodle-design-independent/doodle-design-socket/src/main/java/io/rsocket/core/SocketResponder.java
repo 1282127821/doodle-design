@@ -50,18 +50,16 @@ public class SocketResponder extends SocketRequesterResponderSupport implements 
   private void handleFrames(ByteBuf frame) {
     try {
       SocketFrameType frameType = SocketFrameHeaderCodec.frameType(frame);
-      switch (frameType) {
-        case KEEP_ALIVE -> handleKeepAlive(frame);
-        case ONEWAY -> handleOneWay(frame);
-        default -> log.error("未支持的协议类型: {}", frameType);
+      if (frameType == SocketFrameType.ONEWAY) {
+        handleOneWay(frame);
+      } else {
+        log.error("未支持的协议类型: {}", frameType);
       }
     } catch (Throwable t) {
       log.error("处理协议发生未知错误", t);
       tryTerminateOnConnectionError(t);
     }
   }
-
-  private void handleKeepAlive(ByteBuf frame) {}
 
   private void handleOneWay(ByteBuf frame) {
     oneway(super.getPayloadDecoder().apply(frame))
