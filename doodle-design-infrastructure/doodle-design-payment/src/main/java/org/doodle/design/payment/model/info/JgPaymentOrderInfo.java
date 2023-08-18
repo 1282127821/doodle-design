@@ -16,6 +16,7 @@
 package org.doodle.design.payment.model.info;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
+import java.util.Map;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -75,4 +76,7 @@ public class JgPaymentOrderInfo {
   int totalPrice;
 
   String vip;
+
+  // 扩展参数
+  Map<String, Object> ext;
 }

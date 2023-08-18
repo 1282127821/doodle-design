@@ -16,6 +16,7 @@
 package org.doodle.design.payment;
 
 import org.doodle.design.common.ProtoMapper;
+import org.doodle.design.common.util.ProtoUtils;
 
 public abstract class PaymentMapper implements ProtoMapper {
 
@@ -32,6 +33,7 @@ public abstract class PaymentMapper implements ProtoMapper {
         .productId(orderInfo.getProductId())
         .productName(orderInfo.getProductName())
         .productPrice(orderInfo.getProductPrice())
+        .ext(ProtoUtils.fromProto(orderInfo.getExt()))
         .build();
   }
 

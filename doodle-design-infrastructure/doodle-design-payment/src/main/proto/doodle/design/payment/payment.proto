@@ -18,6 +18,8 @@ syntax = "proto3";
 
 package doodle.design.payment;
 
+import "google/protobuf/struct.proto";
+
 option java_multiple_files = true;
 option java_package = "org.doodle.design.payment";
 option java_outer_classname = "PaymentProto";
@@ -47,6 +49,7 @@ message PaymentOrderInfo {
   string product_id = 8;
   string product_name = 9;
   string product_price = 10;
+  google.protobuf.Struct ext = 11;
 }
 
 message EmbeddedPaymentOrderInfo {
@@ -60,6 +63,7 @@ message EmbeddedPaymentOrderInfo {
   string product_id = 8;
   string product_name = 9;
   string product_price = 10;
+  google.protobuf.Struct ext = 11;
 }
 
 message JgPaymentOrderInfo {
@@ -80,6 +84,7 @@ message JgPaymentOrderInfo {
   string server_name = 15;
   int32 total_price = 16;
   string vip = 17;
+  google.protobuf.Struct ext = 18;
 }
 
 message EmbeddedPaymentOrderCreateRequest {
@@ -93,6 +98,7 @@ message EmbeddedPaymentOrderCreateRequest {
   string product_name = 8;
   string product_price = 9;
   PaymentOrderDeliverRoute route = 10;
+  google.protobuf.Struct ext = 11;
 }
 
 message EmbeddedPaymentOrderCreateReply {
@@ -113,6 +119,7 @@ message JgPaymentOrderCreateRequest {
   string product_name = 8;
   int32 per_price = 9;
   PaymentOrderDeliverRoute route = 10;
+  google.protobuf.Struct ext = 11;
 }
 
 message JgPaymentOrderCreateReply {

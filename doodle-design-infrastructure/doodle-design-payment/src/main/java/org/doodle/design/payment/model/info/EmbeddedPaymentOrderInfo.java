@@ -15,6 +15,7 @@
  */
 package org.doodle.design.payment.model.info;
 
+import java.util.Map;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -45,4 +46,6 @@ public class EmbeddedPaymentOrderInfo {
   String productName;
   // 商品价格
   String productPrice;
+  // 扩展参数
+  Map<String, Object> ext;
 }
