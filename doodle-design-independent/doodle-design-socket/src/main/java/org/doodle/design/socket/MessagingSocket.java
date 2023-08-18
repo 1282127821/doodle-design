@@ -15,6 +15,7 @@
  */
 package org.doodle.design.socket;
 
+import io.netty.buffer.PooledByteBufAllocator;
 import io.rsocket.Payload;
 import io.rsocket.Socket;
 import io.rsocket.SocketConnectionSetupPayload;
@@ -27,11 +28,16 @@ import org.doodle.design.socket.reactive.SocketMessageHandler;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.core.io.buffer.DataBufferUtils;
 import org.springframework.core.io.buffer.NettyDataBuffer;
+import org.springframework.core.io.buffer.NettyDataBufferFactory;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageHeaders;
+import org.springframework.messaging.handler.DestinationPatternsMessageCondition;
 import org.springframework.messaging.rsocket.PayloadUtils;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.messaging.support.MessageHeaderAccessor;
+import org.springframework.util.AntPathMatcher;
+import org.springframework.util.RouteMatcher;
+import org.springframework.util.SimpleRouteMatcher;
 import reactor.core.publisher.Mono;
 
 @Slf4j
@@ -67,6 +73,11 @@ public final class MessagingSocket implements Socket {
   private MessageHeaders createHeaders(Payload payload, SocketFrameType frameType) {
     MessageHeaderAccessor headers = new MessageHeaderAccessor();
     headers.setLeaveMutable(true);
+    if (frameType == SocketFrameType.SETUP) {
+      RouteMatcher.Route setupRoute = new SimpleRouteMatcher(new AntPathMatcher()).parseRoute("");
+      headers.setHeader(DestinationPatternsMessageCondition.LOOKUP_DESTINATION_HEADER, setupRoute);
+    }
+    headers.setHeader(SocketFrameTypeMessageCondition.FRAME_TYPE_HEADER, frameType);
     return headers.getMessageHeaders();
   }
 
@@ -77,6 +88,7 @@ public final class MessagingSocket implements Socket {
   }
 
   private DataBuffer retainDataAndReleasePayload(Payload payload) {
-    return PayloadUtils.retainDataAndReleasePayload(payload, null);
+    return PayloadUtils.retainDataAndReleasePayload(
+        payload, new NettyDataBufferFactory(PooledByteBufAllocator.DEFAULT));
   }
 }
