@@ -18,27 +18,75 @@ package io.rsocket.core;
 import io.netty.buffer.ByteBuf;
 import io.rsocket.*;
 import io.rsocket.frame.SocketSetupFrameCodec;
-import io.rsocket.frame.decoder.PayloadDecoder;
+import io.rsocket.frame.decoder.SocketPayloadDecoder;
 import io.rsocket.keepalive.SocketKeepAliveHandler;
 import io.rsocket.transport.SocketClientTransport;
+import io.rsocket.util.DefaultPayload;
 import io.rsocket.util.EmptyPayload;
 import java.time.Duration;
+import java.util.Objects;
 import java.util.function.Supplier;
 import lombok.AccessLevel;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import reactor.core.publisher.Mono;
 import reactor.util.function.Tuples;
 
-@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-@RequiredArgsConstructor
-public class SocketConnector {
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public final class SocketConnector {
   SocketAcceptor acceptor;
-  Mono<Payload> setupPayloadMono;
-  PayloadDecoder payloadDecoder;
-  Duration keepAliveInterval;
-  Duration keepAliveMaxLifeTime;
-  int mtu;
+  Mono<Payload> setupPayloadMono = Mono.empty();
+  SocketPayloadDecoder payloadDecoder = SocketPayloadDecoder.ZERO_COPY;
+  Duration keepAliveInterval = Duration.ofSeconds(20);
+  Duration keepAliveMaxLifeTime = Duration.ofSeconds(90);
+
+  public static SocketConnector create() {
+    return new SocketConnector();
+  }
+
+  public SocketConnector acceptor(SocketAcceptor acceptor) {
+    Objects.requireNonNull(acceptor);
+    this.acceptor = acceptor;
+    return this;
+  }
+
+  public static Mono<Socket> connectWith(SocketClientTransport transport) {
+    return create().connect(() -> transport);
+  }
+
+  public SocketConnector setupPayload(Mono<Payload> setupPayloadMono) {
+    this.setupPayloadMono = setupPayloadMono;
+    return this;
+  }
+
+  public SocketConnector setupPayload(Payload payload) {
+    if (payload instanceof DefaultPayload) {
+      this.setupPayloadMono = Mono.just(payload);
+    } else {
+      this.setupPayloadMono = Mono.just(DefaultPayload.create(Objects.requireNonNull(payload)));
+      payload.release();
+    }
+    return this;
+  }
+
+  public SocketConnector keepAlive(Duration interval, Duration maxLifeTime) {
+    if (!interval.negated().isNegative()) {
+      throw new IllegalArgumentException("心跳间隔必须大于0");
+    }
+    if (!maxLifeTime.negated().isNegative()) {
+      throw new IllegalArgumentException("心跳最大生命周期必须大于0");
+    }
+    this.keepAliveInterval = interval;
+    this.keepAliveMaxLifeTime = maxLifeTime;
+    return this;
+  }
+
+  public SocketConnector payloadDecoder(SocketPayloadDecoder payloadDecoder) {
+    Objects.requireNonNull(payloadDecoder);
+    this.payloadDecoder = payloadDecoder;
+    return this;
+  }
 
   public Mono<Socket> connect(Supplier<SocketClientTransport> transportSupplier) {
     return Mono.fromSupplier(transportSupplier)
@@ -80,7 +128,6 @@ public class SocketConnector {
                                       new SocketRequester(
                                           multiplexer.asClientConnection(),
                                           payloadDecoder,
-                                          mtu,
                                           maxFrameLength,
                                           (int) keepAliveInterval.toMillis(),
                                           (int) keepAliveMaxLifeTime.toMillis(),
@@ -94,7 +141,6 @@ public class SocketConnector {
                                           socketHandler -> {
                                             SocketResponder responder =
                                                 new SocketResponder(
-                                                    mtu,
                                                     maxFrameLength,
                                                     multiplexer.asServerConnection(),
                                                     socketHandler,

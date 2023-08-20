@@ -45,7 +45,6 @@ public final class SocketOnewayRequesterMono extends Mono<Void> implements Subsc
   final Payload payload;
 
   final ByteBufAllocator allocator;
-  final int mtu;
   final int maxFrameLength;
   final SocketRequesterResponderSupport requesterResponderSupport;
   final SocketConnection connection;
@@ -54,7 +53,6 @@ public final class SocketOnewayRequesterMono extends Mono<Void> implements Subsc
       Payload payload, SocketRequesterResponderSupport requesterResponderSupport) {
     this.allocator = requesterResponderSupport.getAllocator();
     this.payload = payload;
-    this.mtu = requesterResponderSupport.getMtu();
     this.maxFrameLength = requesterResponderSupport.getMaxFrameLength();
     this.requesterResponderSupport = requesterResponderSupport;
     this.connection = requesterResponderSupport.getSocketConnection();
@@ -72,9 +70,8 @@ public final class SocketOnewayRequesterMono extends Mono<Void> implements Subsc
     actual.onSubscribe(this);
 
     final Payload p = this.payload;
-    int mtu = this.mtu;
     try {
-      if (!isValid(mtu, this.maxFrameLength, p, false)) {
+      if (!isValid(0, this.maxFrameLength, p, false)) {
         lazyTerminate(STATE, this);
         final IllegalArgumentException e =
             new IllegalArgumentException(
@@ -132,7 +129,7 @@ public final class SocketOnewayRequesterMono extends Mono<Void> implements Subsc
 
     final Payload p = this.payload;
     try {
-      if (!isValid(this.mtu, this.maxFrameLength, p, false)) {
+      if (!isValid(0, this.maxFrameLength, p, false)) {
         lazyTerminate(STATE, this);
         final IllegalArgumentException e =
             new IllegalArgumentException(

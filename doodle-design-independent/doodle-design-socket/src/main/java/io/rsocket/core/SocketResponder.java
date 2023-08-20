@@ -33,12 +33,11 @@ public class SocketResponder extends SocketRequesterResponderSupport implements 
   Socket socketHandler;
 
   public SocketResponder(
-      int mtu,
       int maxFrameLength,
       SocketConnection socketConnection,
       Socket socketHandler,
       PayloadDecoder payloadDecoder) {
-    super(mtu, maxFrameLength, socketConnection, payloadDecoder);
+    super(maxFrameLength, socketConnection, payloadDecoder);
     this.socketHandler = socketHandler;
 
     socketConnection.receive().subscribe(this::handleFrames, e -> {});

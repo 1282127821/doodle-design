@@ -25,18 +25,13 @@ import lombok.experimental.FieldDefaults;
 @Getter
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class SocketRequesterResponderSupport {
-  int mtu;
   int maxFrameLength;
   SocketConnection socketConnection;
   PayloadDecoder payloadDecoder;
   ByteBufAllocator allocator;
 
   public SocketRequesterResponderSupport(
-      int mtu,
-      int maxFrameLength,
-      SocketConnection socketConnection,
-      PayloadDecoder payloadDecoder) {
-    this.mtu = mtu;
+      int maxFrameLength, SocketConnection socketConnection, PayloadDecoder payloadDecoder) {
     this.maxFrameLength = maxFrameLength;
     this.socketConnection = socketConnection;
     this.payloadDecoder = payloadDecoder;

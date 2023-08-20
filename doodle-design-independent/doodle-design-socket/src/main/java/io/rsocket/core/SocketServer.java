@@ -22,24 +22,52 @@ import io.rsocket.SocketConnection;
 import io.rsocket.SocketConnectionSetupPayload;
 import io.rsocket.frame.SocketFrameHeaderCodec;
 import io.rsocket.frame.SocketFrameType;
-import io.rsocket.frame.decoder.PayloadDecoder;
+import io.rsocket.frame.decoder.SocketPayloadDecoder;
 import io.rsocket.transport.SocketServerTransport;
 import java.time.Duration;
+import java.util.Objects;
 import java.util.function.Supplier;
 import lombok.AccessLevel;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Mono;
 
 @Slf4j
-@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class SocketServer {
   SocketAcceptor serverAcceptor;
-  private int mtu = 0;
-  PayloadDecoder payloadDecoder;
-  Duration timeout;
+  SocketPayloadDecoder payloadDecoder;
+  Duration timeout = Duration.ofMinutes(1);
+
+  public static SocketServer create() {
+    return new SocketServer();
+  }
+
+  public static SocketServer create(SocketAcceptor acceptor) {
+    return create().acceptor(acceptor);
+  }
+
+  public SocketServer acceptor(SocketAcceptor acceptor) {
+    Objects.requireNonNull(acceptor);
+    this.serverAcceptor = acceptor;
+    return this;
+  }
+
+  public SocketServer payloadDecoder(SocketPayloadDecoder payloadDecoder) {
+    Objects.requireNonNull(payloadDecoder);
+    this.payloadDecoder = payloadDecoder;
+    return this;
+  }
+
+  public SocketServer maxTimeToFirstFrame(Duration timeout) {
+    if (timeout.isNegative() || timeout.isZero()) {
+      throw new IllegalArgumentException("Setup 协议处理等待时间不能小于0");
+    }
+    this.timeout = timeout;
+    return this;
+  }
 
   private Mono<Void> acceptor(
       SocketServerSetup serverSetup, SocketConnection socketConnection, int maxFrameLength) {
@@ -78,7 +106,6 @@ public final class SocketServer {
               new SocketRequester(
                   multiplexer.asServerConnection(),
                   payloadDecoder,
-                  mtu,
                   maxFrameLength,
                   setupPayload.keepAliveInterval(),
                   setupPayload.keepAliveMaxLifetime(),
@@ -90,7 +117,6 @@ public final class SocketServer {
                   socketHandler -> {
                     SocketResponder responder =
                         new SocketResponder(
-                            mtu,
                             maxFrameLength,
                             multiplexer.asClientConnection(),
                             socketHandler,

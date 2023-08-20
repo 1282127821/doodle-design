@@ -22,7 +22,7 @@ import reactor.core.publisher.Mono;
 import reactor.util.function.Tuple2;
 import reactor.util.function.Tuples;
 
-public class SocketClientSetup {
+public final class SocketClientSetup {
 
   public Mono<Tuple2<ByteBuf, SocketConnection>> init(SocketConnection connection) {
     return Mono.create(

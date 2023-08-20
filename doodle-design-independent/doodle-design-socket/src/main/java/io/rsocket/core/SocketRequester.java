@@ -34,19 +34,18 @@ import reactor.core.publisher.Sinks;
 
 @Slf4j
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class SocketRequester extends SocketRequesterResponderSupport implements Socket {
+public final class SocketRequester extends SocketRequesterResponderSupport implements Socket {
   SocketKeepAliveFrameAcceptor keepAliveFrameAcceptor;
   Sinks.Empty<Void> onClose;
 
   public SocketRequester(
       SocketConnection socketConnection,
       PayloadDecoder payloadDecoder,
-      int mtu,
       int maxFrameLength,
       int keepAliveTickPeriod,
       int keepAliveAckTimeout,
       SocketKeepAliveHandler keepAliveHandler) {
-    super(mtu, maxFrameLength, socketConnection, payloadDecoder);
+    super(maxFrameLength, socketConnection, payloadDecoder);
 
     onClose = Sinks.empty();
 
