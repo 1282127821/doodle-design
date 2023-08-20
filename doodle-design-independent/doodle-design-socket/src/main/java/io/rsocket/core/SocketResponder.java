@@ -22,15 +22,25 @@ import io.rsocket.SocketConnection;
 import io.rsocket.frame.SocketFrameHeaderCodec;
 import io.rsocket.frame.SocketFrameType;
 import io.rsocket.frame.decoder.PayloadDecoder;
+import java.nio.channels.ClosedChannelException;
+import java.util.concurrent.CancellationException;
+import java.util.concurrent.atomic.AtomicReferenceFieldUpdater;
+import java.util.function.Supplier;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Mono;
 
 @Slf4j
-@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class SocketResponder extends SocketRequesterResponderSupport implements Socket {
-  Socket socketHandler;
+  private static final Exception CLOSED_CHANNEL_EXCEPTION = new ClosedChannelException();
+  private static final AtomicReferenceFieldUpdater<SocketResponder, Throwable> TERMINATION_ERROR =
+      AtomicReferenceFieldUpdater.newUpdater(
+          SocketResponder.class, Throwable.class, "terminationError");
+  volatile Throwable terminationError;
+
+  final Socket socketHandler;
 
   public SocketResponder(
       int maxFrameLength,
@@ -65,9 +75,22 @@ public class SocketResponder extends SocketRequesterResponderSupport implements 
         .subscribe(SocketOnewayResponderSubscriber.INSTANCE);
   }
 
-  private void tryTerminateOnConnectionClose() {}
+  private void tryTerminateOnConnectionError(Throwable e) {
+    tryTerminate(() -> e);
+  }
 
-  private void tryTerminateOnConnectionError(Throwable e) {}
+  private void tryTerminateOnConnectionClose() {
+    tryTerminate(() -> CLOSED_CHANNEL_EXCEPTION);
+  }
+
+  private void tryTerminate(Supplier<Throwable> errorSupplier) {
+    if (terminationError == null) {
+      Throwable e = errorSupplier.get();
+      if (TERMINATION_ERROR.compareAndSet(this, null, e)) {
+        doOnDispose();
+      }
+    }
+  }
 
   @Override
   public Mono<Void> oneway(Payload payload) {
@@ -79,7 +102,9 @@ public class SocketResponder extends SocketRequesterResponderSupport implements 
   }
 
   @Override
-  public void dispose() {}
+  public void dispose() {
+    tryTerminate(() -> new CancellationException("Disposed"));
+  }
 
   @Override
   public boolean isDisposed() {
@@ -89,5 +114,10 @@ public class SocketResponder extends SocketRequesterResponderSupport implements 
   @Override
   public Mono<Void> onClose() {
     return getSocketConnection().onClose();
+  }
+
+  final void doOnDispose() {
+    getSocketConnection().dispose();
+    socketHandler.dispose();
   }
 }

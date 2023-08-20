@@ -25,6 +25,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.doodle.design.socket.reactive.SocketMessageHandler;
+import org.doodle.design.socket.reactive.SocketRequesterMethodArgumentResolver;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.core.io.buffer.DataBufferUtils;
 import org.springframework.core.io.buffer.NettyDataBuffer;
@@ -44,6 +45,7 @@ import reactor.core.publisher.Mono;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequiredArgsConstructor
 public final class MessagingSocket implements Socket {
+  Socket socket;
   SocketMessageHandler messageHandler;
 
   public Mono<Void> handleConnectionSetupPayload(SocketConnectionSetupPayload setupPayload) {
@@ -77,6 +79,7 @@ public final class MessagingSocket implements Socket {
       RouteMatcher.Route setupRoute = new SimpleRouteMatcher(new AntPathMatcher()).parseRoute("");
       headers.setHeader(DestinationPatternsMessageCondition.LOOKUP_DESTINATION_HEADER, setupRoute);
     }
+    headers.setHeader(SocketRequesterMethodArgumentResolver.SOCKET_REQUESTER_HEADER, socket);
     headers.setHeader(SocketFrameTypeMessageCondition.FRAME_TYPE_HEADER, frameType);
     return headers.getMessageHeaders();
   }

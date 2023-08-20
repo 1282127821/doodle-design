@@ -34,6 +34,13 @@ import reactor.core.publisher.Mono;
 @Slf4j
 public class SocketMessageHandler extends PacketMappingMessageHandler {
 
+  @Override
+  public void afterPropertiesSet() {
+    getArgumentResolverConfigurer().addCustomResolver(new SocketRequesterMethodArgumentResolver());
+    getReturnValueHandlerConfigurer().addCustomHandler(new SocketPayloadReturnValueHandler());
+    super.afterPropertiesSet();
+  }
+
   @Nullable
   @Override
   protected CompositeMessageCondition getCondition(AnnotatedElement element) {
@@ -69,6 +76,6 @@ public class SocketMessageHandler extends PacketMappingMessageHandler {
 
   private MessagingSocket createResponder(
       SocketConnectionSetupPayload setupPayload, Socket socket) {
-    return new MessagingSocket(this);
+    return new MessagingSocket(socket, this);
   }
 }
