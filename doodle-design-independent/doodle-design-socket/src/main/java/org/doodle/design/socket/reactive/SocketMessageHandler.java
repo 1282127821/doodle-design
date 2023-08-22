@@ -16,7 +16,7 @@
 package org.doodle.design.socket.reactive;
 
 import io.rsocket.Socket;
-import io.rsocket.SocketAcceptor;
+import io.rsocket.SocketAcceptorFunction;
 import io.rsocket.SocketConnectionSetupPayload;
 import java.lang.reflect.AnnotatedElement;
 import lombok.extern.slf4j.Slf4j;
@@ -62,7 +62,7 @@ public class SocketMessageHandler extends PacketMappingMessageHandler {
     return null;
   }
 
-  public SocketAcceptor serverAcceptor() {
+  public SocketAcceptorFunction serverAcceptor() {
     return (setupPayload, sendingSocket) -> {
       MessagingSocket responder;
       try {
