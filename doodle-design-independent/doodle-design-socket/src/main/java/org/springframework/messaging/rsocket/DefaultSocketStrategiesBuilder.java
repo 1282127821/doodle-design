@@ -38,7 +38,9 @@ public final class DefaultSocketStrategiesBuilder implements SocketStrategiesBui
 
   public DefaultSocketStrategiesBuilder(SocketStrategies strategies) {
     this.builder = new DefaultRSocketStrategies.DefaultRSocketStrategiesBuilder(strategies);
-    this.builder.metadataExtractor(new DefaultSocketMetadataExtractor());
+    if (strategies.metadataExtractor() == null) {
+      this.builder.metadataExtractor(new DefaultSocketMetadataExtractor());
+    }
   }
 
   @Override
