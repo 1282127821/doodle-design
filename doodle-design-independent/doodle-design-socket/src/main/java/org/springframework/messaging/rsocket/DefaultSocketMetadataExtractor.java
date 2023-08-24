@@ -13,22 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.socket;
+package org.springframework.messaging.rsocket;
 
-import org.springframework.messaging.rsocket.DefaultSocketStrategiesBuilder;
-import org.springframework.messaging.rsocket.RSocketStrategies;
+import io.rsocket.Payload;
+import java.util.Map;
+import org.springframework.util.MimeType;
 
-public interface SocketStrategies extends RSocketStrategies {
-
+public class DefaultSocketMetadataExtractor
+    extends org.springframework.messaging.rsocket.DefaultMetadataExtractor {
   @Override
-  SocketMetadataExtractor metadataExtractor();
-
-  static SocketStrategies create() {
-    return new DefaultSocketStrategiesBuilder().build();
-  }
-
-  @Override
-  default SocketStrategiesBuilder mutate() {
-    return new DefaultSocketStrategiesBuilder(this);
+  public Map<String, Object> extract(Payload payload, MimeType metadataMimeType) {
+    // TODO: 2023/8/24 重新实现解析 Metadata 逻辑
+    return super.extract(payload, metadataMimeType);
   }
 }

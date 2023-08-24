@@ -35,7 +35,6 @@ import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageHeaders;
 import org.springframework.messaging.handler.DestinationPatternsMessageCondition;
 import org.springframework.messaging.handler.invocation.reactive.HandlerMethodReturnValueHandler;
-import org.springframework.messaging.rsocket.MetadataExtractor;
 import org.springframework.messaging.rsocket.PayloadUtils;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.messaging.support.MessageHeaderAccessor;
@@ -81,11 +80,11 @@ public final class MessagingSocket implements Socket {
   private MessageHeaders createHeaders(Payload payload, SocketFrameType frameType) {
     MessageHeaderAccessor headers = new MessageHeaderAccessor();
     headers.setLeaveMutable(true);
-    MetadataExtractor metadataExtractor = this.strategies.metadataExtractor();
+    SocketMetadataExtractor metadataExtractor = this.strategies.metadataExtractor();
     Map<String, Object> metadataValues = metadataExtractor.extract(payload, metadataMimeType);
-    metadataValues.put(MetadataExtractor.ROUTE_KEY, "");
+    metadataValues.put(SocketMetadataExtractor.ROUTE_KEY, "");
     for (Map.Entry<String, Object> entry : metadataValues.entrySet()) {
-      if (entry.getKey().equals(MetadataExtractor.ROUTE_KEY)) {
+      if (entry.getKey().equals(SocketMetadataExtractor.ROUTE_KEY)) {
         RouteMatcher.Route route = this.routeMatcher.parseRoute((String) entry.getValue());
         headers.setHeader(DestinationPatternsMessageCondition.LOOKUP_DESTINATION_HEADER, route);
       } else {

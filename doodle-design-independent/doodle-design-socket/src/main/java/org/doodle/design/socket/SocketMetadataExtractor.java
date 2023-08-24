@@ -15,20 +15,6 @@
  */
 package org.doodle.design.socket;
 
-import org.springframework.messaging.rsocket.DefaultSocketStrategiesBuilder;
-import org.springframework.messaging.rsocket.RSocketStrategies;
+import org.springframework.messaging.rsocket.MetadataExtractor;
 
-public interface SocketStrategies extends RSocketStrategies {
-
-  @Override
-  SocketMetadataExtractor metadataExtractor();
-
-  static SocketStrategies create() {
-    return new DefaultSocketStrategiesBuilder().build();
-  }
-
-  @Override
-  default SocketStrategiesBuilder mutate() {
-    return new DefaultSocketStrategiesBuilder(this);
-  }
-}
+public interface SocketMetadataExtractor extends MetadataExtractor {}
