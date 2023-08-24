@@ -19,20 +19,49 @@ import io.rsocket.Socket;
 import io.rsocket.SocketAcceptorFunction;
 import io.rsocket.SocketConnectionSetupPayload;
 import java.lang.reflect.AnnotatedElement;
+import java.util.ArrayList;
+import java.util.List;
+import lombok.AccessLevel;
+import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.doodle.design.messaging.packet.PacketMapping;
 import org.doodle.design.messaging.packet.reactive.PacketMappingMessageHandler;
 import org.doodle.design.socket.MessagingSocket;
 import org.doodle.design.socket.SocketConnectMapping;
 import org.doodle.design.socket.SocketFrameTypeMessageCondition;
+import org.doodle.design.socket.SocketStrategies;
 import org.springframework.core.annotation.AnnotatedElementUtils;
+import org.springframework.core.codec.Encoder;
 import org.springframework.lang.Nullable;
 import org.springframework.messaging.handler.CompositeMessageCondition;
 import org.springframework.messaging.handler.DestinationPatternsMessageCondition;
+import org.springframework.util.Assert;
+import org.springframework.util.MimeType;
+import org.springframework.util.MimeTypeUtils;
+import org.springframework.util.StringUtils;
 import reactor.core.publisher.Mono;
 
 @Slf4j
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class SocketMessageHandler extends PacketMappingMessageHandler {
+  final List<Encoder<?>> encoders = new ArrayList<>();
+  SocketStrategies strategies;
+  MimeType defaultDataMimeType;
+  MimeType defaultMetadataMimeType;
+
+  public void setEncoders(List<Encoder<?>> encoders) {
+    this.encoders.clear();
+    this.encoders.addAll(encoders);
+    this.strategies =
+        this.strategies
+            .mutate()
+            .encoders(
+                list -> {
+                  list.clear();
+                  list.addAll(encoders);
+                })
+            .build();
+  }
 
   @Override
   public void afterPropertiesSet() {
@@ -76,6 +105,31 @@ public class SocketMessageHandler extends PacketMappingMessageHandler {
 
   private MessagingSocket createResponder(
       SocketConnectionSetupPayload setupPayload, Socket socket) {
-    return new MessagingSocket(socket, this);
+    String mimeType = setupPayload.dataMimeType();
+    MimeType dataMimeType =
+        StringUtils.hasText(mimeType)
+            ? MimeTypeUtils.parseMimeType(mimeType)
+            : this.defaultDataMimeType;
+    Assert.notNull(dataMimeType, "Setup协议没有发送 dataMimeType, 并且没有设置默认值");
+    Assert.isTrue(isDataMimeTypeSupported(dataMimeType), "暂不支持数据类型: " + dataMimeType);
+    mimeType = setupPayload.metadataMimeType();
+    MimeType metadataMimeType =
+        StringUtils.hasText(mimeType)
+            ? MimeTypeUtils.parseMimeType(mimeType)
+            : this.defaultMetadataMimeType;
+    Assert.notNull(metadataMimeType, "Setup协议没有发送 metadataMimeType, 并且没有设置默认值");
+    return new MessagingSocket(
+        socket, dataMimeType, metadataMimeType, this, obtainRouteMatcher(), this.strategies);
+  }
+
+  private boolean isDataMimeTypeSupported(MimeType dataMimeType) {
+    for (Encoder<?> encoder : this.encoders) {
+      for (MimeType encodable : encoder.getEncodableMimeTypes()) {
+        if (encodable.isCompatibleWith(dataMimeType)) {
+          return true;
+        }
+      }
+    }
+    return false;
   }
 }

@@ -20,6 +20,7 @@ import io.rsocket.Payload;
 import io.rsocket.Socket;
 import io.rsocket.SocketConnectionSetupPayload;
 import io.rsocket.frame.SocketFrameType;
+import java.util.Map;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -33,12 +34,13 @@ import org.springframework.core.io.buffer.NettyDataBufferFactory;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageHeaders;
 import org.springframework.messaging.handler.DestinationPatternsMessageCondition;
+import org.springframework.messaging.handler.invocation.reactive.HandlerMethodReturnValueHandler;
+import org.springframework.messaging.rsocket.MetadataExtractor;
 import org.springframework.messaging.rsocket.PayloadUtils;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.messaging.support.MessageHeaderAccessor;
-import org.springframework.util.AntPathMatcher;
+import org.springframework.util.MimeType;
 import org.springframework.util.RouteMatcher;
-import org.springframework.util.SimpleRouteMatcher;
 import reactor.core.publisher.Mono;
 
 @Slf4j
@@ -46,7 +48,11 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 public final class MessagingSocket implements Socket {
   Socket socket;
+  MimeType dataMimeType;
+  MimeType metadataMimeType;
   SocketMessageHandler messageHandler;
+  RouteMatcher routeMatcher;
+  SocketStrategies strategies;
 
   public Mono<Void> handleConnectionSetupPayload(SocketConnectionSetupPayload setupPayload) {
     setupPayload.retain();
@@ -75,12 +81,23 @@ public final class MessagingSocket implements Socket {
   private MessageHeaders createHeaders(Payload payload, SocketFrameType frameType) {
     MessageHeaderAccessor headers = new MessageHeaderAccessor();
     headers.setLeaveMutable(true);
-    if (frameType == SocketFrameType.SETUP) {
-      RouteMatcher.Route setupRoute = new SimpleRouteMatcher(new AntPathMatcher()).parseRoute("");
-      headers.setHeader(DestinationPatternsMessageCondition.LOOKUP_DESTINATION_HEADER, setupRoute);
+    MetadataExtractor metadataExtractor = this.strategies.metadataExtractor();
+    Map<String, Object> metadataValues = metadataExtractor.extract(payload, metadataMimeType);
+    metadataValues.put(MetadataExtractor.ROUTE_KEY, "");
+    for (Map.Entry<String, Object> entry : metadataValues.entrySet()) {
+      if (entry.getKey().equals(MetadataExtractor.ROUTE_KEY)) {
+        RouteMatcher.Route route = this.routeMatcher.parseRoute((String) entry.getValue());
+        headers.setHeader(DestinationPatternsMessageCondition.LOOKUP_DESTINATION_HEADER, route);
+      } else {
+        headers.setHeader(entry.getKey(), entry.getValue());
+      }
     }
+    headers.setContentType(this.dataMimeType);
     headers.setHeader(SocketRequesterMethodArgumentResolver.SOCKET_REQUESTER_HEADER, socket);
     headers.setHeader(SocketFrameTypeMessageCondition.FRAME_TYPE_HEADER, frameType);
+    headers.setHeader(
+        HandlerMethodReturnValueHandler.DATA_BUFFER_FACTORY_HEADER,
+        this.strategies.dataBufferFactory());
     return headers.getMessageHeaders();
   }
 
