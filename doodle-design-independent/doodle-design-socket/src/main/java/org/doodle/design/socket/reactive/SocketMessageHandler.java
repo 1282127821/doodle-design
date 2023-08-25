@@ -18,6 +18,7 @@ package org.doodle.design.socket.reactive;
 import io.rsocket.Socket;
 import io.rsocket.SocketAcceptorFunction;
 import io.rsocket.SocketConnectionSetupPayload;
+import io.rsocket.frame.SocketFrameType;
 import io.rsocket.metadata.WellKnownMimeType;
 import java.lang.reflect.AnnotatedElement;
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ import lombok.AccessLevel;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.doodle.design.messaging.packet.PacketDeliveryException;
 import org.doodle.design.messaging.packet.PacketMapping;
 import org.doodle.design.messaging.packet.reactive.PacketMappingMessageHandler;
 import org.doodle.design.socket.MessagingSocket;
@@ -35,14 +37,12 @@ import org.doodle.design.socket.SocketStrategies;
 import org.springframework.core.annotation.AnnotatedElementUtils;
 import org.springframework.core.codec.Encoder;
 import org.springframework.lang.Nullable;
+import org.springframework.messaging.Message;
 import org.springframework.messaging.handler.CompositeMessageCondition;
 import org.springframework.messaging.handler.DestinationPatternsMessageCondition;
 import org.springframework.messaging.handler.HandlerMethod;
 import org.springframework.messaging.handler.MessageCondition;
-import org.springframework.util.Assert;
-import org.springframework.util.MimeType;
-import org.springframework.util.MimeTypeUtils;
-import org.springframework.util.StringUtils;
+import org.springframework.util.*;
 import reactor.core.publisher.Mono;
 
 @Slf4j
@@ -159,5 +159,11 @@ public class SocketMessageHandler extends PacketMappingMessageHandler {
       }
     }
     return false;
+  }
+
+  @Override
+  protected void handleNoMatch(RouteMatcher.Route destination, Message<?> message) {
+    SocketFrameType frameType = SocketFrameTypeMessageCondition.getFrameType(message);
+    throw new PacketDeliveryException("找不到对应的路由目的地: {" + frameType + "}" + destination);
   }
 }

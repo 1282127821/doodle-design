@@ -18,6 +18,7 @@ package org.doodle.design.socket;
 import io.rsocket.frame.SocketFrameType;
 import java.util.*;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.experimental.FieldDefaults;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.handler.AbstractMessageCondition;
@@ -47,7 +48,7 @@ public class SocketFrameTypeMessageCondition
     }
   }
 
-  Set<SocketFrameType> frameTypes;
+  @Getter Set<SocketFrameType> frameTypes;
 
   public SocketFrameTypeMessageCondition(SocketFrameType... frameTypes) {
     this(Arrays.asList(frameTypes));
@@ -69,6 +70,10 @@ public class SocketFrameTypeMessageCondition
   @Override
   protected String getToStringInfix() {
     return " || ";
+  }
+
+  public static SocketFrameType getFrameType(Message<?> message) {
+    return (SocketFrameType) message.getHeaders().get(FRAME_TYPE_HEADER);
   }
 
   @Override
