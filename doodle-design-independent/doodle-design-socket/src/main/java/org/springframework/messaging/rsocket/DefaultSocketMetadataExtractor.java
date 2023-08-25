@@ -17,10 +17,12 @@ package org.springframework.messaging.rsocket;
 
 import io.rsocket.Payload;
 import java.util.Map;
+import org.doodle.design.socket.SocketMetadataExtractor;
 import org.springframework.util.MimeType;
 
 public class DefaultSocketMetadataExtractor
-    extends org.springframework.messaging.rsocket.DefaultMetadataExtractor {
+    extends org.springframework.messaging.rsocket.DefaultMetadataExtractor
+    implements SocketMetadataExtractor {
   @Override
   public Map<String, Object> extract(Payload payload, MimeType metadataMimeType) {
     // TODO: 2023/8/24 重新实现解析 Metadata 逻辑

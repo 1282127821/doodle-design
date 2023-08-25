@@ -18,10 +18,12 @@ package org.doodle.design.socket.reactive;
 import io.rsocket.Socket;
 import io.rsocket.SocketAcceptorFunction;
 import io.rsocket.SocketConnectionSetupPayload;
+import io.rsocket.metadata.WellKnownMimeType;
 import java.lang.reflect.AnnotatedElement;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.AccessLevel;
+import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.doodle.design.messaging.packet.PacketMapping;
@@ -46,8 +48,11 @@ import reactor.core.publisher.Mono;
 public class SocketMessageHandler extends PacketMappingMessageHandler {
   final List<Encoder<?>> encoders = new ArrayList<>();
   SocketStrategies strategies;
-  MimeType defaultDataMimeType;
-  MimeType defaultMetadataMimeType;
+  @Setter MimeType defaultDataMimeType = MimeTypeUtils.APPLICATION_JSON;
+
+  @Setter
+  MimeType defaultMetadataMimeType =
+      MimeTypeUtils.parseMimeType(WellKnownMimeType.MESSAGE_RSOCKET_COMPOSITE_METADATA.getString());
 
   public void setEncoders(List<Encoder<?>> encoders) {
     this.encoders.clear();
@@ -61,6 +66,14 @@ public class SocketMessageHandler extends PacketMappingMessageHandler {
                   list.addAll(encoders);
                 })
             .build();
+  }
+
+  public void setStrategies(SocketStrategies strategies) {
+    this.strategies = strategies;
+    setEncoders(strategies.encoders());
+    super.setDecoders(strategies.decoders());
+    super.setRouteMatcher(strategies.routeMatcher());
+    super.setReactiveAdapterRegistry(strategies.reactiveAdapterRegistry());
   }
 
   @Override
@@ -97,6 +110,7 @@ public class SocketMessageHandler extends PacketMappingMessageHandler {
       try {
         responder = createResponder(setupPayload, sendingSocket);
       } catch (Throwable ex) {
+        log.error("Socket建立连接发生错误", ex);
         return Mono.error(ex);
       }
       return responder.handleConnectionSetupPayload(setupPayload).then(Mono.just(responder));
