@@ -37,6 +37,8 @@ import org.springframework.core.codec.Encoder;
 import org.springframework.lang.Nullable;
 import org.springframework.messaging.handler.CompositeMessageCondition;
 import org.springframework.messaging.handler.DestinationPatternsMessageCondition;
+import org.springframework.messaging.handler.HandlerMethod;
+import org.springframework.messaging.handler.MessageCondition;
 import org.springframework.util.Assert;
 import org.springframework.util.MimeType;
 import org.springframework.util.MimeTypeUtils;
@@ -102,6 +104,18 @@ public class SocketMessageHandler extends PacketMappingMessageHandler {
           new DestinationPatternsMessageCondition());
     }
     return null;
+  }
+
+  @Override
+  protected CompositeMessageCondition extendMapping(
+      CompositeMessageCondition composite, HandlerMethod handler) {
+    List<MessageCondition<?>> conditions = composite.getMessageConditions();
+    if (conditions.get(0) != SocketFrameTypeMessageCondition.EMPTY_CONDITION) {
+      return composite;
+    }
+
+    return new CompositeMessageCondition(
+        SocketFrameTypeMessageCondition.ONEWAY_CONDITION, conditions.get(1));
   }
 
   public SocketAcceptorFunction serverAcceptor() {

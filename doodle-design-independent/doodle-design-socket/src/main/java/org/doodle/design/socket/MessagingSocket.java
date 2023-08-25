@@ -69,6 +69,7 @@ public final class MessagingSocket implements Socket {
     int refCnt = refCount(dataBuffer);
     Message<DataBuffer> message = MessageBuilder.createMessage(dataBuffer, headers);
     return Mono.defer(() -> this.messageHandler.handleMessage(message))
+        .doOnError(e -> log.error("", e))
         .doFinally(
             s -> {
               if (refCount(dataBuffer) == refCnt) {
@@ -82,7 +83,7 @@ public final class MessagingSocket implements Socket {
     headers.setLeaveMutable(true);
     SocketMetadataExtractor metadataExtractor = this.strategies.metadataExtractor();
     Map<String, Object> metadataValues = metadataExtractor.extract(payload, metadataMimeType);
-    metadataValues.put(SocketMetadataExtractor.ROUTE_KEY, "");
+    metadataValues.putIfAbsent(SocketMetadataExtractor.ROUTE_KEY, "");
     for (Map.Entry<String, Object> entry : metadataValues.entrySet()) {
       if (entry.getKey().equals(SocketMetadataExtractor.ROUTE_KEY)) {
         RouteMatcher.Route route = this.routeMatcher.parseRoute((String) entry.getValue());
