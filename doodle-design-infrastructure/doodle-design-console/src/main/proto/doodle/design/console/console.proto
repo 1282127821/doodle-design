@@ -19,6 +19,7 @@ syntax = "proto3";
 package doodle.design.console;
 
 import "google/protobuf/struct.proto";
+import "doodle/design/broker/broker_frame.proto";
 
 option java_multiple_files = true;
 option java_package = "org.doodle.design.console";
@@ -74,4 +75,16 @@ message ApplicationQueryReply {
 
 message ApplicationDeleteRequest {
   repeated string application_id = 1;
+}
+
+message ApplicationRuntimeInfo {
+  google.protobuf.Struct runtime = 1;
+}
+
+message ApplicationRuntimeRequest {
+  doodle.design.broker.Tags tags = 1;
+}
+
+message ApplicationRuntimeReply {
+  ApplicationRuntimeInfo application_runtime = 1;
 }

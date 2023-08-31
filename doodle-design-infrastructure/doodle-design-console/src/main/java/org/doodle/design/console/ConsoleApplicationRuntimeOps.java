@@ -18,16 +18,16 @@ package org.doodle.design.console;
 import org.doodle.design.common.Result;
 import reactor.core.publisher.Mono;
 
-public interface ConsoleApplicationUpdateOps {
+public interface ConsoleApplicationRuntimeOps {
 
   @FunctionalInterface
-  interface Socket {
-    Mono<ApplicationUpdateReply> update(ApplicationUpdateRequest request);
+  interface RSocket {
+    Mono<ApplicationRuntimeReply> runtime(ApplicationRuntimeRequest request);
   }
 
   @FunctionalInterface
   interface Servlet {
-    Result<org.doodle.design.console.model.payload.reply.ApplicationUpdateReply> update(
-        org.doodle.design.console.model.payload.request.ApplicationUpdateRequest request);
+    Result<org.doodle.design.console.model.payload.reply.ApplicationRuntimeReply> runtime(
+        org.doodle.design.console.model.payload.request.ApplicationRuntimeRequest request);
   }
 }

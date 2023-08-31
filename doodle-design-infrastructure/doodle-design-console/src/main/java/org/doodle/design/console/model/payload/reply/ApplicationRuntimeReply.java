@@ -13,21 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.console;
+package org.doodle.design.console.model.payload.reply;
 
-import org.doodle.design.common.Result;
-import reactor.core.publisher.Mono;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
+import org.doodle.design.console.model.info.ApplicationRuntimeInfo;
 
-public interface ConsoleApplicationUpdateOps {
-
-  @FunctionalInterface
-  interface Socket {
-    Mono<ApplicationUpdateReply> update(ApplicationUpdateRequest request);
-  }
-
-  @FunctionalInterface
-  interface Servlet {
-    Result<org.doodle.design.console.model.payload.reply.ApplicationUpdateReply> update(
-        org.doodle.design.console.model.payload.request.ApplicationUpdateRequest request);
-  }
+@Builder
+@ToString
+@Data
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@AllArgsConstructor
+@NoArgsConstructor
+public class ApplicationRuntimeReply {
+  ApplicationRuntimeInfo runtimeInfo;
 }
