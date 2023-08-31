@@ -18,6 +18,60 @@ syntax = "proto3";
 
 package doodle.design.console;
 
+import "google/protobuf/struct.proto";
+
 option java_multiple_files = true;
 option java_package = "org.doodle.design.console";
 option java_outer_classname = "ConsoleProto";
+
+enum ConsoleErrorCode {
+  FAILURE = 0;
+}
+
+// 应用配置
+message ApplicationInfo {
+  string id = 1;
+  google.protobuf.Struct tags = 2;
+}
+
+message ApplicationInfoList {
+  repeated ApplicationInfo application_info = 1;
+}
+
+
+message ApplicationCreateRequest {
+  google.protobuf.Struct tags = 1;
+}
+
+message ApplicationCreateReply {
+  oneof Result {
+    ConsoleErrorCode error = 1;
+    ApplicationInfo payload = 2;
+  }
+}
+
+message ApplicationUpdateRequest {
+  ApplicationInfo application = 1;
+}
+
+message ApplicationUpdateReply {
+  oneof Result {
+    ConsoleErrorCode error = 1;
+    ApplicationInfo payload = 2;
+  }
+}
+
+message ApplicationQueryRequest {
+  //todo 分页参数
+}
+
+message ApplicationQueryReply {
+  oneof Result {
+    ConsoleErrorCode error = 1;
+    ApplicationInfoList payload = 2;
+  }
+}
+
+message ApplicationDeleteRequest {
+  repeated string application_id = 1;
+}

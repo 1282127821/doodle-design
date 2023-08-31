@@ -15,4 +15,19 @@
  */
 package org.doodle.design.console;
 
-public interface ConsoleOperation {}
+import org.doodle.design.common.Result;
+import reactor.core.publisher.Mono;
+
+public interface ConsoleApplicationDeleteOps {
+
+  @FunctionalInterface
+  interface RSocket {
+    Mono<ConsoleErrorCode> delete(ApplicationDeleteRequest request);
+  }
+
+  @FunctionalInterface
+  interface Servlet {
+    Result<ConsoleErrorCode> delete(
+        org.doodle.design.console.model.payload.request.ApplicationDeleteRequest request);
+  }
+}
