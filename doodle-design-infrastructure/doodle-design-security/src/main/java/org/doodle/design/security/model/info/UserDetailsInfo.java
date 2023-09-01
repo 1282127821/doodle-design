@@ -13,31 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.doodle.design.security.model.info;
 
-syntax = "proto3";
+import java.util.Collection;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
-package doodle.design.security;
-
-import "doodle/design/common/status.proto";
-
-option java_multiple_files = true;
-option java_package = "org.doodle.design.security";
-option java_outer_classname = "SecurityProto";
-
-message UserDetailsInfo {
-  string username = 1;
-  string password = 2;
-  bool enable = 3;
-  repeated string authorities = 4;
-}
-
-message SecurityUserQueryRequest {
-  string username = 1;
-}
-
-message SecurityUserQueryReply {
-  oneof Result {
-    doodle.design.common.Status error = 1;
-    UserDetailsInfo payload = 2;
-  }
+@Builder
+@ToString
+@Data
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@AllArgsConstructor
+@NoArgsConstructor
+public class UserDetailsInfo {
+  String username;
+  String password;
+  boolean enable;
+  Collection<String> authorities;
 }

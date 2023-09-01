@@ -20,11 +20,11 @@ import org.doodle.design.common.Status;
 
 public abstract class SecurityMapper implements ProtoMapper {
 
-  public SecurityPullReply toError(Status status) {
-    return SecurityPullReply.newBuilder().setError(status).build();
+  public SecurityUserQueryReply toError(Status status) {
+    return SecurityUserQueryReply.newBuilder().setError(status).build();
   }
 
-  public SecurityPullReply toReply(UserDetailsInfo info) {
-    return SecurityPullReply.newBuilder().setReply(info).build();
+  public SecurityUserQueryReply toReply(UserDetailsInfo info) {
+    return SecurityUserQueryReply.newBuilder().setPayload(info).build();
   }
 }

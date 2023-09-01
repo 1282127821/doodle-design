@@ -15,10 +15,19 @@
  */
 package org.doodle.design.security;
 
+import org.doodle.design.common.Result;
 import reactor.core.publisher.Mono;
 
-@FunctionalInterface
-public interface SecurityPullOperation {
+public interface SecurityUserQueryOps {
 
-  Mono<SecurityPullReply> pull(SecurityPullRequest request);
+  @FunctionalInterface
+  interface RSocket {
+    Mono<SecurityUserQueryReply> query(SecurityUserQueryRequest request);
+  }
+
+  @FunctionalInterface
+  interface Servlet {
+    Result<org.doodle.design.security.model.payload.reply.SecurityUserQueryReply> query(
+        org.doodle.design.security.model.payload.request.SecurityUserQueryRequest request);
+  }
 }
