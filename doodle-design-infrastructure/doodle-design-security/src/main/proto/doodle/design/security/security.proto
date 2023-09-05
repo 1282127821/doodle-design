@@ -81,6 +81,10 @@ message SecurityUserQueryReply {
   }
 }
 
+message SecurityUserPageRequest {
+  doodle.design.common.PageRequest page = 1;
+}
+
 message SecurityUserPageReply {
   oneof Result {
     doodle.design.common.Status error = 1;
@@ -99,6 +103,10 @@ message SecurityRoleQueryReply {
   }
 }
 
+message SecurityRolePageRequest {
+  doodle.design.common.PageRequest page = 1;
+}
+
 message SecurityRolePageReply {
   oneof Result {
     doodle.design.common.Status error = 1;
@@ -115,6 +123,10 @@ message SecurityAuthorityQueryReply {
     doodle.design.common.Status error = 1;
     AuthorityInfo payload = 2;
   }
+}
+
+message SecurityAuthorityPageRequest {
+  doodle.design.common.PageRequest page = 1;
 }
 
 message SecurityAuthorityPageReply {

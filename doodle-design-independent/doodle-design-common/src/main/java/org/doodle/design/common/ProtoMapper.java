@@ -26,6 +26,19 @@ import org.doodle.design.common.model.SdkBundle;
 import org.doodle.design.common.util.ProtoUtils;
 
 public interface ProtoMapper {
+  default org.doodle.design.common.model.PageRequest fromProto(PageRequest request) {
+    return org.doodle.design.common.model.PageRequest.builder()
+        .pageNumber(request.getPageNumber())
+        .pageSize(request.getPageSize())
+        .build();
+  }
+
+  default PageRequest toProto(org.doodle.design.common.model.PageRequest request) {
+    return PageRequest.newBuilder()
+        .setPageNumber(request.getPageNumber())
+        .setPageSize(request.getPageSize())
+        .build();
+  }
 
   default SdkBundle fromProto(SdkBundleInfo info) {
     return SdkBundle.builder()

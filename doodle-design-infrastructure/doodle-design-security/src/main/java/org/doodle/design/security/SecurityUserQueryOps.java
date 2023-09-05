@@ -22,7 +22,9 @@ public interface SecurityUserQueryOps {
 
   @FunctionalInterface
   interface RSocket {
-    Mono<SecurityUserQueryRequest> query(SecurityUserQueryReply request);
+    String QUERY_MAPPING = "security.user.query";
+
+    Mono<SecurityUserQueryReply> query(SecurityUserQueryRequest request);
   }
 
   @FunctionalInterface

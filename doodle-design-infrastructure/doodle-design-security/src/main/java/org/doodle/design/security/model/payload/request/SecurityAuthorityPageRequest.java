@@ -13,23 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.security;
+package org.doodle.design.security.model.payload.request;
 
-import org.doodle.design.common.Result;
-import reactor.core.publisher.Mono;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
+import org.doodle.design.common.model.PageRequest;
 
-public interface SecurityRoleQueryOps {
-
-  @FunctionalInterface
-  interface RSocket {
-    String QUERY_MAPPING = "security.role.query";
-
-    Mono<SecurityRoleQueryReply> query(SecurityRoleQueryRequest request);
-  }
-
-  @FunctionalInterface
-  interface Servlet {
-    Result<org.doodle.design.security.model.payload.reply.SecurityRoleQueryReply> query(
-        org.doodle.design.security.model.payload.request.SecurityRoleQueryRequest request);
-  }
+@Builder
+@ToString
+@Data
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@AllArgsConstructor
+@NoArgsConstructor
+public class SecurityAuthorityPageRequest {
+  PageRequest page;
 }

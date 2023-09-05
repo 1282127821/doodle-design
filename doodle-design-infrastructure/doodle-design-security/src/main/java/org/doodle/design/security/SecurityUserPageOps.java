@@ -15,7 +15,6 @@
  */
 package org.doodle.design.security;
 
-import org.doodle.design.common.PageRequest;
 import org.doodle.design.common.Result;
 import reactor.core.publisher.Mono;
 
@@ -23,12 +22,14 @@ public interface SecurityUserPageOps {
 
   @FunctionalInterface
   interface RSocket {
-    Mono<SecurityUserPageReply> page(PageRequest request);
+    String PAGE_MAPPING = "security.user.page";
+
+    Mono<SecurityUserPageReply> page(SecurityUserPageRequest request);
   }
 
   @FunctionalInterface
   interface Servlet {
     Result<org.doodle.design.security.model.payload.reply.SecurityUserPageReply> page(
-        org.springframework.data.domain.PageRequest request);
+        org.doodle.design.security.model.payload.request.SecurityUserPageRequest request);
   }
 }
