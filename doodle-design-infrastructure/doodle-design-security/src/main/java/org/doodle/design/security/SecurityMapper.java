@@ -33,10 +33,41 @@ public abstract class SecurityMapper implements ProtoMapper {
         .build();
   }
 
+  public AuthorityInfoList toAuthorityInfoListProto(
+      List<org.doodle.design.security.model.info.AuthorityInfo> authorityInfos) {
+    AuthorityInfoList.Builder builder = AuthorityInfoList.newBuilder();
+    if (!CollectionUtils.isEmpty(authorityInfos)) {
+      authorityInfos.stream().map(this::toProto).forEach(builder::addAuthorityInfo);
+    }
+    return builder.build();
+  }
+
+  public List<org.doodle.design.security.model.info.AuthorityInfo> fromProtoList(
+      AuthorityInfoList proto) {
+    return !CollectionUtils.isEmpty(proto.getAuthorityInfoList())
+        ? proto.getAuthorityInfoList().stream().map(this::fromProto).toList()
+        : Collections.emptyList();
+  }
+
   public RoleInfo toProto(org.doodle.design.security.model.info.RoleInfo info) {
     RoleInfo.Builder builder = RoleInfo.newBuilder().setRole(info.getRole());
     info.getAuthorities().forEach(a -> builder.addAuthorities(toProto(a)));
     return builder.build();
+  }
+
+  public RoleInfoList toRoleInfoListProto(
+      List<org.doodle.design.security.model.info.RoleInfo> roleInfos) {
+    RoleInfoList.Builder builder = RoleInfoList.newBuilder();
+    if (!CollectionUtils.isEmpty(roleInfos)) {
+      roleInfos.stream().map(this::toProto).forEach(builder::addRoleInfo);
+    }
+    return builder.build();
+  }
+
+  public List<org.doodle.design.security.model.info.RoleInfo> fromProtoList(RoleInfoList proto) {
+    return !CollectionUtils.isEmpty(proto.getRoleInfoList())
+        ? proto.getRoleInfoList().stream().map(this::fromProto).toList()
+        : Collections.emptyList();
   }
 
   public org.doodle.design.security.model.info.RoleInfo fromProto(RoleInfo proto) {
@@ -74,7 +105,8 @@ public abstract class SecurityMapper implements ProtoMapper {
     return builder.build();
   }
 
-  public UserInfoList toProtoList(List<org.doodle.design.security.model.info.UserInfo> userInfos) {
+  public UserInfoList toUserInfoProtoList(
+      List<org.doodle.design.security.model.info.UserInfo> userInfos) {
     UserInfoList.Builder builder = UserInfoList.newBuilder();
     if (!CollectionUtils.isEmpty(userInfos)) {
       userInfos.stream().map(this::toProto).forEach(builder::addUserInfo);
@@ -83,13 +115,17 @@ public abstract class SecurityMapper implements ProtoMapper {
   }
 
   public List<org.doodle.design.security.model.info.UserInfo> fromProtoList(UserInfoList proto) {
-    if (!CollectionUtils.isEmpty(proto.getUserInfoList())) {
-      List<org.doodle.design.security.model.info.UserInfo> userInfos = new ArrayList<>();
-      proto.getUserInfoList().stream().map(this::fromProto).forEach(userInfos::add);
-      return userInfos;
-    } else {
-      return Collections.emptyList();
-    }
+    return !CollectionUtils.isEmpty(proto.getUserInfoList())
+        ? proto.getUserInfoList().stream().map(this::fromProto).toList()
+        : Collections.emptyList();
+  }
+
+  public SecurityUserDetailsQueryReply toUserDetailsError(Result<Void> r) {
+    return SecurityUserDetailsQueryReply.newBuilder().setError(ProtoUtils.toProto(r)).build();
+  }
+
+  public SecurityUserDetailsQueryReply toUserDetailsReply(UserDetailsInfo info) {
+    return SecurityUserDetailsQueryReply.newBuilder().setPayload(info).build();
   }
 
   public SecurityUserQueryReply toUserQueryError(Result<Void> r) {
@@ -108,11 +144,35 @@ public abstract class SecurityMapper implements ProtoMapper {
     return SecurityUserPageReply.newBuilder().setPayload(list).build();
   }
 
-  public SecurityUserDetailsQueryReply toUserDetailsError(Result<Void> r) {
-    return SecurityUserDetailsQueryReply.newBuilder().setError(ProtoUtils.toProto(r)).build();
+  public SecurityRoleQueryReply toRoleQueryError(Result<Void> r) {
+    return SecurityRoleQueryReply.newBuilder().setError(ProtoUtils.toProto(r)).build();
   }
 
-  public SecurityUserDetailsQueryReply toUserDetailsReply(UserDetailsInfo info) {
-    return SecurityUserDetailsQueryReply.newBuilder().setPayload(info).build();
+  public SecurityRoleQueryReply toRoleQueryReply(RoleInfo info) {
+    return SecurityRoleQueryReply.newBuilder().setPayload(info).build();
+  }
+
+  public SecurityRolePageReply toRolePageError(Result<Void> r) {
+    return SecurityRolePageReply.newBuilder().setError(ProtoUtils.toProto(r)).build();
+  }
+
+  public SecurityRolePageReply toRolePageReply(RoleInfoList list) {
+    return SecurityRolePageReply.newBuilder().setPayload(list).build();
+  }
+
+  public SecurityAuthorityQueryReply toAuthorityQueryError(Result<Void> r) {
+    return SecurityAuthorityQueryReply.newBuilder().setError(ProtoUtils.toProto(r)).build();
+  }
+
+  public SecurityAuthorityQueryReply toAuthorityQueryReply(AuthorityInfo info) {
+    return SecurityAuthorityQueryReply.newBuilder().setPayload(info).build();
+  }
+
+  public SecurityAuthorityPageReply toAuthorityPageError(Result<Void> r) {
+    return SecurityAuthorityPageReply.newBuilder().setError(ProtoUtils.toProto(r)).build();
+  }
+
+  public SecurityAuthorityPageReply toAuthorityPageReply(AuthorityInfoList list) {
+    return SecurityAuthorityPageReply.newBuilder().setPayload(list).build();
   }
 }
