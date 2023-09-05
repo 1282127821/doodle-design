@@ -17,7 +17,7 @@ package org.doodle.design.security.model.payload.reply;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.doodle.design.security.model.info.UserDetailsInfo;
+import org.doodle.design.security.model.info.UserInfo;
 
 @Builder
 @ToString
@@ -26,5 +26,5 @@ import org.doodle.design.security.model.info.UserDetailsInfo;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SecurityUserQueryReply {
-  UserDetailsInfo userDetailsInfo;
+  UserInfo userInfo;
 }

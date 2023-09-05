@@ -24,11 +24,37 @@ option java_multiple_files = true;
 option java_package = "org.doodle.design.security";
 option java_outer_classname = "SecurityProto";
 
+message AuthorityInfo {
+  string authority = 1;
+}
+
+message RoleInfo {
+  string role = 1;
+  repeated AuthorityInfo authorities = 2;
+}
+
+message UserInfo {
+  string username = 1;
+  bool enable = 2;
+  repeated RoleInfo roles = 3;
+}
+
 message UserDetailsInfo {
   string username = 1;
   string password = 2;
   bool enable = 3;
   repeated string authorities = 4;
+}
+
+message SecurityUserDetailsQueryRequest {
+  string username = 1;
+}
+
+message SecurityUserDetailsQueryReply {
+  oneof Result {
+    doodle.design.common.Status error = 1;
+    UserDetailsInfo payload = 2;
+  }
 }
 
 message SecurityUserQueryRequest {
@@ -38,6 +64,30 @@ message SecurityUserQueryRequest {
 message SecurityUserQueryReply {
   oneof Result {
     doodle.design.common.Status error = 1;
-    UserDetailsInfo payload = 2;
+    UserInfo payload = 2;
   }
 }
+
+message SecurityRoleQueryRequest {
+  string role = 1;
+}
+
+message SecurityRoleQueryReply {
+  oneof Result {
+    doodle.design.common.Status error = 1;
+    RoleInfo payload = 2;
+  }
+}
+
+message SecurityAuthorityQueryRequest {
+  string authority = 1;
+}
+
+message SecurityAuthorityQueryReply {
+  oneof Result {
+    doodle.design.common.Status error = 1;
+    AuthorityInfo payload = 2;
+  }
+}
+
+

@@ -15,16 +15,21 @@
  */
 package org.doodle.design.security;
 
-import org.doodle.design.common.ProtoMapper;
-import org.doodle.design.common.Status;
+import org.doodle.design.common.Result;
+import reactor.core.publisher.Mono;
 
-public abstract class SecurityMapper implements ProtoMapper {
+public interface SecurityUserDetailsQueryOps {
 
-  public SecurityUserDetailsQueryReply toError(Status status) {
-    return SecurityUserDetailsQueryReply.newBuilder().setError(status).build();
+  @FunctionalInterface
+  interface RSocket {
+    String QUERY_MAPPING = "security.user.details.query";
+
+    Mono<SecurityUserDetailsQueryReply> query(SecurityUserDetailsQueryRequest request);
   }
 
-  public SecurityUserDetailsQueryReply toReply(UserDetailsInfo info) {
-    return SecurityUserDetailsQueryReply.newBuilder().setPayload(info).build();
+  @FunctionalInterface
+  interface Servlet {
+    Result<org.doodle.design.security.model.payload.reply.SecurityUserDetailsQueryReply> query(
+        org.doodle.design.security.model.payload.request.SecurityUserDetailsQueryRequest request);
   }
 }

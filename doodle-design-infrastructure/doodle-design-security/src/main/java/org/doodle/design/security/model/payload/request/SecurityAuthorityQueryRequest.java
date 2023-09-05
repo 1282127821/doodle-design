@@ -13,18 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.security;
+package org.doodle.design.security.model.payload.request;
 
-import org.doodle.design.common.ProtoMapper;
-import org.doodle.design.common.Status;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
-public abstract class SecurityMapper implements ProtoMapper {
-
-  public SecurityUserDetailsQueryReply toError(Status status) {
-    return SecurityUserDetailsQueryReply.newBuilder().setError(status).build();
-  }
-
-  public SecurityUserDetailsQueryReply toReply(UserDetailsInfo info) {
-    return SecurityUserDetailsQueryReply.newBuilder().setPayload(info).build();
-  }
+@Builder
+@ToString
+@Data
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@AllArgsConstructor
+@NoArgsConstructor
+public class SecurityAuthorityQueryRequest {
+  String authority;
 }
