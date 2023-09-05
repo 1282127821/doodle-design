@@ -19,6 +19,7 @@ syntax = "proto3";
 package doodle.design.security;
 
 import "doodle/design/common/status.proto";
+import "doodle/design/common/pagination.proto";
 
 option java_multiple_files = true;
 option java_package = "org.doodle.design.security";
@@ -28,15 +29,27 @@ message AuthorityInfo {
   string authority = 1;
 }
 
+message AuthorityInfoList {
+  repeated AuthorityInfo authority_info = 1;
+}
+
 message RoleInfo {
   string role = 1;
   repeated AuthorityInfo authorities = 2;
+}
+
+message RoleInfoList {
+  repeated RoleInfo role_info = 1;
 }
 
 message UserInfo {
   string username = 1;
   bool enable = 2;
   repeated RoleInfo roles = 3;
+}
+
+message UserInfoList {
+  repeated UserInfo user_info = 1;
 }
 
 message UserDetailsInfo {
@@ -68,6 +81,13 @@ message SecurityUserQueryReply {
   }
 }
 
+message SecurityUserPageReply {
+  oneof Result {
+    doodle.design.common.Status error = 1;
+    UserInfoList payload = 2;
+  }
+}
+
 message SecurityRoleQueryRequest {
   string role = 1;
 }
@@ -79,6 +99,13 @@ message SecurityRoleQueryReply {
   }
 }
 
+message SecurityRolePageReply {
+  oneof Result {
+    doodle.design.common.Status error = 1;
+    RoleInfoList payload = 2;
+  }
+}
+
 message SecurityAuthorityQueryRequest {
   string authority = 1;
 }
@@ -87,6 +114,13 @@ message SecurityAuthorityQueryReply {
   oneof Result {
     doodle.design.common.Status error = 1;
     AuthorityInfo payload = 2;
+  }
+}
+
+message SecurityAuthorityPageReply {
+  oneof Result {
+    doodle.design.common.Status error = 1;
+    AuthorityInfoList payload = 2;
   }
 }
 
