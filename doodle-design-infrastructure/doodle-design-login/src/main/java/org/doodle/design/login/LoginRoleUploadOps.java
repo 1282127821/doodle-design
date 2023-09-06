@@ -22,11 +22,15 @@ public interface LoginRoleUploadOps {
 
   @FunctionalInterface
   interface RSocket {
+    String UPLOAD_MAPPING = "login.role.upload";
+
     Mono<Void> upload(LoginRoleUploadRequest request);
   }
 
   @FunctionalInterface
   interface Servlet {
+    String UPLOAD_MAPPING = "/login/role/upload";
+
     Result<Void> upload(
         org.doodle.design.login.model.payload.request.LoginRoleUploadRequest request);
   }

@@ -22,11 +22,15 @@ public interface JgLoginAccountBindOps {
 
   @FunctionalInterface
   interface RSocket {
+    String BIND_MAPPING = "jg.login.account.bind";
+
     Mono<LoginAccountBindReply> bind(JgLoginAccountBindRequest request);
   }
 
   @FunctionalInterface
   interface Servlet {
+    String BIND_MAPPING = "/jg/login/account/bind";
+
     Result<org.doodle.design.login.model.payload.reply.LoginAccountBindReply> bind(
         org.doodle.design.login.model.payload.request.JgLoginAccountBindRequest request);
   }

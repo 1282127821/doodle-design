@@ -22,11 +22,15 @@ public interface LoginRolePullOps {
 
   @FunctionalInterface
   interface RSocket {
+    String PULL_MAPPING = "login.role.pull";
+
     Mono<LoginRolePullReply> pull(LoginRolePullRequest request);
   }
 
   @FunctionalInterface
   interface Servlet {
+    String PULL_MAPPING = "/login/role/pull";
+
     Result<org.doodle.design.login.model.payload.reply.LoginRolePullReply> pull(
         org.doodle.design.login.model.payload.request.LoginRolePullRequest request);
   }

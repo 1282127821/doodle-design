@@ -22,11 +22,15 @@ public interface EmbeddedLoginAccountBindOps {
 
   @FunctionalInterface
   interface RSocket {
+    String BIND_MAPPING = "embedded.login.account.bind";
+
     Mono<LoginAccountBindReply> bind(EmbeddedLoginAccountBindRequest request);
   }
 
   @FunctionalInterface
   interface Servlet {
+    String BIND_MAPPING = "/embedded/login/account/bind";
+
     Result<org.doodle.design.login.model.payload.reply.LoginAccountBindReply> bind(
         org.doodle.design.login.model.payload.request.EmbeddedLoginAccountBindRequest request);
   }

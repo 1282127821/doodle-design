@@ -22,11 +22,15 @@ public interface LoginAccountAuthOps {
 
   @FunctionalInterface
   interface RSocket {
+    String AUTH_MAPPING = "login.account.auth";
+
     Mono<LoginAccountAuthReply> auth(LoginAccountAuthRequest request);
   }
 
   @FunctionalInterface
   interface Servlet {
+    String AUTH_MAPPING = "/login/account/auth";
+
     Result<org.doodle.design.login.model.payload.reply.LoginAccountAuthReply> auth(
         org.doodle.design.login.model.payload.request.LoginAccountAuthRequest request);
   }
