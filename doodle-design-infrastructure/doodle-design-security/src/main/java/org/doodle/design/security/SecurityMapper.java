@@ -17,8 +17,6 @@ package org.doodle.design.security;
 
 import java.util.*;
 import org.doodle.design.common.ProtoMapper;
-import org.doodle.design.common.Result;
-import org.doodle.design.common.util.ProtoUtils;
 import org.springframework.util.CollectionUtils;
 
 public abstract class SecurityMapper implements ProtoMapper {
@@ -120,59 +118,31 @@ public abstract class SecurityMapper implements ProtoMapper {
         : Collections.emptyList();
   }
 
-  public SecurityUserDetailsQueryReply toUserDetailsError(Result<Void> r) {
-    return SecurityUserDetailsQueryReply.newBuilder().setError(ProtoUtils.toProto(r)).build();
-  }
-
-  public SecurityUserDetailsQueryReply toUserDetailsReply(UserDetailsInfo info) {
+  public SecurityUserDetailsQueryReply toProto(UserDetailsInfo info) {
     return SecurityUserDetailsQueryReply.newBuilder().setPayload(info).build();
   }
 
-  public SecurityUserQueryReply toUserQueryError(Result<Void> r) {
-    return SecurityUserQueryReply.newBuilder().setError(ProtoUtils.toProto(r)).build();
-  }
-
-  public SecurityUserQueryReply toUserQueryReply(UserInfo userInfo) {
+  public SecurityUserQueryReply toProto(UserInfo userInfo) {
     return SecurityUserQueryReply.newBuilder().setPayload(userInfo).build();
   }
 
-  public SecurityUserPageReply toUserPageError(Result<Void> r) {
-    return SecurityUserPageReply.newBuilder().setError(ProtoUtils.toProto(r)).build();
-  }
-
-  public SecurityUserPageReply toUserPageReply(UserInfoList list) {
+  public SecurityUserPageReply toProto(UserInfoList list) {
     return SecurityUserPageReply.newBuilder().setPayload(list).build();
   }
 
-  public SecurityRoleQueryReply toRoleQueryError(Result<Void> r) {
-    return SecurityRoleQueryReply.newBuilder().setError(ProtoUtils.toProto(r)).build();
-  }
-
-  public SecurityRoleQueryReply toRoleQueryReply(RoleInfo info) {
+  public SecurityRoleQueryReply toProto(RoleInfo info) {
     return SecurityRoleQueryReply.newBuilder().setPayload(info).build();
   }
 
-  public SecurityRolePageReply toRolePageError(Result<Void> r) {
-    return SecurityRolePageReply.newBuilder().setError(ProtoUtils.toProto(r)).build();
-  }
-
-  public SecurityRolePageReply toRolePageReply(RoleInfoList list) {
+  public SecurityRolePageReply toProto(RoleInfoList list) {
     return SecurityRolePageReply.newBuilder().setPayload(list).build();
   }
 
-  public SecurityAuthorityQueryReply toAuthorityQueryError(Result<Void> r) {
-    return SecurityAuthorityQueryReply.newBuilder().setError(ProtoUtils.toProto(r)).build();
-  }
-
-  public SecurityAuthorityQueryReply toAuthorityQueryReply(AuthorityInfo info) {
+  public SecurityAuthorityQueryReply toProto(AuthorityInfo info) {
     return SecurityAuthorityQueryReply.newBuilder().setPayload(info).build();
   }
 
-  public SecurityAuthorityPageReply toAuthorityPageError(Result<Void> r) {
-    return SecurityAuthorityPageReply.newBuilder().setError(ProtoUtils.toProto(r)).build();
-  }
-
-  public SecurityAuthorityPageReply toAuthorityPageReply(AuthorityInfoList list) {
+  public SecurityAuthorityPageReply toProto(AuthorityInfoList list) {
     return SecurityAuthorityPageReply.newBuilder().setPayload(list).build();
   }
 }

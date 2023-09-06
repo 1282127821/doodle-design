@@ -18,7 +18,6 @@ syntax = "proto3";
 
 package doodle.design.security;
 
-import "doodle/design/common/status.proto";
 import "doodle/design/common/pagination.proto";
 
 option java_multiple_files = true;
@@ -65,7 +64,7 @@ message SecurityUserDetailsQueryRequest {
 
 message SecurityUserDetailsQueryReply {
   oneof Result {
-    doodle.design.common.Status error = 1;
+    SecurityErrorCode error = 1;
     UserDetailsInfo payload = 2;
   }
 }
@@ -76,7 +75,7 @@ message SecurityUserQueryRequest {
 
 message SecurityUserQueryReply {
   oneof Result {
-    doodle.design.common.Status error = 1;
+    SecurityErrorCode error = 1;
     UserInfo payload = 2;
   }
 }
@@ -87,7 +86,7 @@ message SecurityUserPageRequest {
 
 message SecurityUserPageReply {
   oneof Result {
-    doodle.design.common.Status error = 1;
+    SecurityErrorCode error = 1;
     UserInfoList payload = 2;
   }
 }
@@ -98,7 +97,7 @@ message SecurityRoleQueryRequest {
 
 message SecurityRoleQueryReply {
   oneof Result {
-    doodle.design.common.Status error = 1;
+    SecurityErrorCode error = 1;
     RoleInfo payload = 2;
   }
 }
@@ -109,7 +108,7 @@ message SecurityRolePageRequest {
 
 message SecurityRolePageReply {
   oneof Result {
-    doodle.design.common.Status error = 1;
+    SecurityErrorCode error = 1;
     RoleInfoList payload = 2;
   }
 }
@@ -120,7 +119,7 @@ message SecurityAuthorityQueryRequest {
 
 message SecurityAuthorityQueryReply {
   oneof Result {
-    doodle.design.common.Status error = 1;
+    SecurityErrorCode error = 1;
     AuthorityInfo payload = 2;
   }
 }
@@ -131,9 +130,14 @@ message SecurityAuthorityPageRequest {
 
 message SecurityAuthorityPageReply {
   oneof Result {
-    doodle.design.common.Status error = 1;
+    SecurityErrorCode error = 1;
     AuthorityInfoList payload = 2;
   }
+}
+
+enum SecurityErrorCode {
+  QUERY_FAILURE = 0;
+  PAGE_FAILURE = 1;
 }
 
 
