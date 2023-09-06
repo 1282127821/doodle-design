@@ -22,11 +22,15 @@ public interface JgPaymentOrderCreateOps {
 
   @FunctionalInterface
   interface RSocket {
+    String CREATE_MAPPING = "jg.payment.order.create";
+
     Mono<JgPaymentOrderCreateReply> create(JgPaymentOrderCreateRequest request);
   }
 
   @FunctionalInterface
   interface Servlet {
+    String CREATE_MAPPING = "/jg/payment/order/create";
+
     Result<org.doodle.design.payment.model.payload.reply.JgPaymentOrderCreateReply> create(
         org.doodle.design.payment.model.payload.request.JgPaymentOrderCreateRequest request);
   }

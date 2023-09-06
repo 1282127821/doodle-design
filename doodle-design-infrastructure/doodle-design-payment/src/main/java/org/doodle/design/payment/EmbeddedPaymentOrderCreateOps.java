@@ -22,11 +22,15 @@ public interface EmbeddedPaymentOrderCreateOps {
 
   @FunctionalInterface
   interface RSocket {
+    String CREATE_MAPPING = "embedded.payment.order.create";
+
     Mono<EmbeddedPaymentOrderCreateReply> create(EmbeddedPaymentOrderCreateRequest request);
   }
 
   @FunctionalInterface
   interface Servlet {
+    String CREATE_MAPPING = "/embedded/payment/order/create";
+
     Result<org.doodle.design.payment.model.payload.reply.EmbeddedPaymentOrderCreateReply> create(
         org.doodle.design.payment.model.payload.request.EmbeddedPaymentOrderCreateRequest request);
   }

@@ -22,11 +22,15 @@ public interface PaymentOrderDeliverOps {
 
   @FunctionalInterface
   interface RSocket {
+    String DELIVER_MAPPING = "payment.order.deliver";
+
     Mono<PaymentOrderDeliverReply> deliver(PaymentOrderDeliverRequest request);
   }
 
   @FunctionalInterface
   interface Servlet {
+    String DELIVER_MAPPING = "/payment/order/deliver";
+
     Result<org.doodle.design.payment.model.payload.reply.PaymentOrderDeliverReply> deliver(
         org.doodle.design.payment.model.payload.request.PaymentOrderDeliverRequest request);
   }
