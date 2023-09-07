@@ -21,12 +21,16 @@ import reactor.core.publisher.Mono;
 public interface ConsoleApplicationUpdateOps {
 
   @FunctionalInterface
-  interface Socket {
+  interface RSocket {
+    String UPDATE_MAPPING = "console.application.update";
+
     Mono<ApplicationUpdateReply> update(ApplicationUpdateRequest request);
   }
 
   @FunctionalInterface
   interface Servlet {
+    String UPDATE_MAPPING = "/console/application/update";
+
     Result<org.doodle.design.console.model.payload.reply.ApplicationUpdateReply> update(
         org.doodle.design.console.model.payload.request.ApplicationUpdateRequest request);
   }

@@ -22,11 +22,15 @@ public interface ConsoleApplicationQueryOps {
 
   @FunctionalInterface
   interface RSocket {
+    String QUERY_MAPPING = "console.application.query";
+
     Mono<ApplicationQueryReply> query(ApplicationQueryRequest request);
   }
 
   @FunctionalInterface
   interface Servlet {
+    String QUERY_MAPPING = "console.application.query";
+
     Result<org.doodle.design.console.model.payload.reply.ApplicationQueryReply> query(
         org.doodle.design.console.model.payload.request.ApplicationQueryRequest request);
   }
