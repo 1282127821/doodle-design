@@ -1,0 +1,33 @@
+/*
+ * Copyright (c) 2022-present Doodle. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.doodle.design.console;
+
+import org.doodle.design.common.ProtoMapper;
+
+public abstract class ConsoleMapper implements ProtoMapper {
+
+  public ApplicationRuntimeInfo toProto(
+      org.doodle.design.console.model.info.ApplicationRuntimeInfo info) {
+    return ApplicationRuntimeInfo.newBuilder().setRuntime(toProto(info.getRuntimeInfo())).build();
+  }
+
+  public org.doodle.design.console.model.info.ApplicationRuntimeInfo fromProto(
+      ApplicationRuntimeInfo proto) {
+    return org.doodle.design.console.model.info.ApplicationRuntimeInfo.builder()
+        .runtimeInfo(fromProto(proto.getRuntime()))
+        .build();
+  }
+}

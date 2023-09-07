@@ -86,5 +86,8 @@ message ApplicationRuntimeRequest {
 }
 
 message ApplicationRuntimeReply {
-  ApplicationRuntimeInfo application_runtime = 1;
+  oneof Result {
+    ConsoleErrorCode error = 1;
+    ApplicationRuntimeInfo payload = 2;
+  }
 }

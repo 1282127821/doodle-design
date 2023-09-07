@@ -22,12 +22,26 @@ public interface ConsoleApplicationRuntimeOps {
 
   @FunctionalInterface
   interface RSocket {
+    String RUNTIME_MAPPING = "console.application.runtime";
+
     Mono<ApplicationRuntimeReply> runtime(ApplicationRuntimeRequest request);
+
+    @FunctionalInterface
+    interface Client {
+      Mono<ApplicationRuntimeReply> runtime();
+    }
   }
 
   @FunctionalInterface
   interface Servlet {
+    String RUNTIME_MAPPING = "/console/application/runtime";
+
     Result<org.doodle.design.console.model.payload.reply.ApplicationRuntimeReply> runtime(
         org.doodle.design.console.model.payload.request.ApplicationRuntimeRequest request);
+
+    @FunctionalInterface
+    interface Client {
+      Result<org.doodle.design.console.model.payload.reply.ApplicationRuntimeReply> runtime();
+    }
   }
 }
