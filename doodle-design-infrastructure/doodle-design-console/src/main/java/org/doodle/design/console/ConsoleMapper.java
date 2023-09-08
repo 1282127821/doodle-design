@@ -17,17 +17,4 @@ package org.doodle.design.console;
 
 import org.doodle.design.common.ProtoMapper;
 
-public abstract class ConsoleMapper implements ProtoMapper {
-
-  public ApplicationRuntimeInfo toProto(
-      org.doodle.design.console.model.info.ApplicationRuntimeInfo info) {
-    return ApplicationRuntimeInfo.newBuilder().setRuntime(toProto(info.getRuntimeInfo())).build();
-  }
-
-  public org.doodle.design.console.model.info.ApplicationRuntimeInfo fromProto(
-      ApplicationRuntimeInfo proto) {
-    return org.doodle.design.console.model.info.ApplicationRuntimeInfo.builder()
-        .runtimeInfo(fromProto(proto.getRuntime()))
-        .build();
-  }
-}
+public abstract class ConsoleMapper implements ProtoMapper {}

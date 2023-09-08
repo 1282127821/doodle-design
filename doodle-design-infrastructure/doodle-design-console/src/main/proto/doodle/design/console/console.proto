@@ -76,18 +76,3 @@ message ApplicationQueryReply {
 message ApplicationDeleteRequest {
   repeated string application_id = 1;
 }
-
-message ApplicationRuntimeInfo {
-  google.protobuf.Struct runtime = 1;
-}
-
-message ApplicationRuntimeRequest {
-  doodle.design.broker.Tags tags = 1;
-}
-
-message ApplicationRuntimeReply {
-  oneof Result {
-    ConsoleErrorCode error = 1;
-    ApplicationRuntimeInfo payload = 2;
-  }
-}
