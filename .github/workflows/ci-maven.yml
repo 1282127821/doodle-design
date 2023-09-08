@@ -17,7 +17,9 @@ jobs:
           cache: 'maven'
 
       - name: Install Doodle Modules
-        run: echo "doodle-build doodle-socket" > DOODLE && make install
+        run: |
+          echo "doodle-build doodle-socket" > DOODLE
+          make DOODLE_GIT=https://github.com/org-doodle install
 
       - name: Checkout coding style
         run: ./mvnw spotless:check
