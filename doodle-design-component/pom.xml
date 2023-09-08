@@ -15,5 +15,6 @@
   <modules>
     <module>doodle-design-auction</module>
     <module>doodle-design-chat</module>
+    <module>doodle-design-mail</module>
   </modules>
 </project>
