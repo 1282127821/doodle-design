@@ -16,72 +16,24 @@
 package org.doodle.design.config;
 
 import org.doodle.design.common.ProtoMapper;
-import org.doodle.design.common.Result;
-import org.doodle.design.common.Status;
-import org.doodle.design.common.util.ProtoUtils;
-import org.doodle.design.config.model.dto.ConfigIdInfoDto;
-import org.doodle.design.config.model.dto.ConfigPropsInfoDto;
 
 public abstract class ConfigMapper implements ProtoMapper {
 
-  public ConfigPullRequest toProto(
-      org.doodle.design.config.model.payload.request.ConfigPullRequest request) {
-    return ConfigPullRequest.newBuilder().setConfigId(toProto(request.getConfigId())).build();
-  }
-
-  public Result<org.doodle.design.config.model.payload.reply.ConfigPullReply> fromProto(
-      ConfigPullReply reply) {
-    switch (reply.getResultCase()) {
-      case ERROR -> {
-        return ProtoUtils.fromProto(reply.getError());
-      }
-      case CONFIG_PROPS -> {
-        return Result.ok(
-            org.doodle.design.config.model.payload.reply.ConfigPullReply.builder()
-                .configProps(fromProto(reply.getConfigProps()))
-                .build());
-      }
-      default -> {
-        return Result.bad();
-      }
-    }
-  }
-
-  public ConfigPullReply toError(Status status) {
-    return ConfigPullReply.newBuilder().setError(status).build();
-  }
-
-  public ConfigPullReply toReply(ConfigPropsInfo info) {
-    return ConfigPullReply.newBuilder().setConfigProps(info).build();
-  }
-
-  public ConfigIdInfoDto fromProto(ConfigIdInfo info) {
-    return ConfigIdInfoDto.builder()
-        .group(info.getGroup())
-        .dataId(info.getDataId())
-        .profile(info.getProfile())
-        .build();
-  }
-
-  public ConfigIdInfo toProto(ConfigIdInfoDto dto) {
+  public ConfigIdInfo toProto(org.doodle.design.config.model.info.ConfigIdInfo info) {
     return ConfigIdInfo.newBuilder()
-        .setGroup(dto.getGroup())
-        .setDataId(dto.getDataId())
-        .setProfile(dto.getProfile())
+        .setGroup(info.getGroup())
+        .setType(info.getType())
+        .setApplicationId(info.getApplicationId())
+        .setProfile(info.getProfile())
         .build();
   }
 
-  public ConfigPropsInfoDto fromProto(ConfigPropsInfo info) {
-    return ConfigPropsInfoDto.builder()
-        .configId(fromProto(info.getConfigId()))
-        .props(fromProto(info.getProps()))
-        .build();
-  }
-
-  public ConfigPropsInfo toProto(ConfigPropsInfoDto dto) {
-    return ConfigPropsInfo.newBuilder()
-        .setConfigId(toProto(dto.getConfigId()))
-        .setProps(toProto(dto.getProps()))
+  public org.doodle.design.config.model.info.ConfigIdInfo fromProto(ConfigIdInfo proto) {
+    return org.doodle.design.config.model.info.ConfigIdInfo.builder()
+        .group(proto.getGroup())
+        .type(proto.getType())
+        .applicationId(proto.getApplicationId())
+        .profile(proto.getProfile())
         .build();
   }
 }

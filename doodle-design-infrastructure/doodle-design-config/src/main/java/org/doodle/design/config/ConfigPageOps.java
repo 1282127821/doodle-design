@@ -13,19 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.config.model.dto;
+package org.doodle.design.config;
 
-import lombok.*;
-import lombok.experimental.FieldDefaults;
+import org.doodle.design.common.Result;
+import reactor.core.publisher.Mono;
 
-@ToString
-@Builder
-@Data
-@FieldDefaults(level = AccessLevel.PRIVATE)
-@AllArgsConstructor
-@NoArgsConstructor
-public class ConfigIdInfoDto {
-  String group;
-  String dataId;
-  String profile;
+public interface ConfigPageOps {
+
+  @FunctionalInterface
+  interface RSocket {
+    String PAGE_MAPPING = "config.page";
+
+    Mono<ConfigPageReply> page(ConfigPageRequest request);
+  }
+
+  @FunctionalInterface
+  interface Servlet {
+    String PAGE_MAPPING = "/config/page";
+
+    Result<org.doodle.design.config.model.payload.reply.ConfigPageReply> page(
+        org.doodle.design.config.model.payload.request.ConfigPageRequest request);
+  }
 }

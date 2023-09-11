@@ -13,15 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.config;
+package org.doodle.design.config.model.payload.request;
 
-import lombok.experimental.UtilityClass;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
+import org.doodle.design.common.model.PageRequest;
 
-@UtilityClass
-public final class ConfigConstants {
-  public static final String CONFIG_PREFIX = "doodleConfig:";
-  public static final String CONFIG_GROUP = "group";
-
-  public static final String CONFIG_TYPE = "type";
-  public static final String CONFIG_APPLICATION_ID = "applicationId";
+@ToString
+@Builder
+@Data
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@AllArgsConstructor
+@NoArgsConstructor
+public class ConfigPageRequest {
+  PageRequest page;
 }

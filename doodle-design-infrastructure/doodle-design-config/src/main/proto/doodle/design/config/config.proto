@@ -18,32 +18,51 @@ syntax = "proto3";
 
 package doodle.design.config;
 
-import "doodle/design/common/status.proto";
 import "google/protobuf/struct.proto";
-
+import "doodle/design/common/pagination.proto";
 
 option java_multiple_files = true;
 option java_package = "org.doodle.design.config";
 option java_outer_classname = "ConfigProto";
 
-message ConfigIdInfo {
-  string group = 1;
-  string data_id = 2;
-  string profile = 3;
+enum ConfigErrorCode {
+  FAILURE = 0;
 }
 
-message ConfigPropsInfo {
+message ConfigIdInfo {
+  string group = 1;
+  string type = 2;
+  string application_id = 3;
+  string profile = 4;
+}
+
+message ConfigIdInfoList {
+  repeated ConfigIdInfo config_id = 1;
+}
+
+message ConfigInfo {
   ConfigIdInfo config_id = 1;
   google.protobuf.Struct props = 2;
 }
 
-message ConfigPullRequest {
+message ConfigQueryRequest {
   ConfigIdInfo config_id = 1;
 }
 
-message ConfigPullReply {
+message ConfigQueryReply {
   oneof Result {
-    doodle.design.common.Status error = 1;
-    ConfigPropsInfo config_props = 2;
+    ConfigErrorCode error = 1;
+    ConfigInfo payload = 2;
+  }
+}
+
+message ConfigPageRequest {
+  doodle.design.common.PageRequest page = 1;
+}
+
+message ConfigPageReply {
+  oneof Result {
+    ConfigErrorCode error = 1;
+    ConfigIdInfoList payload = 2;
   }
 }

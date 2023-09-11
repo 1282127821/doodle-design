@@ -13,9 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.config.model.dto;
+package org.doodle.design.config.model.info;
 
-import java.util.Map;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -25,7 +24,9 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @AllArgsConstructor
 @NoArgsConstructor
-public class ConfigPropsInfoDto {
-  ConfigIdInfoDto configId;
-  Map<String, Object> props;
+public class ConfigIdInfo {
+  String group;
+  String type;
+  String applicationId;
+  String profile;
 }

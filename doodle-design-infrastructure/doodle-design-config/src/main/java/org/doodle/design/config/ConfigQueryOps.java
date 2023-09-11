@@ -13,18 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.config.model.payload.request;
+package org.doodle.design.config;
 
-import lombok.*;
-import lombok.experimental.FieldDefaults;
-import org.doodle.design.config.model.dto.ConfigIdInfoDto;
+import org.doodle.design.common.Result;
+import reactor.core.publisher.Mono;
 
-@ToString
-@Builder
-@Data
-@FieldDefaults(level = AccessLevel.PRIVATE)
-@NoArgsConstructor
-@AllArgsConstructor
-public class ConfigPullRequest {
-  ConfigIdInfoDto configId;
+public interface ConfigQueryOps {
+
+  @FunctionalInterface
+  interface RSocket {
+    String QUERY_MAPPING = "config.query";
+
+    Mono<ConfigQueryReply> query(ConfigQueryRequest request);
+  }
+
+  @FunctionalInterface
+  interface Servlet {
+    String QUERY_MAPPING = "/config/query";
+
+    Result<org.doodle.design.config.model.payload.reply.ConfigQueryReply> query(
+        org.doodle.design.config.model.payload.request.ConfigQueryRequest request);
+  }
 }

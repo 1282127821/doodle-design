@@ -13,18 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.config.model.payload.reply;
+package org.doodle.design.config.model.payload.request;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.doodle.design.config.model.dto.ConfigPropsInfoDto;
+import org.doodle.design.config.model.info.ConfigIdInfo;
 
 @ToString
 @Builder
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@NoArgsConstructor
 @AllArgsConstructor
-public class ConfigPullReply {
-  ConfigPropsInfoDto configProps;
+@NoArgsConstructor
+public class ConfigQueryRequest {
+  ConfigIdInfo configId;
 }
