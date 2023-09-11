@@ -22,11 +22,15 @@ public interface DataSeerLogUploadOps {
 
   @FunctionalInterface
   interface RSocket {
+    String UPLOAD_MAPPING = "dataseer.log.upload";
+
     Mono<Void> upload(LogUploadRequest request);
   }
 
   @FunctionalInterface
   interface Servlet {
+    String UPLOAD_MAPPING = "/dataseer/log/upload";
+
     Result<Void> upload(org.doodle.design.dataseer.model.payload.request.LogUploadRequest request);
   }
 }
