@@ -24,6 +24,10 @@
       <groupId>org.doodle</groupId>
       <artifactId>doodle-design-common</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.doodle</groupId>
+      <artifactId>doodle-design-broker</artifactId>
+    </dependency>
   </dependencies>
   <build>
     <plugins>
