@@ -49,7 +49,9 @@ public abstract class SecurityMapper implements ProtoMapper {
 
   public RoleInfo toProto(org.doodle.design.security.model.info.RoleInfo info) {
     RoleInfo.Builder builder = RoleInfo.newBuilder().setRole(info.getRole());
-    info.getAuthorities().forEach(a -> builder.addAuthorities(toProto(a)));
+    if (!CollectionUtils.isEmpty(info.getAuthorities())) {
+      info.getAuthorities().forEach(a -> builder.addAuthorities(toProto(a)));
+    }
     return builder.build();
   }
 
@@ -84,7 +86,9 @@ public abstract class SecurityMapper implements ProtoMapper {
   public UserInfo toProto(org.doodle.design.security.model.info.UserInfo info) {
     UserInfo.Builder builder =
         UserInfo.newBuilder().setUsername(info.getUsername()).setEnable(info.isEnable());
-    info.getRoles().forEach(r -> builder.addRoles(toProto(r)));
+    if (!CollectionUtils.isEmpty(info.getRoles())) {
+      info.getRoles().forEach(r -> builder.addRoles(toProto(r)));
+    }
     return builder.build();
   }
 
