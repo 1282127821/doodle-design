@@ -38,7 +38,10 @@ message PipelineWorkflowQueryRequest {
 }
 
 message PipelineWorkflowQueryReply {
-  WorkflowInfo workflow_info = 1;
+  oneof Result {
+    PipelineErrorCode error = 1;
+    WorkflowInfo workflow_info = 2;
+  }
 }
 
 message PipelineWorkflowPageRequest {
