@@ -19,41 +19,36 @@ syntax = "proto3";
 package doodle.design.pipeline;
 
 import "doodle/design/common/pagination.proto";
+import "doodle/design/pipeline/pipeline.proto";
 
 option java_multiple_files = true;
 option java_package = "org.doodle.design.pipeline";
-option java_outer_classname = "PipelineProto";
+option java_outer_classname = "PipelineWorkflowProto";
 
-enum PipelineErrorCode {
-  FAILURE = 0;
+message WorkflowInfo {
+  string workflow_id = 1;
 }
 
-message PipelineInfo {
-  string pipeline_id = 1;
+message WorkflowInfoList {
+  repeated WorkflowInfo workflow_info = 1;
 }
 
-message PipelineInfoList {
-  repeated PipelineInfo pipeline_info = 1;
+message PipelineWorkflowQueryRequest {
+  string workflow_id = 1;
 }
 
-message PipelineQueryRequest {
-  string pipeline_id = 1;
+message PipelineWorkflowQueryReply {
+  WorkflowInfo workflow_info = 1;
 }
 
-message PipelineQueryReply {
-  oneof Result {
-    PipelineErrorCode error = 1;
-    PipelineInfo payload = 2;
-  }
-}
-
-message PipelinePageRequest {
+message PipelineWorkflowPageRequest {
   doodle.design.common.PageRequest page = 1;
 }
 
-message PipelinePageReply {
+message PipelineWorkflowPageReply {
   oneof Result {
     PipelineErrorCode error = 1;
-    PipelineInfoList payload = 2;
+    WorkflowInfoList payload = 2;
   }
 }
+

@@ -19,41 +19,39 @@ syntax = "proto3";
 package doodle.design.pipeline;
 
 import "doodle/design/common/pagination.proto";
+import "doodle/design/pipeline/pipeline.proto";
 
 option java_multiple_files = true;
 option java_package = "org.doodle.design.pipeline";
-option java_outer_classname = "PipelineProto";
+option java_outer_classname = "PipelineAgentProto";
 
-enum PipelineErrorCode {
-  FAILURE = 0;
+message AgentInfo {
+  string agent_id = 1;
 }
 
-message PipelineInfo {
-  string pipeline_id = 1;
+message AgentInfoList {
+  repeated AgentInfo agent_info = 1;
 }
 
-message PipelineInfoList {
-  repeated PipelineInfo pipeline_info = 1;
+
+message PipelineAgentCreateRequest {
+  string agent_id = 1;
 }
 
-message PipelineQueryRequest {
-  string pipeline_id = 1;
-}
-
-message PipelineQueryReply {
+message PipelineAgentCreateReply {
   oneof Result {
     PipelineErrorCode error = 1;
-    PipelineInfo payload = 2;
+    AgentInfo payload = 2;
   }
 }
 
-message PipelinePageRequest {
+message PipelineAgentPageRequest {
   doodle.design.common.PageRequest page = 1;
 }
 
-message PipelinePageReply {
+message PipelineAgentPageReply {
   oneof Result {
     PipelineErrorCode error = 1;
-    PipelineInfoList payload = 2;
+    AgentInfoList payload = 2;
   }
 }
