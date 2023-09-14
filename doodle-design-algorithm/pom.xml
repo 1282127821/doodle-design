@@ -14,5 +14,6 @@
   <packaging>pom</packaging>
   <modules>
     <module>doodle-design-bitmap</module>
+    <module>doodle-design-hashids</module>
   </modules>
 </project>
