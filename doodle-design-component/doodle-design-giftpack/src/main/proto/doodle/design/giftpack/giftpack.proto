@@ -18,6 +18,8 @@ syntax = "proto3";
 
 package doodle.design.giftpack;
 
+import "doodle/design/common/pagination.proto";
+
 option java_multiple_files = true;
 option java_package = "org.doodle.design.giftpack";
 option java_outer_classname = "GiftPackProto";
@@ -25,3 +27,71 @@ option java_outer_classname = "GiftPackProto";
 enum GiftPackErrorCode {
   FAILURE = 0;
 }
+
+message GiftPackInfo {
+  int64 pack_id = 1;
+  int64 count = 2;
+  string content = 3;
+}
+
+message GiftPackInfoList {
+  repeated GiftPackInfo pack_info = 1;
+}
+
+message GiftPackHashInfo {
+  int64 pack_id = 1;
+  string hash_id = 2;
+  int64 index = 3;
+}
+
+message GiftPackHashInfoList {
+  repeated GiftPackHashInfo pack_hash_info = 1;
+}
+
+message GiftPackQueryRequest {
+  string pack_id = 1;
+}
+
+
+
+message GiftPackQueryReply {
+  oneof Result {
+    GiftPackErrorCode error = 1;
+    GiftPackInfo pack_info = 2;
+  }
+}
+
+message GiftPackPageRequest {
+  doodle.design.common.PageRequest page = 1;
+}
+
+message GiftPackPageReply {
+  oneof Result {
+    GiftPackErrorCode error = 1;
+    GiftPackInfoList pack_info = 2;
+  }
+}
+
+message GiftPackHashQueryRequest {
+  string hash_id = 1;
+}
+
+message GiftPackHashQueryReply {
+  oneof Result {
+    GiftPackErrorCode error = 1;
+    GiftPackHashInfo payload = 2;
+  }
+}
+
+message GiftPackHashPageRequest {
+  doodle.design.common.PageRequest page = 1;
+}
+
+message GiftPackHashPageReply {
+  oneof Result {
+    GiftPackErrorCode error = 1;
+    GiftPackHashInfoList payload = 2;
+  }
+}
+
+
