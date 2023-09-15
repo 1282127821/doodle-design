@@ -18,30 +18,46 @@ syntax = "proto3";
 
 package doodle.design.excel;
 
-import "doodle/design/common/status.proto";
 import "google/protobuf/struct.proto";
 
 option java_multiple_files = true;
 option java_package = "org.doodle.design.excel";
 option java_outer_classname = "ExcelProto";
 
-message ExcelIdInfo {
-  string xlsx = 1;
-  string sheet = 2;
+enum ExcelErrorCode {
+  FAILURE = 0;
 }
 
-message ExcelPropsInfo {
-  ExcelIdInfo excel_id = 1;
-  google.protobuf.Struct excel_props = 2;
+message XlsxInfo {
+  string xlsx_name = 1;
+  repeated string sheet_name = 2;
 }
 
-message ExcelPullRequest {
-  ExcelIdInfo excel_id = 1;
+message SheetInfo {
+  string xlsx_name = 1;
+  string sheet_name = 2;
+  google.protobuf.Struct config = 3;
 }
 
-message ExcelPullReply {
+message ExcelXlsxQueryRequest {
+  string xlsx_name = 1;
+}
+
+message ExcelXlsxQueryReply {
   oneof Result {
-    doodle.design.common.Status error = 1;
-    ExcelPropsInfo reply = 2;
+    ExcelErrorCode error = 1;
+    XlsxInfo payload = 2;
+  }
+}
+
+message ExcelSheetQueryRequest {
+  string xlsx_name = 1;
+  string sheet_name = 2;
+}
+
+message ExcelSheetQueryReply {
+  oneof Result {
+    ExcelErrorCode error = 1;
+    SheetInfo payload = 2;
   }
 }

@@ -13,6 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.excel;
+package org.doodle.design.excel.model.info;
 
-public interface ExcelOperation extends ExcelPullOperation {}
+import lombok.*;
+import lombok.experimental.FieldDefaults;
+
+@Builder
+@ToString
+@Data
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@AllArgsConstructor
+@NoArgsConstructor
+public class XlsxInfo {
+  String name;
+}

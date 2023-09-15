@@ -13,18 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.excel;
+package org.doodle.design.excel.model.payload.request;
 
-import org.doodle.design.common.Result;
-import reactor.core.publisher.Mono;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
-public interface ExcelPullOperation {
-
-  Mono<ExcelPullReply> pull(ExcelPullRequest request);
-
-  interface RestPullOperation {
-
-    Mono<Result<org.doodle.design.excel.model.payload.reply.ExcelPullReply>> pull(
-        org.doodle.design.excel.model.payload.request.ExcelPullRequest request);
-  }
+@Builder
+@ToString
+@Data
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@AllArgsConstructor
+@NoArgsConstructor
+public class ExcelSheetQueryRequest {
+  String xlsxName;
+  String sheetName;
 }

@@ -13,18 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.excel.model.dto;
+package org.doodle.design.excel.model.payload.reply;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.doodle.design.excel.model.info.SheetInfo;
 
-@ToString
 @Builder
+@ToString
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @AllArgsConstructor
 @NoArgsConstructor
-public class ExcelIdInfoDto {
-  String xlsx;
-  String sheet;
+public class ExcelSheetQueryReply {
+  SheetInfo sheetInfo;
 }

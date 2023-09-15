@@ -13,19 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.excel.model.dto;
+package org.doodle.design.excel.model.payload.request;
 
-import java.util.Map;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-@ToString
 @Builder
+@ToString
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @AllArgsConstructor
 @NoArgsConstructor
-public class ExcelPropsInfoDto {
-  ExcelIdInfoDto excelId;
-  Map<String, Object> excelProps;
+public class ExcelXlsxQueryRequest {
+  String xlsxName;
 }

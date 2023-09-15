@@ -13,18 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.excel.model.payload.request;
+package org.doodle.design.excel;
 
-import lombok.*;
-import lombok.experimental.FieldDefaults;
-import org.doodle.design.excel.model.dto.ExcelIdInfoDto;
+import org.doodle.design.common.Result;
+import reactor.core.publisher.Mono;
 
-@ToString
-@Builder
-@Data
-@FieldDefaults(level = AccessLevel.PRIVATE)
-@AllArgsConstructor
-@NoArgsConstructor
-public class ExcelPullRequest {
-  ExcelIdInfoDto excelId;
+public interface ExcelSheetQueryOps {
+
+  @FunctionalInterface
+  interface RSocket {
+    String QUERY_MAPPING = "excel.sheet.query";
+
+    Mono<ExcelSheetQueryReply> query(ExcelSheetQueryRequest request);
+  }
+
+  @FunctionalInterface
+  interface Servlet {
+    String QUERY_MAPPING = "/excel/sheet/query";
+
+    Result<org.doodle.design.excel.model.payload.reply.ExcelSheetQueryReply> query(
+        org.doodle.design.excel.model.payload.request.ExcelSheetQueryRequest request);
+  }
 }

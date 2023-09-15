@@ -17,14 +17,14 @@ package org.doodle.design.excel.model.payload.reply;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.doodle.design.excel.model.dto.ExcelPropsInfoDto;
+import org.doodle.design.excel.model.info.XlsxInfo;
 
-@ToString
 @Builder
+@ToString
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @AllArgsConstructor
 @NoArgsConstructor
-public class ExcelPullReply {
-  ExcelPropsInfoDto excelProps;
+public class ExcelXlsxQueryReply {
+  XlsxInfo xlsxInfo;
 }
