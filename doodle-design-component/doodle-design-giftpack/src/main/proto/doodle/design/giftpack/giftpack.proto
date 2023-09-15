@@ -117,4 +117,14 @@ message GiftPackHashPageReply {
   }
 }
 
+message GiftPackHashUseRequest {
+  string hash_id = 1;
+}
+
+message GiftPackHashUseReply {
+  oneof Result {
+    GiftPackErrorCode error = 1;
+    GiftPackHashInfo payload = 2;
+  }
+}
 
