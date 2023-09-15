@@ -48,11 +48,22 @@ message GiftPackHashInfoList {
   repeated GiftPackHashInfo pack_hash_info = 1;
 }
 
+message GiftPackCreateRequest {
+  int64 pack_id = 1;
+  int64 count = 2;
+  string content = 3;
+}
+
+message GiftPackCreateReply {
+  oneof Result {
+    GiftPackErrorCode error = 1;
+    GiftPackInfo payload = 2;
+  }
+}
+
 message GiftPackQueryRequest {
   string pack_id = 1;
 }
-
-
 
 message GiftPackQueryReply {
   oneof Result {
@@ -69,6 +80,18 @@ message GiftPackPageReply {
   oneof Result {
     GiftPackErrorCode error = 1;
     GiftPackInfoList pack_info = 2;
+  }
+}
+
+message GiftPackHashCreateRequest {
+  string pack_id = 1;
+  int64 count = 2;
+}
+
+message GiftPackHashCreateReply {
+  oneof Result {
+    GiftPackErrorCode error = 1;
+    GiftPackInfo payload = 2;
   }
 }
 
