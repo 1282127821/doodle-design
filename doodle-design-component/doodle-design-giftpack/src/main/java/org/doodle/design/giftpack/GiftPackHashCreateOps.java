@@ -16,7 +16,6 @@
 package org.doodle.design.giftpack;
 
 import org.doodle.design.common.Result;
-import org.doodle.design.giftpack.model.payload.request.GiftPackHashCreateRequest;
 import reactor.core.publisher.Mono;
 
 public interface GiftPackHashCreateOps {
@@ -25,7 +24,7 @@ public interface GiftPackHashCreateOps {
   interface RSocket {
     String CREATE_MAPPING = "giftpack.hash.create";
 
-    Mono<GiftPackHashCreateReply> create(GiftPackHashCreateReply request);
+    Mono<GiftPackHashCreateReply> create(GiftPackHashCreateRequest request);
   }
 
   @FunctionalInterface
@@ -33,6 +32,6 @@ public interface GiftPackHashCreateOps {
     String CREATE_MAPPING = "/giftpack/hash/create";
 
     Result<org.doodle.design.giftpack.model.payload.reply.GiftPackHashCreateReply> create(
-        GiftPackHashCreateRequest request);
+        org.doodle.design.giftpack.model.payload.request.GiftPackHashCreateRequest request);
   }
 }
