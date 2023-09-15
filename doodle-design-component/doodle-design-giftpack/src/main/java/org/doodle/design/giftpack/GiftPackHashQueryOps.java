@@ -15,6 +15,7 @@
  */
 package org.doodle.design.giftpack;
 
+import org.doodle.design.common.Result;
 import reactor.core.publisher.Mono;
 
 public interface GiftPackHashQueryOps {
@@ -30,7 +31,7 @@ public interface GiftPackHashQueryOps {
   interface Servlet {
     String QUERY_MAPPING = "/giftpack/hash/query";
 
-    Mono<org.doodle.design.giftpack.model.payload.reply.GiftPackHashQueryReply> query(
+    Result<org.doodle.design.giftpack.model.payload.reply.GiftPackHashQueryReply> query(
         org.doodle.design.giftpack.model.payload.request.GiftPackHashQueryRequest request);
   }
 }
