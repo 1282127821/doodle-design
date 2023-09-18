@@ -17,7 +17,7 @@ package org.doodle.design.giftpack.model.payload.reply;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.doodle.design.giftpack.model.info.GiftPackInfo;
+import org.doodle.design.giftpack.model.info.PackCodeInfo;
 
 @Builder
 @ToString
@@ -25,6 +25,6 @@ import org.doodle.design.giftpack.model.info.GiftPackInfo;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @AllArgsConstructor
 @NoArgsConstructor
-public class GiftPackCreateReply {
-  GiftPackInfo packInfo;
+public class GiftPackUseReply {
+  PackCodeInfo packCodeInfo;
 }

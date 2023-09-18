@@ -17,6 +17,7 @@ package org.doodle.design.giftpack.model.payload.request;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.doodle.design.giftpack.model.info.PackCodeInfo;
 
 @Builder
 @ToString
@@ -24,8 +25,6 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @AllArgsConstructor
 @NoArgsConstructor
-public class GiftPackCreateRequest {
-  String packId;
-  long count;
-  String content;
+public class GiftPackCodeQueryReply {
+  PackCodeInfo packCodeInfo;
 }

@@ -18,20 +18,20 @@ package org.doodle.design.giftpack;
 import org.doodle.design.common.Result;
 import reactor.core.publisher.Mono;
 
-public interface GiftPackHashCreateOps {
+public interface GiftPackCodeCreateOps {
 
   @FunctionalInterface
   interface RSocket {
-    String CREATE_MAPPING = "giftpack.hash.create";
+    String CREATE_MAPPING = "giftpack.code.create";
 
-    Mono<GiftPackHashCreateReply> create(GiftPackHashCreateRequest request);
+    Mono<GiftPackCodeCreateReply> create(GiftPackCodeCreateRequest request);
   }
 
   @FunctionalInterface
   interface Servlet {
-    String CREATE_MAPPING = "/giftpack/hash/create";
+    String CREATE_MAPPING = "/giftpack/code/create";
 
-    Result<org.doodle.design.giftpack.model.payload.reply.GiftPackHashCreateReply> create(
-        org.doodle.design.giftpack.model.payload.request.GiftPackHashCreateRequest request);
+    Result<org.doodle.design.giftpack.model.payload.request.GiftPackCodeCreateReply> create(
+        org.doodle.design.giftpack.model.payload.reply.GiftPackCodeCreateRequest request);
   }
 }

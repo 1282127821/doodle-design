@@ -13,25 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.giftpack;
+package org.doodle.design.giftpack.model.payload.reply;
 
-import org.doodle.design.common.Result;
-import reactor.core.publisher.Mono;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
-public interface GiftPackCreateOps {
-
-  @FunctionalInterface
-  interface RSocket {
-    String CREATE_MAPPING = "giftpack.create";
-
-    Mono<GiftPackCreateReply> create(GiftPackCreateRequest request);
-  }
-
-  @FunctionalInterface
-  interface Servlet {
-    String CREATE_MAPPING = "/giftpack/create";
-
-    Result<org.doodle.design.giftpack.model.payload.reply.GiftPackCreateReply> create(
-        org.doodle.design.giftpack.model.payload.request.GiftPackCreateRequest request);
-  }
+@Builder
+@ToString
+@Data
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@AllArgsConstructor
+@NoArgsConstructor
+public class GiftPackCodeCreateRequest {
+  String packCode;
+  String content;
 }

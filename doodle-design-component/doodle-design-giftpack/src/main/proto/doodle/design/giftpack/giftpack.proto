@@ -28,103 +28,95 @@ enum GiftPackErrorCode {
   FAILURE = 0;
 }
 
-message GiftPackInfo {
-  int64 pack_id = 1;
-  int64 count = 2;
+message PackCodeInfo {
+  int32 pack_id = 1;
+  string pack_code = 2;
   string content = 3;
 }
 
-message GiftPackInfoList {
-  repeated GiftPackInfo pack_info = 1;
+message PackCodeInfoList {
+  repeated PackCodeInfo pack_code = 1;
 }
 
-message GiftPackHashInfo {
-  int64 pack_id = 1;
-  string hash_id = 2;
-  int64 index = 3;
+enum PackPlaceType {
+  TIME_BASE = 0;
+  TIME_HASH = 1;
 }
 
-message GiftPackHashInfoList {
-  repeated GiftPackHashInfo pack_hash_info = 1;
+message PackPlaceInfo {
+  PackCodeInfo pack_code = 1;
+  PackPlaceType type = 2;
+  int32 batch = 3;
+  int32 quantity = 4;
 }
 
-message GiftPackCreateRequest {
-  int64 pack_id = 1;
-  int64 count = 2;
-  string content = 3;
+message PackPlaceInfoList {
+  repeated PackPlaceType pack_place = 1;
 }
 
-message GiftPackCreateReply {
+message GiftPackCodeCreateRequest {
+  string pack_code = 1;
+  string content = 2;
+}
+
+message GiftPackCodeCreateReply {
   oneof Result {
     GiftPackErrorCode error = 1;
-    GiftPackInfo payload = 2;
+    PackCodeInfo payload = 2;
   }
 }
 
-message GiftPackQueryRequest {
-  string pack_id = 1;
+message GiftPackCodeQueryRequest {
+  string pack_code = 1;
 }
 
-message GiftPackQueryReply {
+message GiftPackCodeQueryReply {
   oneof Result {
     GiftPackErrorCode error = 1;
-    GiftPackInfo pack_info = 2;
+    PackCodeInfo payload = 2;
   }
 }
 
-message GiftPackPageRequest {
+message GiftPackCodePageRequest {
   doodle.design.common.PageRequest page = 1;
 }
 
-message GiftPackPageReply {
+message GiftPackCodePageReply {
   oneof Result {
     GiftPackErrorCode error = 1;
-    GiftPackInfoList pack_info = 2;
+    PackCodeInfoList payload = 2;
   }
 }
 
-message GiftPackHashCreateRequest {
-  string pack_id = 1;
-  int64 count = 2;
+message GiftPackPlaceQueryRequest {
+  string pack_code = 1;
 }
 
-message GiftPackHashCreateReply {
+message GiftPackPlaceQueryReply {
   oneof Result {
     GiftPackErrorCode error = 1;
-    GiftPackInfo payload = 2;
+    PackPlaceInfoList payload = 2;
   }
 }
 
-message GiftPackHashQueryRequest {
-  string hash_id = 1;
+message GiftPackPlacePageRequest {
+  doodle.design.common.PageRequest page = 2;
 }
 
-message GiftPackHashQueryReply {
+message GiftPackPlacePageReply {
   oneof Result {
     GiftPackErrorCode error = 1;
-    GiftPackHashInfo payload = 2;
+    PackPlaceInfoList payload = 2;
   }
 }
 
-message GiftPackHashPageRequest {
-  doodle.design.common.PageRequest page = 1;
+message GiftPackUseRequest {
+  string pack_code = 1;
 }
 
-message GiftPackHashPageReply {
+message GiftPackUseReply {
   oneof Result {
     GiftPackErrorCode error = 1;
-    GiftPackHashInfoList payload = 2;
+    PackCodeInfo payload = 2;
   }
 }
-
-message GiftPackHashUseRequest {
-  string hash_id = 1;
-}
-
-message GiftPackHashUseReply {
-  oneof Result {
-    GiftPackErrorCode error = 1;
-    GiftPackHashInfo payload = 2;
-  }
-}
-

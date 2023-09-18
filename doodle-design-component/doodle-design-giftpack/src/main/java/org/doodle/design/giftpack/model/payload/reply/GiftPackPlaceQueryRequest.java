@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.giftpack.model.info;
+package org.doodle.design.giftpack.model.payload.reply;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -24,8 +24,6 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @AllArgsConstructor
 @NoArgsConstructor
-public class GiftPackInfo {
-  String packId;
-  long count;
-  String content;
+public class GiftPackPlaceQueryRequest {
+  String packCode;
 }

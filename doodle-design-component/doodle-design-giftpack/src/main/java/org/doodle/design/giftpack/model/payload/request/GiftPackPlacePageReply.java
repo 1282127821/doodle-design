@@ -15,9 +15,10 @@
  */
 package org.doodle.design.giftpack.model.payload.request;
 
+import java.util.List;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.doodle.design.common.PageRequest;
+import org.doodle.design.giftpack.model.info.PackPlaceInfo;
 
 @Builder
 @ToString
@@ -25,6 +26,6 @@ import org.doodle.design.common.PageRequest;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @AllArgsConstructor
 @NoArgsConstructor
-public class GiftPackHashPageRequest {
-  PageRequest page;
+public class GiftPackPlacePageReply {
+  List<PackPlaceInfo> packPlaceInfos;
 }

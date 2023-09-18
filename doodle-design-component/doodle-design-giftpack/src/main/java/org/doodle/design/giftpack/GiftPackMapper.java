@@ -15,23 +15,6 @@
  */
 package org.doodle.design.giftpack;
 
-import org.doodle.design.common.Result;
-import reactor.core.publisher.Mono;
+import org.doodle.design.common.ProtoMapper;
 
-public interface GiftPackHashUseOps {
-
-  @FunctionalInterface
-  interface RSocket {
-    String USE_MAPPING = "giftpack.hash.use";
-
-    Mono<GiftPackHashUseReply> use(GiftPackHashUseRequest request);
-  }
-
-  @FunctionalInterface
-  interface Servlet {
-    String USE_MAPPING = "/giftpack/hash/use";
-
-    Result<org.doodle.design.giftpack.model.payload.reply.GiftPackHashUseReply> use(
-        org.doodle.design.giftpack.model.payload.request.GiftPackHashUseRequest request);
-  }
-}
+public abstract class GiftPackMapper implements ProtoMapper {}

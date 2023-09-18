@@ -13,11 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.giftpack.model.payload.reply;
+package org.doodle.design.giftpack.model.payload.request;
 
+import java.util.List;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.doodle.design.giftpack.model.info.GiftPackInfo;
+import org.doodle.design.giftpack.model.info.PackCodeInfo;
 
 @Builder
 @ToString
@@ -25,6 +26,6 @@ import org.doodle.design.giftpack.model.info.GiftPackInfo;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @AllArgsConstructor
 @NoArgsConstructor
-public class GiftPackQueryReply {
-  GiftPackInfo packInfo;
+public class GiftPackCodePageReply {
+  List<PackCodeInfo> packCodeInfos;
 }

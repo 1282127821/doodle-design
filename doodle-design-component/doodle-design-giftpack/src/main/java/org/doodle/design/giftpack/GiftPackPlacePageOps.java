@@ -18,20 +18,20 @@ package org.doodle.design.giftpack;
 import org.doodle.design.common.Result;
 import reactor.core.publisher.Mono;
 
-public interface GiftPackPageOps {
+public interface GiftPackPlacePageOps {
 
   @FunctionalInterface
   interface RSocket {
-    String PAGE_MAPPING = "giftpack.page";
+    String PAGE_MAPPING = "giftpack.place.page";
 
-    Mono<GiftPackPageReply> page(GiftPackPageRequest request);
+    Mono<GiftPackPlacePageReply> page(GiftPackPlacePageRequest request);
   }
 
   @FunctionalInterface
   interface Servlet {
-    String PAGE_MAPPING = "/giftpack/page";
+    String PAGE_MAPPING = "/giftpack/place/page";
 
-    Result<org.doodle.design.giftpack.model.payload.reply.GiftPackPageReply> page(
-        org.doodle.design.giftpack.model.payload.request.GiftPackPageRequest request);
+    Result<org.doodle.design.giftpack.model.payload.request.GiftPackPlacePageReply> page(
+        org.doodle.design.giftpack.model.payload.reply.GiftPackPlacePageRequest request);
   }
 }

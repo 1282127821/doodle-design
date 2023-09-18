@@ -18,20 +18,20 @@ package org.doodle.design.giftpack;
 import org.doodle.design.common.Result;
 import reactor.core.publisher.Mono;
 
-public interface GiftPackQueryOps {
+public interface GiftPackUseOps {
 
   @FunctionalInterface
   interface RSocket {
-    String QUERY_MAPPING = "giftpack.query";
+    String USE_MAPPING = "giftpack.use";
 
-    Mono<GiftPackQueryReply> query(GiftPackQueryRequest request);
+    Mono<GiftPackUseReply> use(GiftPackUseRequest request);
   }
 
   @FunctionalInterface
   interface Servlet {
-    String QUERY_MAPPING = "/giftpack/query";
+    String USE_MAPPING = "/giftpack/use";
 
-    Result<org.doodle.design.giftpack.model.payload.reply.GiftPackQueryReply> query(
-        org.doodle.design.giftpack.model.payload.request.GiftPackQueryRequest request);
+    Result<org.doodle.design.giftpack.model.payload.reply.GiftPackUseReply> use(
+        org.doodle.design.giftpack.model.payload.request.GiftPackUseRequest request);
   }
 }

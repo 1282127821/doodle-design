@@ -13,17 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.giftpack.model.payload.request;
+package org.doodle.design.giftpack;
 
-import lombok.*;
-import lombok.experimental.FieldDefaults;
+import org.doodle.design.common.Result;
+import reactor.core.publisher.Mono;
 
-@Builder
-@ToString
-@Data
-@FieldDefaults(level = AccessLevel.PRIVATE)
-@AllArgsConstructor
-@NoArgsConstructor
-public class GiftPackQueryRequest {
-  String packId;
+public interface GiftPackCodeQueryOps {
+
+  @FunctionalInterface
+  interface RSocket {
+    String QUERY_MAPPING = "giftpack.code.query";
+
+    Mono<GiftPackCodeQueryReply> query(GiftPackCodeQueryRequest request);
+  }
+
+  @FunctionalInterface
+  interface Servlet {
+    String QUERY_MAPPING = "/giftpack/code/query";
+
+    Result<org.doodle.design.giftpack.model.payload.request.GiftPackCodeQueryReply> query(
+        org.doodle.design.giftpack.model.payload.reply.GiftPackCodeQueryRequest request);
+  }
 }

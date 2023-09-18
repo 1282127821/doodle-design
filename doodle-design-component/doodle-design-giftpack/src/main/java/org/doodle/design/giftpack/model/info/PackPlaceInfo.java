@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.giftpack.model.payload.reply;
+package org.doodle.design.giftpack.model.info;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.doodle.design.giftpack.model.info.GiftPackInfo;
+import org.doodle.design.giftpack.PackPlaceType;
 
 @Builder
 @ToString
@@ -25,6 +25,9 @@ import org.doodle.design.giftpack.model.info.GiftPackInfo;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @AllArgsConstructor
 @NoArgsConstructor
-public class GiftPackHashCreateReply {
-  GiftPackInfo packInfo;
+public class PackPlaceInfo {
+  PackCodeInfo packCodeInfo;
+  PackPlaceType type;
+  int batch;
+  int quantity;
 }

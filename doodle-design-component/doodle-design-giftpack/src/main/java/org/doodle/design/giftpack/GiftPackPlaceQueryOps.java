@@ -13,19 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.giftpack.model.info;
+package org.doodle.design.giftpack;
 
-import lombok.*;
-import lombok.experimental.FieldDefaults;
+import org.doodle.design.common.Result;
+import reactor.core.publisher.Mono;
 
-@Builder
-@ToString
-@Data
-@FieldDefaults(level = AccessLevel.PRIVATE)
-@AllArgsConstructor
-@NoArgsConstructor
-public class GiftPackHashInfo {
-  String packId;
-  String hashId;
-  long index;
+public interface GiftPackPlaceQueryOps {
+  @FunctionalInterface
+  interface RSocket {
+    String QUERY_MAPPING = "giftpack.place.query";
+
+    Mono<GiftPackPlaceQueryReply> query(GiftPackPlaceQueryRequest request);
+  }
+
+  @FunctionalInterface
+  interface Servlet {
+    String QUERY_MAPPING = "/giftpack/place/query";
+
+    Result<org.doodle.design.giftpack.model.payload.request.GiftPackPlaceQueryReply> query(
+        org.doodle.design.giftpack.model.payload.reply.GiftPackPlaceQueryRequest request);
+  }
 }

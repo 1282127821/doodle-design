@@ -13,25 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.giftpack;
+package org.doodle.design.giftpack.model.payload.request;
 
-import org.doodle.design.common.Result;
-import reactor.core.publisher.Mono;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
-public interface GiftPackHashPageOps {
-
-  @FunctionalInterface
-  interface RSocket {
-    String PAGE_MAPPING = "giftpack.hash.page";
-
-    Mono<GiftPackHashPageReply> page(GiftPackHashPageRequest request);
-  }
-
-  @FunctionalInterface
-  interface Servlet {
-    String PAGE_MAPPING = "/giftpack/hash/page";
-
-    Result<org.doodle.design.giftpack.model.payload.reply.GiftPackHashPageReply> page(
-        org.doodle.design.giftpack.model.payload.request.GiftPackHashPageRequest request);
-  }
+@Builder
+@ToString
+@Data
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@AllArgsConstructor
+@NoArgsConstructor
+public class GiftPackUseRequest {
+  String packCode;
 }

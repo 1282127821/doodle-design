@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.giftpack.model.payload.request;
+package org.doodle.design.giftpack.model.payload.reply;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -25,6 +25,6 @@ import org.doodle.design.common.PageRequest;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @AllArgsConstructor
 @NoArgsConstructor
-public class GiftPackPageRequest {
+public class GiftPackPlacePageRequest {
   PageRequest page;
 }
