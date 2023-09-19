@@ -19,107 +19,100 @@ syntax = "proto3";
 package doodle.design.giftpack;
 
 import "google/protobuf/timestamp.proto";
-import "doodle/design/common/pagination.proto";
 
 option java_multiple_files = true;
 option java_package = "org.doodle.design.giftpack";
-option java_outer_classname = "GiftPackProto";
+option java_outer_classname = "GiftPackStructProto";
 
 enum GiftPackErrorCode {
   FAILURE = 0;
 }
 
-// 视觉风格
-message GiftVisionStyle {
-  // 透传视觉ID
+message VisionInfo {
   string vision_id = 1;
-  // 描述
   string description = 2;
 }
 
-// 视觉风格列表
-message GiftVisionStyleList {
-  repeated GiftVisionStyle vision_style = 1;
+message VisionList {
+  repeated VisionInfo vision = 1;
 }
 
-// 礼物信息
 message GiftInfo {
   // 礼物ID
   string gift_id = 1;
-  // 礼物内容
   string content = 2;
-  // 礼物视觉风格
-  GiftVisionStyle vision_style = 3;
+  VisionInfo vision = 3;
 }
 
-// 礼物列表
 message GiftInfoList {
   repeated GiftInfo gift = 1;
 }
 
-// 礼包码信息
 message CodeInfo {
-  // 礼包码唯一ID
   int64 code_id = 1;
-  // 礼包码批次
   int32 batch = 2;
-  // 礼包码
   string pack_code = 3;
-  // 礼物列表
   GiftInfoList gift = 4;
 }
 
-// 通用码详情信息
+message CodeInfoList {
+  repeated CodeInfo code = 1;
+}
+
 message UniversalPackDetailInfo {
+  message LimitQuantity {
+    int64 quantity = 1;
+  }
+
+  message LimitTimes {
+    int64 times = 1;
+  }
+
   oneof Kind {
-    // 限制数量
-    int64 limit_quantity = 1;
-    // 限制次数
-    int64 limit_times = 2;
+    LimitQuantity limit_quantity = 1;
+    LimitTimes limit_times = 2;
   }
 }
-// 一次性码详情信息
 message TemporaryPackDetailInfo {
-  // 数量
   int64 quantity = 1;
 }
 
-// 礼包详情
 message PackDetailInfo {
   oneof Kind {
-    // 通用码详情
     UniversalPackDetailInfo universal = 1;
-    // 一次性码详情
     TemporaryPackDetailInfo temporary = 2;
   }
 }
 
-// 礼包生命周期
 message PackLifecycleInfo {
-  // 生效开始时间
   google.protobuf.Timestamp start = 1;
-  // 生效结束时间
   google.protobuf.Timestamp end = 2;
 }
 
-// 礼包选项信息
-message PackOptionInfo {
-  // 是否开启
-  bool enable = 1;
-  // 是否允许不同批次重复领取
-  bool allow_diff_batch = 2;
+message PackConditionInfo {
+  enum MatchType {
+    ANY = 0;
+    ALL = 1;
+  }
+  MatchType match_type = 1;
+  map<string, string> condition = 2;
 }
 
-// 礼包信息
+message PackOptionInfo {
+  bool enable = 1;
+  bool allow_diff_batch = 2;
+  PackConditionInfo condition = 3;
+}
+
+
 message PackInfo {
-  // 礼包唯一ID
   string pack_id = 1;
-  // 礼包码信息
   CodeInfo code = 2;
-  // 礼包详情信息
   PackDetailInfo detail = 3;
-  // 礼包生命周期
   PackLifecycleInfo lifecycle = 4;
-  // 礼包选项
   PackOptionInfo option = 5;
+}
+
+message PackInfoList {
+  repeated PackInfo pack = 1;
 }
