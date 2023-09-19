@@ -18,6 +18,7 @@ syntax = "proto3";
 
 package doodle.design.giftpack;
 
+import "google/protobuf/timestamp.proto";
 import "doodle/design/common/pagination.proto";
 
 option java_multiple_files = true;
@@ -28,95 +29,97 @@ enum GiftPackErrorCode {
   FAILURE = 0;
 }
 
-message PackCodeInfo {
-  int32 pack_id = 1;
-  string pack_code = 2;
-  string content = 3;
+// 视觉风格
+message GiftVisionStyle {
+  // 透传视觉ID
+  string vision_id = 1;
+  // 描述
+  string description = 2;
 }
 
-message PackCodeInfoList {
-  repeated PackCodeInfo pack_code = 1;
+// 视觉风格列表
+message GiftVisionStyleList {
+  repeated GiftVisionStyle vision_style = 1;
 }
 
-enum PackPlaceType {
-  TIME_BASE = 0;
-  TIME_HASH = 1;
-}
-
-message PackPlaceInfo {
-  PackCodeInfo pack_code = 1;
-  PackPlaceType type = 2;
-  int32 batch = 3;
-  int32 quantity = 4;
-}
-
-message PackPlaceInfoList {
-  repeated PackPlaceType pack_place = 1;
-}
-
-message GiftPackCodeCreateRequest {
-  string pack_code = 1;
+// 礼物信息
+message GiftInfo {
+  // 礼物ID
+  string gift_id = 1;
+  // 礼物内容
   string content = 2;
+  // 礼物视觉风格
+  GiftVisionStyle vision_style = 3;
 }
 
-message GiftPackCodeCreateReply {
-  oneof Result {
-    GiftPackErrorCode error = 1;
-    PackCodeInfo payload = 2;
+// 礼物列表
+message GiftInfoList {
+  repeated GiftInfo gift = 1;
+}
+
+// 礼包码信息
+message CodeInfo {
+  // 礼包码唯一ID
+  int64 code_id = 1;
+  // 礼包码批次
+  int32 batch = 2;
+  // 礼包码
+  string pack_code = 3;
+  // 礼物列表
+  GiftInfoList gift = 4;
+}
+
+// 通用码详情信息
+message UniversalPackDetailInfo {
+  oneof Kind {
+    // 限制数量
+    int64 limit_quantity = 1;
+    // 限制次数
+    int64 limit_times = 2;
+  }
+}
+// 一次性码详情信息
+message TemporaryPackDetailInfo {
+  // 数量
+  int64 quantity = 1;
+}
+
+// 礼包详情
+message PackDetailInfo {
+  oneof Kind {
+    // 通用码详情
+    UniversalPackDetailInfo universal = 1;
+    // 一次性码详情
+    TemporaryPackDetailInfo temporary = 2;
   }
 }
 
-message GiftPackCodeQueryRequest {
-  string pack_code = 1;
+// 礼包生命周期
+message PackLifecycleInfo {
+  // 生效开始时间
+  google.protobuf.Timestamp start = 1;
+  // 生效结束时间
+  google.protobuf.Timestamp end = 2;
 }
 
-message GiftPackCodeQueryReply {
-  oneof Result {
-    GiftPackErrorCode error = 1;
-    PackCodeInfo payload = 2;
-  }
+// 礼包选项信息
+message PackOptionInfo {
+  // 是否开启
+  bool enable = 1;
+  // 是否允许不同批次重复领取
+  bool allow_diff_batch = 2;
 }
 
-message GiftPackCodePageRequest {
-  doodle.design.common.PageRequest page = 1;
-}
-
-message GiftPackCodePageReply {
-  oneof Result {
-    GiftPackErrorCode error = 1;
-    PackCodeInfoList payload = 2;
-  }
-}
-
-message GiftPackPlaceQueryRequest {
-  string pack_code = 1;
-}
-
-message GiftPackPlaceQueryReply {
-  oneof Result {
-    GiftPackErrorCode error = 1;
-    PackPlaceInfoList payload = 2;
-  }
-}
-
-message GiftPackPlacePageRequest {
-  doodle.design.common.PageRequest page = 2;
-}
-
-message GiftPackPlacePageReply {
-  oneof Result {
-    GiftPackErrorCode error = 1;
-    PackPlaceInfoList payload = 2;
-  }
-}
-
-message GiftPackUseRequest {
-  string pack_code = 1;
-}
-
-message GiftPackUseReply {
-  oneof Result {
-    GiftPackErrorCode error = 1;
-    PackCodeInfo payload = 2;
-  }
+// 礼包信息
+message PackInfo {
+  // 礼包唯一ID
+  string pack_id = 1;
+  // 礼包码信息
+  CodeInfo code = 2;
+  // 礼包详情信息
+  PackDetailInfo detail = 3;
+  // 礼包生命周期
+  PackLifecycleInfo lifecycle = 4;
+  // 礼包选项
+  PackOptionInfo option = 5;
 }
