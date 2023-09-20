@@ -18,16 +18,13 @@ package org.doodle.design.giftpack.model.info;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-// 礼物视觉风格
-@ToString
 @Builder
+@ToString
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @AllArgsConstructor
 @NoArgsConstructor
 public class VisionInfo {
-  // 视觉风格ID
   String visionId;
-  // 视觉风格说明
   String description;
 }

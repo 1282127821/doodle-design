@@ -18,12 +18,13 @@ package org.doodle.design.giftpack.model.info;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-@ToString
 @Builder
+@ToString
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @AllArgsConstructor
 @NoArgsConstructor
 public class TemporaryPackDetailInfo {
   long quantity;
+  long batch;
 }

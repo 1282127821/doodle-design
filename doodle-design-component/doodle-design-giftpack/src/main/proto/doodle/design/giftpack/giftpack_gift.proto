@@ -46,3 +46,7 @@ message GiftPackGiftPageReply {
     GiftInfoList payload = 2;
   }
 }
+
+
+
+

@@ -43,6 +43,10 @@ message GiftPackVisionPageRequest {
 message GiftPackVisionPageReply {
   oneof Result {
     GiftPackErrorCode error = 1;
-    VisionList payload = 2;
+    VisionInfoList payload = 2;
   }
 }
+
+
+
+

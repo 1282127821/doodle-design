@@ -18,8 +18,8 @@ package org.doodle.design.giftpack.model.info;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-@ToString
 @Builder
+@ToString
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @AllArgsConstructor
@@ -27,7 +27,8 @@ import lombok.experimental.FieldDefaults;
 public class PackInfo {
   String packId;
   CodeInfo code;
-  PackDetailInfo detail;
   PackLifecycleInfo lifecycle;
-  PackOptionInfo option;
+  PackOptionsInfo options;
+  PackConditionInfo condition;
+  PackDetailInfo detail;
 }

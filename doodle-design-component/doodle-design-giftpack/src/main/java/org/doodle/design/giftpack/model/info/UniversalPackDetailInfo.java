@@ -15,37 +15,17 @@
  */
 package org.doodle.design.giftpack.model.info;
 
+import com.google.protobuf.Int64Value;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-@ToString
 @Builder
+@ToString
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @AllArgsConstructor
 @NoArgsConstructor
 public class UniversalPackDetailInfo {
-
-  @ToString
-  @Builder
-  @Data
-  @FieldDefaults(level = AccessLevel.PRIVATE)
-  @AllArgsConstructor
-  @NoArgsConstructor
-  public static class LimitQuantity {
-    long quantity;
-  }
-
-  @ToString
-  @Builder
-  @Data
-  @FieldDefaults(level = AccessLevel.PRIVATE)
-  @AllArgsConstructor
-  @NoArgsConstructor
-  public static class LimitTimes {
-    long times;
-  }
-
-  LimitQuantity limitQuantity;
-  LimitTimes limitTimes;
+  Int64Value quantity;
+  Int64Value times;
 }

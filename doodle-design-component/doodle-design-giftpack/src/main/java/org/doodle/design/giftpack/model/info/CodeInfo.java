@@ -19,15 +19,14 @@ import java.util.List;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-@ToString
 @Builder
+@ToString
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @AllArgsConstructor
 @NoArgsConstructor
 public class CodeInfo {
   long codeId;
-  int batch;
   String packCode;
-  List<GiftInfo> gifts;
+  List<GiftInfo> giftInfos;
 }

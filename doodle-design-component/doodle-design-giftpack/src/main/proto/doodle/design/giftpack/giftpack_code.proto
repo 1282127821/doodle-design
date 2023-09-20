@@ -46,3 +46,7 @@ message GiftPackCodePageReply {
     CodeInfoList payload = 2;
   }
 }
+
+
+
+

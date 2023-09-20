@@ -18,13 +18,14 @@ package org.doodle.design.giftpack.model.payload.reply;
 import java.util.List;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.doodle.design.giftpack.model.info.VisionInfo;
+import org.doodle.design.giftpack.model.info.GiftInfo;
 
 @Builder
+@ToString
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @AllArgsConstructor
 @NoArgsConstructor
 public class GiftPackGiftPageReply {
-  List<VisionInfo> visionInfos;
+  List<GiftInfo> giftInfos;
 }

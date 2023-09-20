@@ -13,25 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.giftpack;
+package org.doodle.design.giftpack.model.info;
 
-import org.doodle.design.common.Result;
-import reactor.core.publisher.Mono;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
-public interface GiftPackVisionPageOps {
-
-  @FunctionalInterface
-  interface RSocket {
-    String PAGE_MAPPING = "giftpack.vision.page";
-
-    Mono<GiftPackVisionPageReply> page(GiftPackVisionPageRequest request);
-  }
-
-  @FunctionalInterface
-  interface Servlet {
-    String PAGE_MAPPING = "/giftpack/vision/page";
-
-    Result<org.doodle.design.giftpack.model.payload.reply.GiftPackVisionPageReply> page(
-        org.doodle.design.giftpack.model.payload.request.GiftPackVisionPageRequest request);
-  }
+@Builder
+@ToString
+@Data
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@AllArgsConstructor
+@NoArgsConstructor
+public class PackOptionsInfo {
+  boolean enable;
 }

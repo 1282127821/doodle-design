@@ -19,6 +19,7 @@ syntax = "proto3";
 package doodle.design.giftpack;
 
 import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
 
 option java_multiple_files = true;
 option java_package = "org.doodle.design.giftpack";
@@ -33,12 +34,11 @@ message VisionInfo {
   string description = 2;
 }
 
-message VisionList {
+message VisionInfoList {
   repeated VisionInfo vision = 1;
 }
 
 message GiftInfo {
-  // 礼物ID
   string gift_id = 1;
   string content = 2;
   VisionInfo vision = 3;
@@ -50,31 +50,31 @@ message GiftInfoList {
 
 message CodeInfo {
   int64 code_id = 1;
-  int32 batch = 2;
-  string pack_code = 3;
-  GiftInfoList gift = 4;
+  string pack_code = 2;
+  GiftInfoList gift = 3;
 }
 
 message CodeInfoList {
   repeated CodeInfo code = 1;
 }
 
-message UniversalPackDetailInfo {
-  message LimitQuantity {
-    int64 quantity = 1;
-  }
-
-  message LimitTimes {
-    int64 times = 1;
-  }
-
-  oneof Kind {
-    LimitQuantity limit_quantity = 1;
-    LimitTimes limit_times = 2;
-  }
+message PackLifecycleInfo {
+  google.protobuf.Timestamp start = 1;
+  google.protobuf.Timestamp end = 2;
 }
+
+message PackOptionsInfo {
+  bool enable = 1;
+}
+
+message UniversalPackDetailInfo {
+  google.protobuf.Int64Value quantity = 1;
+  google.protobuf.Int64Value times = 2;
+}
+
 message TemporaryPackDetailInfo {
   int64 quantity = 1;
+  int64 batch = 2;
 }
 
 message PackDetailInfo {
@@ -82,11 +82,6 @@ message PackDetailInfo {
     UniversalPackDetailInfo universal = 1;
     TemporaryPackDetailInfo temporary = 2;
   }
-}
-
-message PackLifecycleInfo {
-  google.protobuf.Timestamp start = 1;
-  google.protobuf.Timestamp end = 2;
 }
 
 message PackConditionInfo {
@@ -98,21 +93,19 @@ message PackConditionInfo {
   map<string, string> condition = 2;
 }
 
-message PackOptionInfo {
-  bool enable = 1;
-  bool allow_diff_batch = 2;
-  PackConditionInfo condition = 3;
-}
-
-
 message PackInfo {
   string pack_id = 1;
   CodeInfo code = 2;
-  PackDetailInfo detail = 3;
-  PackLifecycleInfo lifecycle = 4;
-  PackOptionInfo option = 5;
+  PackLifecycleInfo lifecycle = 3;
+  PackOptionsInfo options = 4;
+  PackConditionInfo condition = 5;
+  PackDetailInfo detail = 6;
 }
 
 message PackInfoList {
   repeated PackInfo pack = 1;
 }
+
+
+
+

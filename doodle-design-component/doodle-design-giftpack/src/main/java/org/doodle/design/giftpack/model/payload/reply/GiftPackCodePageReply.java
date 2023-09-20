@@ -21,6 +21,7 @@ import lombok.experimental.FieldDefaults;
 import org.doodle.design.giftpack.model.info.CodeInfo;
 
 @Builder
+@ToString
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @AllArgsConstructor

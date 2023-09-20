@@ -17,14 +17,13 @@ package org.doodle.design.giftpack.model.payload.reply;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.doodle.design.giftpack.model.info.PackInfo;
 
-@ToString
 @Builder
+@ToString
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @AllArgsConstructor
 @NoArgsConstructor
 public class GiftPackPackQueryReply {
-  PackInfo packInfo;
+  String packCode;
 }
