@@ -15,6 +15,264 @@
  */
 package org.doodle.design.giftpack;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
 import org.doodle.design.common.ProtoMapper;
+import org.springframework.util.CollectionUtils;
 
-public abstract class GiftPackMapper implements ProtoMapper {}
+public abstract class GiftPackMapper implements ProtoMapper {
+
+  public VisionInfo toProto(org.doodle.design.giftpack.model.info.VisionInfo info) {
+    return VisionInfo.newBuilder()
+        .setVisionId(info.getVisionId())
+        .setDescription(info.getDescription())
+        .build();
+  }
+
+  public org.doodle.design.giftpack.model.info.VisionInfo fromProto(VisionInfo proto) {
+    return org.doodle.design.giftpack.model.info.VisionInfo.builder()
+        .visionId(proto.getVisionId())
+        .description(proto.getDescription())
+        .build();
+  }
+
+  public VisionInfoList toVisionInfoList(
+      List<org.doodle.design.giftpack.model.info.VisionInfo> infos) {
+    VisionInfoList.Builder builder = VisionInfoList.newBuilder();
+    if (!CollectionUtils.isEmpty(infos)) {
+      infos.stream().map(this::toProto).forEach(builder::addVision);
+    }
+    return builder.build();
+  }
+
+  public List<org.doodle.design.giftpack.model.info.VisionInfo> fromProtoList(
+      VisionInfoList proto) {
+    return !CollectionUtils.isEmpty(proto.getVisionList())
+        ? proto.getVisionList().stream().map(this::fromProto).toList()
+        : Collections.emptyList();
+  }
+
+  public GiftInfo toProto(org.doodle.design.giftpack.model.info.GiftInfo info) {
+    return GiftInfo.newBuilder()
+        .setGiftId(info.getGiftId())
+        .setContent(info.getContent())
+        .setVision(toProto(info.getVision()))
+        .build();
+  }
+
+  public org.doodle.design.giftpack.model.info.GiftInfo fromProto(GiftInfo proto) {
+    return org.doodle.design.giftpack.model.info.GiftInfo.builder()
+        .giftId(proto.getGiftId())
+        .content(proto.getContent())
+        .vision(fromProto(proto.getVision()))
+        .build();
+  }
+
+  public GiftInfoList toGiftInfoList(List<org.doodle.design.giftpack.model.info.GiftInfo> infos) {
+    GiftInfoList.Builder gift = GiftInfoList.newBuilder();
+    if (!CollectionUtils.isEmpty(infos)) {
+      infos.stream().map(this::toProto).forEach(gift::addGift);
+    }
+    return gift.build();
+  }
+
+  public List<org.doodle.design.giftpack.model.info.GiftInfo> fromProtoList(GiftInfoList proto) {
+    return !CollectionUtils.isEmpty(proto.getGiftList())
+        ? proto.getGiftList().stream().map(this::fromProto).toList()
+        : Collections.emptyList();
+  }
+
+  public CodeInfo toProto(org.doodle.design.giftpack.model.info.CodeInfo info) {
+    return CodeInfo.newBuilder()
+        .setCodeId(info.getCodeId())
+        .setPackCode(info.getPackCode())
+        .setGift(this.toGiftInfoList(info.getGiftInfos()))
+        .build();
+  }
+
+  public org.doodle.design.giftpack.model.info.CodeInfo fromProto(CodeInfo proto) {
+    return org.doodle.design.giftpack.model.info.CodeInfo.builder()
+        .codeId(proto.getCodeId())
+        .packCode(proto.getPackCode())
+        .giftInfos(fromProtoList(proto.getGift()))
+        .build();
+  }
+
+  public CodeInfoList toCodeInfoList(List<org.doodle.design.giftpack.model.info.CodeInfo> infos) {
+    CodeInfoList.Builder builder = CodeInfoList.newBuilder();
+    if (!CollectionUtils.isEmpty(infos)) {
+      infos.stream().map(this::toProto).forEach(builder::addCode);
+    }
+    return builder.build();
+  }
+
+  public List<org.doodle.design.giftpack.model.info.CodeInfo> fromProtoList(CodeInfoList proto) {
+    return !CollectionUtils.isEmpty(proto.getCodeList())
+        ? proto.getCodeList().stream().map(this::fromProto).toList()
+        : Collections.emptyList();
+  }
+
+  public PackLifecycleInfo toProto(org.doodle.design.giftpack.model.info.PackLifecycleInfo info) {
+    return PackLifecycleInfo.newBuilder()
+        .setStart(toProto(info.getStart().atZone(ZoneId.systemDefault()).toInstant()))
+        .setEnd(toProto(info.getEnd().atZone(ZoneId.systemDefault()).toInstant()))
+        .build();
+  }
+
+  public org.doodle.design.giftpack.model.info.PackLifecycleInfo fromProto(
+      PackLifecycleInfo proto) {
+    return org.doodle.design.giftpack.model.info.PackLifecycleInfo.builder()
+        .start(LocalDateTime.ofInstant(fromProto(proto.getStart()), ZoneId.systemDefault()))
+        .end(LocalDateTime.ofInstant(fromProto(proto.getEnd()), ZoneId.systemDefault()))
+        .build();
+  }
+
+  public PackOptionsInfo toProto(org.doodle.design.giftpack.model.info.PackOptionsInfo info) {
+    return PackOptionsInfo.newBuilder().setEnable(info.isEnable()).build();
+  }
+
+  public org.doodle.design.giftpack.model.info.PackOptionsInfo fromProto(PackOptionsInfo proto) {
+    return org.doodle.design.giftpack.model.info.PackOptionsInfo.builder()
+        .enable(proto.getEnable())
+        .build();
+  }
+
+  public PackConditionInfo toProto(org.doodle.design.giftpack.model.info.PackConditionInfo info) {
+    return PackConditionInfo.newBuilder()
+        .setMatchType(info.getMatchType())
+        .putAllCondition(info.getCondition())
+        .build();
+  }
+
+  public org.doodle.design.giftpack.model.info.PackConditionInfo fromProto(
+      PackConditionInfo proto) {
+    return org.doodle.design.giftpack.model.info.PackConditionInfo.builder()
+        .matchType(proto.getMatchType())
+        .condition(proto.getConditionMap())
+        .build();
+  }
+
+  public UniversalPackDetailInfo toProto(
+      org.doodle.design.giftpack.model.info.UniversalPackDetailInfo info) {
+    return UniversalPackDetailInfo.newBuilder()
+        .setQuantity(info.getQuantity())
+        .setTimes(info.getTimes())
+        .build();
+  }
+
+  public org.doodle.design.giftpack.model.info.UniversalPackDetailInfo fromProto(
+      UniversalPackDetailInfo proto) {
+    return org.doodle.design.giftpack.model.info.UniversalPackDetailInfo.builder()
+        .quantity(proto.getQuantity())
+        .times(proto.getTimes())
+        .build();
+  }
+
+  public TemporaryPackDetailInfo toProto(
+      org.doodle.design.giftpack.model.info.TemporaryPackDetailInfo info) {
+    return TemporaryPackDetailInfo.newBuilder()
+        .setQuantity(info.getQuantity())
+        .setBatch(info.getBatch())
+        .build();
+  }
+
+  public org.doodle.design.giftpack.model.info.TemporaryPackDetailInfo fromProto(
+      TemporaryPackDetailInfo proto) {
+    return org.doodle.design.giftpack.model.info.TemporaryPackDetailInfo.builder()
+        .quantity(proto.getQuantity())
+        .batch(proto.getBatch())
+        .build();
+  }
+
+  public PackDetailInfo toProto(org.doodle.design.giftpack.model.info.PackDetailInfo info) {
+    PackDetailInfo.Builder builder = PackDetailInfo.newBuilder();
+    if (Objects.nonNull(info.getUniversal())) {
+      builder.setUniversal(toProto(info.getUniversal()));
+    } else if (Objects.nonNull(info.getTemporary())) {
+      builder.setTemporary(toProto(info.getTemporary()));
+    }
+    return builder.build();
+  }
+
+  public org.doodle.design.giftpack.model.info.PackDetailInfo fromProto(PackDetailInfo proto) {
+    org.doodle.design.giftpack.model.info.PackDetailInfo.PackDetailInfoBuilder builder =
+        org.doodle.design.giftpack.model.info.PackDetailInfo.builder();
+    if (proto.hasUniversal()) {
+      builder.universal(fromProto(proto.getUniversal()));
+    } else if (proto.hasTemporary()) {
+      builder.temporary(fromProto(proto.getTemporary()));
+    }
+    return builder.build();
+  }
+
+  public PackInfo toProto(org.doodle.design.giftpack.model.info.PackInfo info) {
+    return PackInfo.newBuilder()
+        .setPackId(info.getPackId())
+        .setCode(toProto(info.getCode()))
+        .setLifecycle(toProto(info.getLifecycle()))
+        .setCondition(toProto(info.getCondition()))
+        .setOptions(toProto(info.getOptions()))
+        .setDetail(toProto(info.getDetail()))
+        .build();
+  }
+
+  public org.doodle.design.giftpack.model.info.PackInfo fromProto(PackInfo proto) {
+    return org.doodle.design.giftpack.model.info.PackInfo.builder()
+        .packId(proto.getPackId())
+        .code(fromProto(proto.getCode()))
+        .lifecycle(fromProto(proto.getLifecycle()))
+        .condition(fromProto(proto.getCondition()))
+        .options(fromProto(proto.getOptions()))
+        .detail(fromProto(proto.getDetail()))
+        .build();
+  }
+
+  public PackInfoList toPackInfoList(List<org.doodle.design.giftpack.model.info.PackInfo> infos) {
+    PackInfoList.Builder builder = PackInfoList.newBuilder();
+    if (!CollectionUtils.isEmpty(infos)) {
+      infos.stream().map(this::toProto).forEach(builder::addPack);
+    }
+    return builder.build();
+  }
+
+  public List<org.doodle.design.giftpack.model.info.PackInfo> fromProtoList(PackInfoList proto) {
+    return !CollectionUtils.isEmpty(proto.getPackList())
+        ? proto.getPackList().stream().map(this::fromProto).toList()
+        : Collections.emptyList();
+  }
+
+  public GiftPackVisionQueryReply toProto(VisionInfo info) {
+    return GiftPackVisionQueryReply.newBuilder().setPayload(info).build();
+  }
+
+  public GiftPackVisionPageReply toProto(VisionInfoList infos) {
+    return GiftPackVisionPageReply.newBuilder().setPayload(infos).build();
+  }
+
+  public GiftPackGiftQueryReply toProto(GiftInfo info) {
+    return GiftPackGiftQueryReply.newBuilder().setPayload(info).build();
+  }
+
+  public GiftPackGiftPageReply toProto(GiftInfoList infos) {
+    return GiftPackGiftPageReply.newBuilder().setPayload(infos).build();
+  }
+
+  public GiftPackCodeQueryReply toProto(CodeInfo info) {
+    return GiftPackCodeQueryReply.newBuilder().setPayload(info).build();
+  }
+
+  public GiftPackCodePageReply toProto(CodeInfoList infos) {
+    return GiftPackCodePageReply.newBuilder().setPayload(infos).build();
+  }
+
+  public GiftPackPackQueryReply toProto(PackInfo info) {
+    return GiftPackPackQueryReply.newBuilder().setPayload(info).build();
+  }
+
+  public GiftPackPackPageReply toProto(PackInfoList infos) {
+    return GiftPackPackPageReply.newBuilder().setPayload(infos).build();
+  }
+}
