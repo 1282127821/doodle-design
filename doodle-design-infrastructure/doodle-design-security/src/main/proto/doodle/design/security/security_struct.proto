@@ -1,0 +1,64 @@
+/*
+ * Copyright (c) 2022-present Doodle. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+syntax = "proto3";
+
+package doodle.design.security;
+
+
+option java_multiple_files = true;
+option java_package = "org.doodle.design.security";
+option java_outer_classname = "SecurityStructProto";
+
+enum SecurityErrorCode {
+  QUERY_FAILURE = 0;
+  PAGE_FAILURE = 1;
+}
+
+message AuthorityInfo {
+  string authority = 1;
+}
+
+message AuthorityInfoList {
+  repeated AuthorityInfo authority_info = 1;
+}
+
+message RoleInfo {
+  string role = 1;
+  repeated AuthorityInfo authorities = 2;
+}
+
+message RoleInfoList {
+  repeated RoleInfo role_info = 1;
+}
+
+message UserInfo {
+  string username = 1;
+  bool enable = 2;
+  repeated RoleInfo roles = 3;
+}
+
+message UserInfoList {
+  repeated UserInfo user_info = 1;
+}
+
+message UserDetailsInfo {
+  string username = 1;
+  string password = 2;
+  bool enable = 3;
+  repeated string authorities = 4;
+}
+
