@@ -126,27 +126,55 @@ public abstract class SecurityMapper implements ProtoMapper {
     return SecurityUserDetailsQueryReply.newBuilder().setPayload(info).build();
   }
 
+  public SecurityUserDetailsQueryReply toUserDetailsQueryError(SecurityErrorCode errorCode) {
+    return SecurityUserDetailsQueryReply.newBuilder().setError(errorCode).build();
+  }
+
   public SecurityUserQueryReply toProto(UserInfo userInfo) {
     return SecurityUserQueryReply.newBuilder().setPayload(userInfo).build();
+  }
+
+  public SecurityUserQueryReply toUserQueryError(SecurityErrorCode errorCode) {
+    return SecurityUserQueryReply.newBuilder().setError(errorCode).build();
   }
 
   public SecurityUserPageReply toProto(UserInfoList list) {
     return SecurityUserPageReply.newBuilder().setPayload(list).build();
   }
 
+  public SecurityUserPageReply toUserPageError(SecurityErrorCode errorCode) {
+    return SecurityUserPageReply.newBuilder().setError(errorCode).build();
+  }
+
   public SecurityRoleQueryReply toProto(RoleInfo info) {
     return SecurityRoleQueryReply.newBuilder().setPayload(info).build();
+  }
+
+  public SecurityRoleQueryReply toRoleQueryError(SecurityErrorCode errorCode) {
+    return SecurityRoleQueryReply.newBuilder().setError(errorCode).build();
   }
 
   public SecurityRolePageReply toProto(RoleInfoList list) {
     return SecurityRolePageReply.newBuilder().setPayload(list).build();
   }
 
+  public SecurityRolePageReply toRolePageError(SecurityErrorCode errorCode) {
+    return SecurityRolePageReply.newBuilder().setError(errorCode).build();
+  }
+
   public SecurityAuthorityQueryReply toProto(AuthorityInfo info) {
     return SecurityAuthorityQueryReply.newBuilder().setPayload(info).build();
   }
 
+  public SecurityAuthorityQueryReply toAuthorityQueryError(SecurityErrorCode errorCode) {
+    return SecurityAuthorityQueryReply.newBuilder().setError(errorCode).build();
+  }
+
   public SecurityAuthorityPageReply toProto(AuthorityInfoList list) {
     return SecurityAuthorityPageReply.newBuilder().setPayload(list).build();
+  }
+
+  public SecurityAuthorityPageReply toAuthorityPageError(SecurityErrorCode errorCode) {
+    return SecurityAuthorityPageReply.newBuilder().setError(errorCode).build();
   }
 }
