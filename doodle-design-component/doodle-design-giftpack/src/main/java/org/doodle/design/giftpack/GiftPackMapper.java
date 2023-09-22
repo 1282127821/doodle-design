@@ -248,31 +248,63 @@ public abstract class GiftPackMapper implements ProtoMapper {
     return GiftPackVisionQueryReply.newBuilder().setPayload(info).build();
   }
 
+  public GiftPackVisionQueryReply toVisionQueryError(GiftPackErrorCode errorCode) {
+    return GiftPackVisionQueryReply.newBuilder().setError(errorCode).build();
+  }
+
   public GiftPackVisionPageReply toProto(VisionInfoList infos) {
     return GiftPackVisionPageReply.newBuilder().setPayload(infos).build();
+  }
+
+  public GiftPackVisionPageReply toVisionPageError(GiftPackErrorCode errorCode) {
+    return GiftPackVisionPageReply.newBuilder().setError(errorCode).build();
   }
 
   public GiftPackGiftQueryReply toProto(GiftInfo info) {
     return GiftPackGiftQueryReply.newBuilder().setPayload(info).build();
   }
 
+  public GiftPackGiftQueryReply toGiftQueryError(GiftPackErrorCode errorCode) {
+    return GiftPackGiftQueryReply.newBuilder().setError(errorCode).build();
+  }
+
   public GiftPackGiftPageReply toProto(GiftInfoList infos) {
     return GiftPackGiftPageReply.newBuilder().setPayload(infos).build();
+  }
+
+  public GiftPackGiftPageReply toGiftPageError(GiftPackErrorCode errorCode) {
+    return GiftPackGiftPageReply.newBuilder().setError(errorCode).build();
   }
 
   public GiftPackCodeQueryReply toProto(CodeInfo info) {
     return GiftPackCodeQueryReply.newBuilder().setPayload(info).build();
   }
 
+  public GiftPackCodeQueryReply toCodeQueryError(GiftPackErrorCode errorCode) {
+    return GiftPackCodeQueryReply.newBuilder().setError(errorCode).build();
+  }
+
   public GiftPackCodePageReply toProto(CodeInfoList infos) {
     return GiftPackCodePageReply.newBuilder().setPayload(infos).build();
+  }
+
+  public GiftPackCodePageReply toCodePageError(GiftPackErrorCode errorCode) {
+    return GiftPackCodePageReply.newBuilder().setError(errorCode).build();
   }
 
   public GiftPackPackQueryReply toProto(PackInfo info) {
     return GiftPackPackQueryReply.newBuilder().setPayload(info).build();
   }
 
+  public GiftPackPackQueryReply toPackQueryError(GiftPackErrorCode errorCode) {
+    return GiftPackPackQueryReply.newBuilder().setError(errorCode).build();
+  }
+
   public GiftPackPackPageReply toProto(PackInfoList infos) {
     return GiftPackPackPageReply.newBuilder().setPayload(infos).build();
+  }
+
+  public GiftPackPackPageReply toPackPageError(GiftPackErrorCode errorCode) {
+    return GiftPackPackPageReply.newBuilder().setError(errorCode).build();
   }
 }
