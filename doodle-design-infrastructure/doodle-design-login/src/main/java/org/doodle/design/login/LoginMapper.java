@@ -15,7 +15,10 @@
  */
 package org.doodle.design.login;
 
+import java.util.Collections;
+import java.util.List;
 import org.doodle.design.common.ProtoMapper;
+import org.springframework.util.CollectionUtils;
 
 public abstract class LoginMapper implements ProtoMapper {
 
@@ -39,5 +42,45 @@ public abstract class LoginMapper implements ProtoMapper {
         .serverId(info.getServerId())
         .timestamp(info.getTimestamp())
         .build();
+  }
+
+  public LoginRoleInfoList toRoleInfoList(
+      List<org.doodle.design.login.model.info.LoginRoleInfo> infos) {
+    LoginRoleInfoList.Builder builder = LoginRoleInfoList.newBuilder();
+    if (!CollectionUtils.isEmpty(infos)) {
+      infos.stream().map(this::toProto).forEach(builder::addRoleInfo);
+    }
+    return builder.build();
+  }
+
+  public List<org.doodle.design.login.model.info.LoginRoleInfo> fromProtoList(
+      LoginRoleInfoList proto) {
+    return !CollectionUtils.isEmpty(proto.getRoleInfoList())
+        ? proto.getRoleInfoList().stream().map(this::fromProto).toList()
+        : Collections.emptyList();
+  }
+
+  public LoginAccountBindReply toProto(LoginAccountAuthToken token) {
+    return LoginAccountBindReply.newBuilder().setPayload(token).build();
+  }
+
+  public LoginAccountBindReply toAccountBindError(LoginErrorCode errorCode) {
+    return LoginAccountBindReply.newBuilder().setError(errorCode).build();
+  }
+
+  public LoginAccountAuthReply toProto(LoginAccountInfo info) {
+    return LoginAccountAuthReply.newBuilder().setPayload(info).build();
+  }
+
+  public LoginAccountAuthReply toAccountAuthError(LoginErrorCode errorCode) {
+    return LoginAccountAuthReply.newBuilder().setError(errorCode).build();
+  }
+
+  public LoginRolePullReply toProto(LoginRoleInfoList info) {
+    return LoginRolePullReply.newBuilder().setPayload(info).build();
+  }
+
+  public LoginRolePullReply toRolePullError(LoginErrorCode errorCode) {
+    return LoginRolePullReply.newBuilder().setError(errorCode).build();
   }
 }
