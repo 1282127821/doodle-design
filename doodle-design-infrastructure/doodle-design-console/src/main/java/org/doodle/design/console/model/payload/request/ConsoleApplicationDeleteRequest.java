@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.console.model.info;
+package org.doodle.design.console.model.payload.request;
 
-import java.util.Map;
+import java.util.List;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -25,7 +25,6 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @AllArgsConstructor
 @NoArgsConstructor
-public class ApplicationInfo {
-  String applicationId;
-  Map<String, Object> tags;
+public class ConsoleApplicationDeleteRequest {
+  List<String> applicationIds;
 }

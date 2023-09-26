@@ -15,7 +15,7 @@
  */
 package org.doodle.design.console.model.payload.request;
 
-import java.util.List;
+import java.util.Map;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -25,6 +25,6 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @AllArgsConstructor
 @NoArgsConstructor
-public class ApplicationDeleteRequest {
-  List<String> applicationIds;
+public class ConsoleApplicationCreateRequest {
+  Map<String, Object> tags;
 }

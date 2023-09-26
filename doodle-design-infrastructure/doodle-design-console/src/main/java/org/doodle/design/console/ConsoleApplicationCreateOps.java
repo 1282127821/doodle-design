@@ -24,14 +24,14 @@ public interface ConsoleApplicationCreateOps {
   interface RSocket {
     String CREATE_MAPPING = "console.application.create";
 
-    Mono<ApplicationCreateReply> create(ApplicationCreateRequest request);
+    Mono<ConsoleApplicationCreateReply> create(ConsoleApplicationCreateRequest request);
   }
 
   @FunctionalInterface
   interface Servlet {
     String CREATE_MAPPING = "/console/application/create";
 
-    Result<org.doodle.design.console.model.payload.reply.ApplicationCreateReply> create(
-        org.doodle.design.console.model.payload.request.ApplicationCreateRequest request);
+    Result<org.doodle.design.console.model.payload.reply.ConsoleApplicationCreateReply> create(
+        org.doodle.design.console.model.payload.request.ConsoleApplicationCreateRequest request);
   }
 }

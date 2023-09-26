@@ -17,7 +17,7 @@ package org.doodle.design.console.model.payload.request;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.doodle.design.console.model.info.ApplicationInfo;
+import org.doodle.design.common.model.PageRequest;
 
 @Builder
 @ToString
@@ -25,6 +25,6 @@ import org.doodle.design.console.model.info.ApplicationInfo;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @AllArgsConstructor
 @NoArgsConstructor
-public class ApplicationUpdateRequest {
-  ApplicationInfo applicationInfo;
+public class ConsoleApplicationPageRequest {
+  PageRequest page;
 }

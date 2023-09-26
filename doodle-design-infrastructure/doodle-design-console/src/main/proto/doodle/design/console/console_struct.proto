@@ -13,18 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.console.model.payload.request;
 
-import java.util.Map;
-import lombok.*;
-import lombok.experimental.FieldDefaults;
+syntax = "proto3";
 
-@Builder
-@ToString
-@Data
-@FieldDefaults(level = AccessLevel.PRIVATE)
-@AllArgsConstructor
-@NoArgsConstructor
-public class ApplicationCreateRequest {
-  Map<String, Object> tags;
+package doodle.design.console;
+
+import "google/protobuf/struct.proto";
+import "doodle/design/broker/broker_frame.proto";
+import "doodle/design/common/pagination.proto";
+
+option java_multiple_files = true;
+option java_package = "org.doodle.design.console";
+option java_outer_classname = "ConsoleStructProto";
+
+enum ConsoleErrorCode {
+  FAILURE = 0;
+}
+
+message ApplicationInfo {
+  string application_id = 1;
+  google.protobuf.Struct tags = 2;
+}
+
+message ApplicationInfoList {
+  repeated ApplicationInfo application_info = 1;
 }

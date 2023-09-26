@@ -18,20 +18,20 @@ package org.doodle.design.console;
 import org.doodle.design.common.Result;
 import reactor.core.publisher.Mono;
 
-public interface ConsoleApplicationQueryOps {
+public interface ConsoleApplicationPageOps {
 
   @FunctionalInterface
   interface RSocket {
-    String QUERY_MAPPING = "console.application.query";
+    String PAGE_MAPPING = "console.application.page";
 
-    Mono<ConsoleApplicationQueryReply> query(ConsoleApplicationQueryRequest request);
+    Mono<ConsoleApplicationPageReply> page(ConsoleApplicationPageRequest request);
   }
 
   @FunctionalInterface
   interface Servlet {
-    String QUERY_MAPPING = "console.application.query";
+    String PAGE_MAPPING = "/console/application/page";
 
-    Result<org.doodle.design.console.model.payload.reply.ConsoleApplicationQueryReply> query(
-        org.doodle.design.console.model.payload.request.ConsoleApplicationQueryRequest request);
+    Result<org.doodle.design.console.model.payload.reply.ConsoleApplicationPageReply> page(
+        org.doodle.design.console.model.payload.request.ConsoleApplicationPageRequest request);
   }
 }

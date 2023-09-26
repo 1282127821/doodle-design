@@ -15,6 +15,16 @@
  */
 package org.doodle.design.console.model.payload.request;
 
-public class ApplicationQueryRequest {
-  // TODO: 2023/8/31 分页查询参数
+import lombok.*;
+import lombok.experimental.FieldDefaults;
+import org.doodle.design.console.model.info.ApplicationInfo;
+
+@Builder
+@ToString
+@Data
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@AllArgsConstructor
+@NoArgsConstructor
+public class ConsoleApplicationUpdateRequest {
+  ApplicationInfo applicationInfo;
 }

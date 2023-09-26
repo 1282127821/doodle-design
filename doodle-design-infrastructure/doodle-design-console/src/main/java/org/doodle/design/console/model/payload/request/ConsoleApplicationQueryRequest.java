@@ -13,11 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.console.model.payload.reply;
+package org.doodle.design.console.model.payload.request;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.doodle.design.console.model.info.ApplicationInfo;
 
 @Builder
 @ToString
@@ -25,6 +24,6 @@ import org.doodle.design.console.model.info.ApplicationInfo;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @AllArgsConstructor
 @NoArgsConstructor
-public class ApplicationUpdateReply {
-  ApplicationInfo applicationInfo;
+public class ConsoleApplicationQueryRequest {
+  String applicationId;
 }

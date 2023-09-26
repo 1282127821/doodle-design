@@ -25,6 +25,6 @@ import org.doodle.design.console.model.info.ApplicationInfo;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @AllArgsConstructor
 @NoArgsConstructor
-public class ApplicationCreateReply {
+public class ConsoleApplicationCreateReply {
   ApplicationInfo applicationInfo;
 }

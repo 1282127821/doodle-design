@@ -17,4 +17,51 @@ package org.doodle.design.console;
 
 import org.doodle.design.common.ProtoMapper;
 
-public abstract class ConsoleMapper implements ProtoMapper {}
+public abstract class ConsoleMapper implements ProtoMapper {
+
+  public ApplicationInfo toProto(org.doodle.design.console.model.info.ApplicationInfo info) {
+    return ApplicationInfo.newBuilder()
+        .setApplicationId(info.getApplicationId())
+        .setTags(toProto(info.getTags()))
+        .build();
+  }
+
+  public org.doodle.design.console.model.info.ApplicationInfo fromProto(ApplicationInfo proto) {
+    return org.doodle.design.console.model.info.ApplicationInfo.builder()
+        .applicationId(proto.getApplicationId())
+        .tags(fromProto(proto.getTags()))
+        .build();
+  }
+
+  public ConsoleApplicationCreateReply toApplicationCreateReply(ApplicationInfo info) {
+    return ConsoleApplicationCreateReply.newBuilder().setPayload(info).build();
+  }
+
+  public ConsoleApplicationCreateReply toApplicationCreateError(ConsoleErrorCode errorCode) {
+    return ConsoleApplicationCreateReply.newBuilder().setError(errorCode).build();
+  }
+
+  public ConsoleApplicationQueryReply toApplicationQueryReply(ApplicationInfo info) {
+    return ConsoleApplicationQueryReply.newBuilder().setPayload(info).build();
+  }
+
+  public ConsoleApplicationQueryReply toApplicationQueryError(ConsoleErrorCode errorCode) {
+    return ConsoleApplicationQueryReply.newBuilder().setError(errorCode).build();
+  }
+
+  public ConsoleApplicationUpdateReply toApplicationUpdateReply(ApplicationInfo info) {
+    return ConsoleApplicationUpdateReply.newBuilder().setPayload(info).build();
+  }
+
+  public ConsoleApplicationUpdateReply toApplicationUpdateError(ConsoleErrorCode errorCode) {
+    return ConsoleApplicationUpdateReply.newBuilder().setError(errorCode).build();
+  }
+
+  public ConsoleApplicationPageReply toApplicationPageReply(ApplicationInfoList infos) {
+    return ConsoleApplicationPageReply.newBuilder().setPayload(infos).build();
+  }
+
+  public ConsoleApplicationPageReply toApplicationPageError(ConsoleErrorCode errorCode) {
+    return ConsoleApplicationPageReply.newBuilder().setError(errorCode).build();
+  }
+}

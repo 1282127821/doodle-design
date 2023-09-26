@@ -24,7 +24,7 @@ public interface ConsoleApplicationDeleteOps {
   interface RSocket {
     String DELETE_MAPPING = "console.application.delete";
 
-    Mono<ConsoleErrorCode> delete(ApplicationDeleteRequest request);
+    Mono<ConsoleErrorCode> delete(ConsoleApplicationDeleteRequest request);
   }
 
   @FunctionalInterface
@@ -32,6 +32,6 @@ public interface ConsoleApplicationDeleteOps {
     String DELETE_MAPPING = "/console/application/delete";
 
     Result<ConsoleErrorCode> delete(
-        org.doodle.design.console.model.payload.request.ApplicationDeleteRequest request);
+        org.doodle.design.console.model.payload.request.ConsoleApplicationDeleteRequest request);
   }
 }

@@ -24,14 +24,14 @@ public interface ConsoleApplicationUpdateOps {
   interface RSocket {
     String UPDATE_MAPPING = "console.application.update";
 
-    Mono<ApplicationUpdateReply> update(ApplicationUpdateRequest request);
+    Mono<ConsoleApplicationUpdateReply> update(ConsoleApplicationUpdateRequest request);
   }
 
   @FunctionalInterface
   interface Servlet {
     String UPDATE_MAPPING = "/console/application/update";
 
-    Result<org.doodle.design.console.model.payload.reply.ApplicationUpdateReply> update(
-        org.doodle.design.console.model.payload.request.ApplicationUpdateRequest request);
+    Result<org.doodle.design.console.model.payload.reply.ConsoleApplicationUpdateReply> update(
+        org.doodle.design.console.model.payload.request.ConsoleApplicationUpdateRequest request);
   }
 }

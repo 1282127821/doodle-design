@@ -15,7 +15,6 @@
  */
 package org.doodle.design.console.model.payload.reply;
 
-import java.util.List;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.doodle.design.console.model.info.ApplicationInfo;
@@ -26,6 +25,6 @@ import org.doodle.design.console.model.info.ApplicationInfo;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @AllArgsConstructor
 @NoArgsConstructor
-public class ApplicationQueryReply {
-  List<ApplicationInfo> applicationInfos;
+public class ConsoleApplicationQueryReply {
+  ApplicationInfo applicationInfo;
 }
