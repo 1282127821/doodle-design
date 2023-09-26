@@ -106,6 +106,7 @@ message PackInfoList {
   repeated PackInfo pack = 1;
 }
 
-
-
-
+message CodeUserInfo {
+  string user_id = 1;
+  map<string, string> vars = 2;
+}

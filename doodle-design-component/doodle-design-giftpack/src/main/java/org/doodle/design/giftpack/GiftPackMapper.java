@@ -244,7 +244,18 @@ public abstract class GiftPackMapper implements ProtoMapper {
         : Collections.emptyList();
   }
 
-  public GiftPackVisionQueryReply toProto(VisionInfo info) {
+  public CodeUserInfo toProto(org.doodle.design.giftpack.model.info.CodeUserInfo info) {
+    return CodeUserInfo.newBuilder().setUserId(info.getUserId()).putAllVars(info.getVars()).build();
+  }
+
+  public org.doodle.design.giftpack.model.info.CodeUserInfo fromProto(CodeUserInfo proto) {
+    return org.doodle.design.giftpack.model.info.CodeUserInfo.builder()
+        .userId(proto.getUserId())
+        .vars(proto.getVarsMap())
+        .build();
+  }
+
+  public GiftPackVisionQueryReply toVisionQueryReply(VisionInfo info) {
     return GiftPackVisionQueryReply.newBuilder().setPayload(info).build();
   }
 
@@ -252,7 +263,7 @@ public abstract class GiftPackMapper implements ProtoMapper {
     return GiftPackVisionQueryReply.newBuilder().setError(errorCode).build();
   }
 
-  public GiftPackVisionPageReply toProto(VisionInfoList infos) {
+  public GiftPackVisionPageReply toVisionPageReply(VisionInfoList infos) {
     return GiftPackVisionPageReply.newBuilder().setPayload(infos).build();
   }
 
@@ -260,7 +271,7 @@ public abstract class GiftPackMapper implements ProtoMapper {
     return GiftPackVisionPageReply.newBuilder().setError(errorCode).build();
   }
 
-  public GiftPackGiftQueryReply toProto(GiftInfo info) {
+  public GiftPackGiftQueryReply toGiftQueryReply(GiftInfo info) {
     return GiftPackGiftQueryReply.newBuilder().setPayload(info).build();
   }
 
@@ -268,7 +279,7 @@ public abstract class GiftPackMapper implements ProtoMapper {
     return GiftPackGiftQueryReply.newBuilder().setError(errorCode).build();
   }
 
-  public GiftPackGiftPageReply toProto(GiftInfoList infos) {
+  public GiftPackGiftPageReply toGiftPageReply(GiftInfoList infos) {
     return GiftPackGiftPageReply.newBuilder().setPayload(infos).build();
   }
 
@@ -276,7 +287,7 @@ public abstract class GiftPackMapper implements ProtoMapper {
     return GiftPackGiftPageReply.newBuilder().setError(errorCode).build();
   }
 
-  public GiftPackCodeQueryReply toProto(CodeInfo info) {
+  public GiftPackCodeQueryReply toCodeQueryReply(CodeInfo info) {
     return GiftPackCodeQueryReply.newBuilder().setPayload(info).build();
   }
 
@@ -284,7 +295,7 @@ public abstract class GiftPackMapper implements ProtoMapper {
     return GiftPackCodeQueryReply.newBuilder().setError(errorCode).build();
   }
 
-  public GiftPackCodePageReply toProto(CodeInfoList infos) {
+  public GiftPackCodePageReply toCodePageReply(CodeInfoList infos) {
     return GiftPackCodePageReply.newBuilder().setPayload(infos).build();
   }
 
@@ -292,7 +303,15 @@ public abstract class GiftPackMapper implements ProtoMapper {
     return GiftPackCodePageReply.newBuilder().setError(errorCode).build();
   }
 
-  public GiftPackPackQueryReply toProto(PackInfo info) {
+  public GiftPackCodeUseReply toCodeUseReply(CodeInfo info) {
+    return GiftPackCodeUseReply.newBuilder().setPayload(info).build();
+  }
+
+  public GiftPackCodeUseReply toCodeUseError(GiftPackErrorCode errorCode) {
+    return GiftPackCodeUseReply.newBuilder().setError(errorCode).build();
+  }
+
+  public GiftPackPackQueryReply toPackQueryReply(PackInfo info) {
     return GiftPackPackQueryReply.newBuilder().setPayload(info).build();
   }
 
@@ -300,7 +319,7 @@ public abstract class GiftPackMapper implements ProtoMapper {
     return GiftPackPackQueryReply.newBuilder().setError(errorCode).build();
   }
 
-  public GiftPackPackPageReply toProto(PackInfoList infos) {
+  public GiftPackPackPageReply toPackPageReply(PackInfoList infos) {
     return GiftPackPackPageReply.newBuilder().setPayload(infos).build();
   }
 
