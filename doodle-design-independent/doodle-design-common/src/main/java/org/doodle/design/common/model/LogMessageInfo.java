@@ -13,8 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.dataseer;
+package org.doodle.design.common.model;
 
-import org.doodle.design.common.ProtoMapper;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
+import org.doodle.design.common.LogLevel;
 
-public abstract class DataSeerMapper implements ProtoMapper {}
+@Builder
+@Data
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@AllArgsConstructor
+@NoArgsConstructor
+public class LogMessageInfo {
+  LogLevel level;
+  String fileName;
+  String methodName;
+  String lineNumber;
+  String content;
+}

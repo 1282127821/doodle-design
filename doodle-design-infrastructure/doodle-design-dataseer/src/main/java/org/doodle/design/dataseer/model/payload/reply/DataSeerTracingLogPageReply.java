@@ -13,8 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.dataseer;
+package org.doodle.design.dataseer.model.payload.reply;
 
-import org.doodle.design.common.ProtoMapper;
+import java.util.List;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
+import org.doodle.design.dataseer.model.info.TracingLog;
 
-public abstract class DataSeerMapper implements ProtoMapper {}
+@Builder
+@ToString
+@Data
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@AllArgsConstructor
+@NoArgsConstructor
+public class DataSeerTracingLogPageReply {
+  List<TracingLog> tracingLogs;
+}

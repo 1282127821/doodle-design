@@ -13,24 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.dataseer;
+package org.doodle.design.dataseer.model.payload.request;
 
-import org.doodle.design.common.Result;
-import reactor.core.publisher.Mono;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
+import org.doodle.design.common.model.PageRequest;
 
-public interface DataSeerLogUploadOps {
-
-  @FunctionalInterface
-  interface RSocket {
-    String UPLOAD_MAPPING = "dataseer.log.upload";
-
-    Mono<Void> upload(LogUploadRequest request);
-  }
-
-  @FunctionalInterface
-  interface Servlet {
-    String UPLOAD_MAPPING = "/dataseer/log/upload";
-
-    Result<Void> upload(org.doodle.design.dataseer.model.payload.request.LogUploadRequest request);
-  }
+@Builder
+@ToString
+@Data
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@AllArgsConstructor
+@NoArgsConstructor
+public class DataSeerOperationLogPageRequest {
+  PageRequest page;
 }

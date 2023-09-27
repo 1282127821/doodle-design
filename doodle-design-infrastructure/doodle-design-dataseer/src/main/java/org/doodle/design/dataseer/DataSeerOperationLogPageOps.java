@@ -15,6 +15,23 @@
  */
 package org.doodle.design.dataseer;
 
-import org.doodle.design.common.ProtoMapper;
+import org.doodle.design.common.Result;
+import reactor.core.publisher.Mono;
 
-public abstract class DataSeerMapper implements ProtoMapper {}
+public interface DataSeerOperationLogPageOps {
+
+  @FunctionalInterface
+  interface RSocket {
+    String PAGE_MAPPING = "dataseer.operation.page";
+
+    Mono<DataSeerOperationLogPageReply> page(DataSeerOperationLogPageRequest request);
+  }
+
+  @FunctionalInterface
+  interface Servlet {
+    String PAGE_MAPPING = "/dataseer/operation/page";
+
+    Result<org.doodle.design.dataseer.model.payload.reply.DataSeerOperationLogPageReply> page(
+        org.doodle.design.dataseer.model.payload.request.DataSeerOperationLogPageRequest request);
+  }
+}

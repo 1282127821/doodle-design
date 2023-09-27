@@ -13,18 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.dataseer.model.payload.request;
+package org.doodle.design.common.model;
 
+import java.util.Map;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.doodle.design.dataseer.model.info.LogMessageInfo;
 
 @Builder
-@ToString
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @AllArgsConstructor
 @NoArgsConstructor
-public class LogUploadRequest {
-  LogMessageInfo message;
+public class LogContextInfo {
+  Map.Entry<String, String> context;
+  Map.Entry<String, String> nestedContext;
+  Map.Entry<String, String> application;
 }

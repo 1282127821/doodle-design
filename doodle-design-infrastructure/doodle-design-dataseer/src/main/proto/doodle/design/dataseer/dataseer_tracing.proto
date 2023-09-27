@@ -13,8 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.dataseer;
 
-import org.doodle.design.common.ProtoMapper;
+syntax = "proto3";
 
-public abstract class DataSeerMapper implements ProtoMapper {}
+package doodle.design.dataseer;
+
+import "doodle/design/dataseer/dataseer_struct.proto";
+import "doodle/design/common/pagination.proto";
+
+option java_multiple_files = true;
+option java_package = "org.doodle.design.dataseer";
+option java_outer_classname = "DataSeerTracingProto";
+
+message DataSeerTracingLogPageRequest {
+  doodle.design.common.PageRequest page = 1;
+}
+
+message DataSeerTracingLogPageReply {
+  oneof Result {
+    DataSeerErrorCode error = 1;
+    TracingLogList payload = 2;
+  }
+}

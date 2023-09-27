@@ -26,6 +26,65 @@ import org.doodle.design.common.model.SdkBundle;
 import org.doodle.design.common.util.ProtoUtils;
 
 public interface ProtoMapper {
+
+  default LogInfo toProto(org.doodle.design.common.model.LogInfo info) {
+    return LogInfo.newBuilder()
+        .setLogContext(toProto(info.getContextInfo()))
+        .setLogMessage(toProto(info.getMessageInfo()))
+        .build();
+  }
+
+  default org.doodle.design.common.model.LogInfo fromProto(LogInfo proto) {
+    return org.doodle.design.common.model.LogInfo.builder()
+        .contextInfo(fromProto(proto.getLogContext()))
+        .messageInfo(fromProto(proto.getLogMessage()))
+        .build();
+  }
+
+  default LogContextInfo toProto(org.doodle.design.common.model.LogContextInfo info) {
+    return LogContextInfo.newBuilder()
+        .setContext(toProto(info.getContext()))
+        .setNestedContext(toProto(info.getNestedContext()))
+        .setApplication(toProto(info.getApplication()))
+        .build();
+  }
+
+  default org.doodle.design.common.model.LogContextInfo fromProto(LogContextInfo proto) {
+    return org.doodle.design.common.model.LogContextInfo.builder()
+        .context(fromProto(proto.getContext()))
+        .nestedContext(fromProto(proto.getNestedContext()))
+        .application(fromProto(proto.getApplication()))
+        .build();
+  }
+
+  default LogMessageInfo toProto(org.doodle.design.common.model.LogMessageInfo info) {
+    return LogMessageInfo.newBuilder()
+        .setLevel(info.getLevel())
+        .setFileName(info.getFileName())
+        .setMethodName(info.getMethodName())
+        .setLineNumber(info.getLineNumber())
+        .setContent(info.getContent())
+        .build();
+  }
+
+  default org.doodle.design.common.model.LogMessageInfo fromProto(LogMessageInfo proto) {
+    return org.doodle.design.common.model.LogMessageInfo.builder()
+        .level(proto.getLevel())
+        .fileName(proto.getFileName())
+        .methodName(proto.getMethodName())
+        .lineNumber(proto.getLineNumber())
+        .content(proto.getContent())
+        .build();
+  }
+
+  default Pair toProto(Map.Entry<String, String> entry) {
+    return Pair.newBuilder().setKey(entry.getKey()).setValue(entry.getValue()).build();
+  }
+
+  default Map.Entry<String, String> fromProto(Pair pair) {
+    return Map.entry(pair.getKey(), pair.getValue());
+  }
+
   default org.doodle.design.common.model.PageRequest fromProto(PageRequest request) {
     return org.doodle.design.common.model.PageRequest.builder()
         .pageNumber(request.getPageNumber())

@@ -13,12 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.dataseer.model.info;
+package org.doodle.design.dataseer.model.payload.request;
 
-import java.util.Map;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.doodle.design.dataseer.LogType;
+import org.doodle.design.common.model.PageRequest;
 
 @Builder
 @ToString
@@ -26,8 +25,6 @@ import org.doodle.design.dataseer.LogType;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @AllArgsConstructor
 @NoArgsConstructor
-public class LogMessageInfo {
-  LogType type = LogType.CUSTOM;
-  Map<String, String> tags;
-  Map<String, Object> payload;
+public class DataSeerReportLogPageRequest {
+  PageRequest page;
 }

@@ -13,30 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.doodle.design.common.model;
 
-syntax = "proto3";
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
-package doodle.design.dataseer;
-
-import "google/protobuf/struct.proto";
-
-option java_multiple_files = true;
-option java_package = "org.doodle.design.dataseer";
-option java_outer_classname = "DataSeerProto";
-
-enum LogType {
-  CLIENT_REPORT = 0;
-  SERVER_LOGGING = 1;
-  BI = 2;
-  CUSTOM = 3;
-}
-
-message LogMessageInfo {
-  LogType type = 1;
-  map<string, string> tags = 2;
-  google.protobuf.Struct payload = 3;
-}
-
-message LogUploadRequest {
-  LogMessageInfo message = 1;
+@Builder
+@Data
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@AllArgsConstructor
+@NoArgsConstructor
+public class LogInfo {
+  LogContextInfo contextInfo;
+  LogMessageInfo messageInfo;
 }
