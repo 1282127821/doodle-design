@@ -17,5 +17,6 @@
     <module>doodle-design-chat</module>
     <module>doodle-design-giftpack</module>
     <module>doodle-design-mail</module>
+    <module>doodle-design-notice</module>
   </modules>
 </project>
