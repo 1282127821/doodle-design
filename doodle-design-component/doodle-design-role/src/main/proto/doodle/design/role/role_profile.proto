@@ -25,6 +25,21 @@ option java_multiple_files = true;
 option java_package = "org.doodle.design.role";
 option java_outer_classname = "RoleProfilePorto";
 
+message RoleProfilePullRequest {
+  string account_id = 1;
+}
+
+message RoleProfilePullReply {
+  oneof Result {
+    RoleErrorCode error = 1;
+    RoleProfileInfoList payload = 2;
+  }
+}
+
+message RoleProfileUploadRequest {
+  RoleProfileInfo profile = 1;
+}
+
 message RoleProfileQueryRequest {
   string role_id = 1;
 }
