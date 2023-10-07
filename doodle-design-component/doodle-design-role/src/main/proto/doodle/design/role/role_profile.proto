@@ -18,45 +18,31 @@ syntax = "proto3";
 
 package doodle.design.role;
 
-import "google/protobuf/timestamp.proto";
+import "doodle/design/role/role_struct.proto";
+import "doodle/design/common/pagination.proto";
 
 option java_multiple_files = true;
 option java_package = "org.doodle.design.role";
-option java_outer_classname = "RoleStructProto";
+option java_outer_classname = "RoleProfilePorto";
 
-enum RoleErrorCode {
-  FAILURE = 0;
+message RoleProfileQueryRequest {
+  string role_id = 1;
 }
 
-message RoleProfileInfo {
-  string account_id = 1;
-  string role_id = 2;
-  string role_name = 3;
-  int32 role_level = 4;
-  string server_id = 5;
-  int64 timestamp = 6;
+message RoleProfileQueryReply {
+  oneof Result {
+    RoleErrorCode error = 1;
+    RoleProfileInfo payload = 2;
+  }
 }
 
-message RoleProfileInfoList {
-  repeated RoleProfileInfo role_profile = 1;
+message RoleProfilePageRequest {
+  doodle.design.common.PageRequest page = 1;
 }
 
-message RoleGMInfo {
-  string cmd = 1;
-  string reason = 2;
-  google.protobuf.Timestamp start = 3;
-  google.protobuf.Timestamp end = 4;
-}
-
-message RoleGMInfoList {
-  repeated RoleGMInfo role_gm = 1;
-}
-
-message RoleDetailsInfo {
-  RoleProfileInfo profile = 1;
-  RoleGMInfo gm = 2;
-}
-
-message RoleDetailsInfoList {
-  repeated RoleDetailsInfo role = 1;
+message RoleProfilePageReply {
+  oneof Result {
+    RoleErrorCode error = 1;
+    RoleProfileInfoList payload = 2;
+  }
 }
