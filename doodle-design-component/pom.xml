@@ -19,5 +19,6 @@
     <module>doodle-design-mail</module>
     <module>doodle-design-marquee</module>
     <module>doodle-design-notice</module>
+    <module>doodle-design-role</module>
   </modules>
 </project>
