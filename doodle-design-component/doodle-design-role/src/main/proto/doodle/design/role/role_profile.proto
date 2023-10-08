@@ -37,7 +37,7 @@ message RoleProfilePullReply {
 }
 
 message RoleProfileUploadRequest {
-  RoleProfileInfo profile = 1;
+  RoleProfileInfoList profile = 1;
 }
 
 message RoleProfileQueryRequest {

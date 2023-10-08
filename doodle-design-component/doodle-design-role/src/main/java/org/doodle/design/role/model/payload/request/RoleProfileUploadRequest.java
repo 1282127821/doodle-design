@@ -15,6 +15,7 @@
  */
 package org.doodle.design.role.model.payload.request;
 
+import java.util.List;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.doodle.design.role.model.info.RoleProfileInfo;
@@ -26,5 +27,5 @@ import org.doodle.design.role.model.info.RoleProfileInfo;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RoleProfileUploadRequest {
-  RoleProfileInfo profileInfo;
+  List<RoleProfileInfo> profileInfos;
 }
