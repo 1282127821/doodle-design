@@ -19,6 +19,7 @@ syntax = "proto3";
 package doodle.design.role;
 
 import "google/protobuf/timestamp.proto";
+import "google/protobuf/duration.proto";
 
 option java_multiple_files = true;
 option java_package = "org.doodle.design.role";
@@ -41,11 +42,22 @@ message RoleProfileInfoList {
   repeated RoleProfileInfo role_profile = 1;
 }
 
+message RoleGMDuration {
+  google.protobuf.Duration duration = 1;
+}
+
+message RoleGMLifecycle {
+  google.protobuf.Timestamp start = 1;
+  google.protobuf.Timestamp end = 2;
+}
+
 message RoleGMInfo {
   string cmd = 1;
   string reason = 2;
-  google.protobuf.Timestamp start = 3;
-  google.protobuf.Timestamp end = 4;
+  oneof Kind {
+    RoleGMDuration option = 3;
+    RoleGMLifecycle lifecycle = 4;
+  }
 }
 
 message RoleGMInfoList {
@@ -54,7 +66,7 @@ message RoleGMInfoList {
 
 message RoleDetailsInfo {
   RoleProfileInfo profile = 1;
-  RoleGMInfo gm = 2;
+  RoleGMInfoList gm = 2;
 }
 
 message RoleDetailsInfoList {

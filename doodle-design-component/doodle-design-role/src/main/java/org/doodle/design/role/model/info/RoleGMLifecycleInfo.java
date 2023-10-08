@@ -15,6 +15,7 @@
  */
 package org.doodle.design.role.model.info;
 
+import java.time.LocalDateTime;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -23,9 +24,7 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @AllArgsConstructor
 @NoArgsConstructor
-public class RoleGMInfo {
-  String cmd;
-  String reason;
-  RoleGMDurationInfo duration;
-  RoleGMLifecycleInfo lifecycle;
+public class RoleGMLifecycleInfo {
+  LocalDateTime start;
+  LocalDateTime end;
 }
