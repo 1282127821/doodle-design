@@ -22,8 +22,4 @@ public class LoginValidator {
   public void validate(JgLoginAccountBindRequest request) {}
 
   public void validate(LoginAccountAuthRequest request) {}
-
-  public void validate(LoginRoleUploadRequest request) {}
-
-  public void validate(LoginRolePullRequest request) {}
 }

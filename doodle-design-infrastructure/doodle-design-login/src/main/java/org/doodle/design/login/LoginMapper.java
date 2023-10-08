@@ -15,50 +15,9 @@
  */
 package org.doodle.design.login;
 
-import java.util.Collections;
-import java.util.List;
 import org.doodle.design.common.ProtoMapper;
-import org.springframework.util.CollectionUtils;
 
 public abstract class LoginMapper implements ProtoMapper {
-
-  public LoginRoleInfo toProto(org.doodle.design.login.model.info.LoginRoleInfo info) {
-    return LoginRoleInfo.newBuilder()
-        .setRoleId(info.getRoleId())
-        .setAccountId(info.getAccountId())
-        .setRoleName(info.getRoleName())
-        .setRoleLevel(info.getRoleLevel())
-        .setServerId(info.getServerId())
-        .setTimestamp(info.getTimestamp())
-        .build();
-  }
-
-  public org.doodle.design.login.model.info.LoginRoleInfo fromProto(LoginRoleInfo info) {
-    return org.doodle.design.login.model.info.LoginRoleInfo.builder()
-        .roleId(info.getRoleId())
-        .accountId(info.getAccountId())
-        .roleName(info.getRoleName())
-        .roleLevel(info.getRoleLevel())
-        .serverId(info.getServerId())
-        .timestamp(info.getTimestamp())
-        .build();
-  }
-
-  public LoginRoleInfoList toRoleInfoList(
-      List<org.doodle.design.login.model.info.LoginRoleInfo> infos) {
-    LoginRoleInfoList.Builder builder = LoginRoleInfoList.newBuilder();
-    if (!CollectionUtils.isEmpty(infos)) {
-      infos.stream().map(this::toProto).forEach(builder::addRoleInfo);
-    }
-    return builder.build();
-  }
-
-  public List<org.doodle.design.login.model.info.LoginRoleInfo> fromProtoList(
-      LoginRoleInfoList proto) {
-    return !CollectionUtils.isEmpty(proto.getRoleInfoList())
-        ? proto.getRoleInfoList().stream().map(this::fromProto).toList()
-        : Collections.emptyList();
-  }
 
   public LoginAccountBindReply toProto(LoginAccountAuthToken token) {
     return LoginAccountBindReply.newBuilder().setPayload(token).build();
@@ -74,13 +33,5 @@ public abstract class LoginMapper implements ProtoMapper {
 
   public LoginAccountAuthReply toAccountAuthError(LoginErrorCode errorCode) {
     return LoginAccountAuthReply.newBuilder().setError(errorCode).build();
-  }
-
-  public LoginRolePullReply toProto(LoginRoleInfoList info) {
-    return LoginRolePullReply.newBuilder().setPayload(info).build();
-  }
-
-  public LoginRolePullReply toRolePullError(LoginErrorCode errorCode) {
-    return LoginRolePullReply.newBuilder().setError(errorCode).build();
   }
 }
