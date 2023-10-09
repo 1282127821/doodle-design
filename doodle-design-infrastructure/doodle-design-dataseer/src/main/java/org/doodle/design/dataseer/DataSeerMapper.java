@@ -15,6 +15,35 @@
  */
 package org.doodle.design.dataseer;
 
+import java.util.Collections;
+import java.util.List;
 import org.doodle.design.common.ProtoMapper;
+import org.springframework.util.CollectionUtils;
 
-public abstract class DataSeerMapper implements ProtoMapper {}
+public abstract class DataSeerMapper implements ProtoMapper {
+
+  public ReportLog toProto(org.doodle.design.dataseer.model.info.ReportLog info) {
+    return ReportLog.newBuilder().setLog(toProto(info.getLogInfo())).build();
+  }
+
+  public org.doodle.design.dataseer.model.info.ReportLog fromProto(ReportLog proto) {
+    return org.doodle.design.dataseer.model.info.ReportLog.builder()
+        .logInfo(fromProto(proto.getLog()))
+        .build();
+  }
+
+  public ReportLogList toReportLogList(
+      List<org.doodle.design.dataseer.model.info.ReportLog> infos) {
+    ReportLogList.Builder builder = ReportLogList.newBuilder();
+    if (!CollectionUtils.isEmpty(infos)) {
+      infos.stream().map(this::toProto).forEach(builder::addReportLog);
+    }
+    return builder.build();
+  }
+
+  public List<org.doodle.design.dataseer.model.info.ReportLog> fromProtoList(ReportLogList proto) {
+    return !CollectionUtils.isEmpty(proto.getReportLogList())
+        ? proto.getReportLogList().stream().map(this::fromProto).toList()
+        : Collections.emptyList();
+  }
+}
