@@ -47,8 +47,15 @@ public abstract class DataSeerMapper implements ProtoMapper {
         : Collections.emptyList();
   }
 
-  public DataSeerReportLogPageReply toReportLogPageReply(ReportLogList logList) {
-    return DataSeerReportLogPageReply.newBuilder().setPayload(logList).build();
+  public DataSeerReportLogPageReply toReportLogPageReply(ReportLogList logs) {
+    return DataSeerReportLogPageReply.newBuilder().setPayload(logs).build();
+  }
+
+  public org.doodle.design.dataseer.model.payload.reply.DataSeerReportLogPageReply
+      toReportPageReply(List<org.doodle.design.dataseer.model.info.ReportLog> logs) {
+    return org.doodle.design.dataseer.model.payload.reply.DataSeerReportLogPageReply.builder()
+        .reportLogs(logs)
+        .build();
   }
 
   public DataSeerReportLogPageReply toReportLogPageError(DataSeerErrorCode errorCode) {
