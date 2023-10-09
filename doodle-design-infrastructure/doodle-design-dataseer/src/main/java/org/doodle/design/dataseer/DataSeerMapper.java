@@ -46,4 +46,12 @@ public abstract class DataSeerMapper implements ProtoMapper {
         ? proto.getReportLogList().stream().map(this::fromProto).toList()
         : Collections.emptyList();
   }
+
+  public DataSeerReportLogPageReply toReportLogPageReply(ReportLogList logList) {
+    return DataSeerReportLogPageReply.newBuilder().setPayload(logList).build();
+  }
+
+  public DataSeerReportLogPageReply toReportLogPageError(DataSeerErrorCode errorCode) {
+    return DataSeerReportLogPageReply.newBuilder().setError(errorCode).build();
+  }
 }
