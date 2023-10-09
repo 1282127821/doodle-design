@@ -13,21 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.common.model;
+package org.doodle.design.dataseer;
 
-import lombok.*;
-import lombok.experimental.FieldDefaults;
-import org.doodle.design.common.LogLevel;
+import org.doodle.design.common.Result;
+import reactor.core.publisher.Mono;
 
-@Builder
-@Data
-@FieldDefaults(level = AccessLevel.PRIVATE)
-@AllArgsConstructor
-@NoArgsConstructor
-public class LogMessageInfo {
-  LogLevel level;
-  String fileName;
-  String methodName;
-  int lineNumber;
-  String content;
+public interface DataSeerReportLogUploadOps {
+  @FunctionalInterface
+  interface RSocket {
+    String UPLOAD_MAPPING = "dataseer.report.upload";
+
+    Mono<Void> report(DataSeerReportLogUploadRequest request);
+  }
+
+  @FunctionalInterface
+  interface Servlet {
+    String UPLOAD_MAPPING = "/dataseer/report/upload";
+
+    Result<Void> report(
+        org.doodle.design.dataseer.model.payload.request.DataSeerReportLogUploadRequest request);
+  }
 }

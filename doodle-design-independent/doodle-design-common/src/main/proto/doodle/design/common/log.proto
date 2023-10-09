@@ -35,7 +35,7 @@ message LogMessageInfo {
   LogLevel level = 1;
   string file_name = 2;
   string method_name = 3;
-  string line_number = 4;
+  int32 line_number = 4;
   string content = 5;
 }
 

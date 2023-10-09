@@ -25,6 +25,10 @@ option java_multiple_files = true;
 option java_package = "org.doodle.design.dataseer";
 option java_outer_classname = "DataSeerReportProto";
 
+message DataSeerReportLogUploadRequest {
+  ReportLog report_log = 1;
+}
+
 message DataSeerReportLogPageRequest {
   doodle.design.common.PageRequest page = 1;
 }

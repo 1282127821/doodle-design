@@ -13,21 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.common.model;
+package org.doodle.design.dataseer.model.payload.request;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.doodle.design.common.LogLevel;
+import org.doodle.design.dataseer.model.info.ReportLog;
 
 @Builder
+@ToString
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @AllArgsConstructor
 @NoArgsConstructor
-public class LogMessageInfo {
-  LogLevel level;
-  String fileName;
-  String methodName;
-  int lineNumber;
-  String content;
+public class DataSeerReportLogUploadRequest {
+  ReportLog reportLog;
 }
