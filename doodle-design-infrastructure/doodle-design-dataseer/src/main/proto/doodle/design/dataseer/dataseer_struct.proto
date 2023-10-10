@@ -32,7 +32,8 @@ enum DataSeerErrorCode {
 message ReportLog {
   string role_id = 1;
   string content = 2;
-  map<string, string> vars = 3;
+  string tag = 3;
+  map<string, string> vars = 4;
 }
 
 message ReportLogList {

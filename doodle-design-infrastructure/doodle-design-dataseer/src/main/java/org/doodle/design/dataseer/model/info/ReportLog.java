@@ -28,5 +28,6 @@ import lombok.experimental.FieldDefaults;
 public class ReportLog {
   String roleId;
   String content;
+  String tag;
   Map<String, String> vars;
 }

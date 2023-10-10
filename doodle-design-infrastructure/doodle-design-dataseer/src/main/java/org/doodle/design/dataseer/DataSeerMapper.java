@@ -24,7 +24,10 @@ public abstract class DataSeerMapper implements ProtoMapper {
 
   public ReportLog toProto(org.doodle.design.dataseer.model.info.ReportLog info) {
     ReportLog.Builder builder =
-        ReportLog.newBuilder().setRoleId(info.getRoleId()).setContent(info.getContent());
+        ReportLog.newBuilder()
+            .setRoleId(info.getRoleId())
+            .setContent(info.getContent())
+            .setTag(info.getTag());
     if (!CollectionUtils.isEmpty(info.getVars())) {
       builder.putAllVars(info.getVars());
     }
@@ -35,7 +38,8 @@ public abstract class DataSeerMapper implements ProtoMapper {
     org.doodle.design.dataseer.model.info.ReportLog.ReportLogBuilder builder =
         org.doodle.design.dataseer.model.info.ReportLog.builder()
             .roleId(proto.getRoleId())
-            .content(proto.getContent());
+            .content(proto.getContent())
+            .tag(proto.getTag());
     if (!CollectionUtils.isEmpty(proto.getVarsMap())) {
       builder.vars(proto.getVarsMap());
     }
