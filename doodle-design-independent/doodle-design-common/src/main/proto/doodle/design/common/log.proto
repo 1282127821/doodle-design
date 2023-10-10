@@ -38,14 +38,3 @@ message LogMessageInfo {
   int32 line_number = 4;
   string content = 5;
 }
-
-message LogContextInfo {
-  doodle.design.common.Pair context = 1;
-  doodle.design.common.Pair nested_context = 2;
-  doodle.design.common.Pair application = 3;
-}
-
-message LogInfo {
-  LogMessageInfo log_message = 1;
-  LogContextInfo log_context = 2;
-}

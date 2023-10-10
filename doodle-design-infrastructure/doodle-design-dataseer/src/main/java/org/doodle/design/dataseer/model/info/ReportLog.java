@@ -15,9 +15,9 @@
  */
 package org.doodle.design.dataseer.model.info;
 
+import java.util.Map;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.doodle.design.common.model.LogInfo;
 
 @Builder
 @ToString
@@ -26,5 +26,7 @@ import org.doodle.design.common.model.LogInfo;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ReportLog {
-  LogInfo logInfo;
+  String roleId;
+  String content;
+  Map<String, String> vars;
 }

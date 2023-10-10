@@ -23,13 +23,23 @@ import org.springframework.util.CollectionUtils;
 public abstract class DataSeerMapper implements ProtoMapper {
 
   public ReportLog toProto(org.doodle.design.dataseer.model.info.ReportLog info) {
-    return ReportLog.newBuilder().setLog(toProto(info.getLogInfo())).build();
+    ReportLog.Builder builder =
+        ReportLog.newBuilder().setRoleId(info.getRoleId()).setContent(info.getContent());
+    if (!CollectionUtils.isEmpty(info.getVars())) {
+      builder.putAllVars(info.getVars());
+    }
+    return builder.build();
   }
 
   public org.doodle.design.dataseer.model.info.ReportLog fromProto(ReportLog proto) {
-    return org.doodle.design.dataseer.model.info.ReportLog.builder()
-        .logInfo(fromProto(proto.getLog()))
-        .build();
+    org.doodle.design.dataseer.model.info.ReportLog.ReportLogBuilder builder =
+        org.doodle.design.dataseer.model.info.ReportLog.builder()
+            .roleId(proto.getRoleId())
+            .content(proto.getContent());
+    if (!CollectionUtils.isEmpty(proto.getVarsMap())) {
+      builder.vars(proto.getVarsMap());
+    }
+    return builder.build();
   }
 
   public ReportLogList toReportLogList(

@@ -27,36 +27,6 @@ import org.doodle.design.common.util.ProtoUtils;
 
 public interface ProtoMapper {
 
-  default LogInfo toProto(org.doodle.design.common.model.LogInfo info) {
-    return LogInfo.newBuilder()
-        .setLogContext(toProto(info.getContextInfo()))
-        .setLogMessage(toProto(info.getMessageInfo()))
-        .build();
-  }
-
-  default org.doodle.design.common.model.LogInfo fromProto(LogInfo proto) {
-    return org.doodle.design.common.model.LogInfo.builder()
-        .contextInfo(fromProto(proto.getLogContext()))
-        .messageInfo(fromProto(proto.getLogMessage()))
-        .build();
-  }
-
-  default LogContextInfo toProto(org.doodle.design.common.model.LogContextInfo info) {
-    return LogContextInfo.newBuilder()
-        .setContext(toProto(info.getContext()))
-        .setNestedContext(toProto(info.getNestedContext()))
-        .setApplication(toProto(info.getApplication()))
-        .build();
-  }
-
-  default org.doodle.design.common.model.LogContextInfo fromProto(LogContextInfo proto) {
-    return org.doodle.design.common.model.LogContextInfo.builder()
-        .context(fromProto(proto.getContext()))
-        .nestedContext(fromProto(proto.getNestedContext()))
-        .application(fromProto(proto.getApplication()))
-        .build();
-  }
-
   default LogMessageInfo toProto(org.doodle.design.common.model.LogMessageInfo info) {
     return LogMessageInfo.newBuilder()
         .setLevel(info.getLevel())

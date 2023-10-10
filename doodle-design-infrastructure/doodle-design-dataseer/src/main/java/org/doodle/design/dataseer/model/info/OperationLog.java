@@ -17,7 +17,7 @@ package org.doodle.design.dataseer.model.info;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.doodle.design.common.model.LogInfo;
+import org.doodle.design.common.model.LogMessageInfo;
 
 @Builder
 @ToString
@@ -26,5 +26,5 @@ import org.doodle.design.common.model.LogInfo;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OperationLog {
-  LogInfo logInfo;
+  LogMessageInfo messageInfo;
 }
