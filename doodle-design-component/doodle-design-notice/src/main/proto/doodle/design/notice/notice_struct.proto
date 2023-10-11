@@ -21,3 +21,60 @@ package doodle.design.notice;
 option java_multiple_files = true;
 option java_package = "org.doodle.design.notice";
 option java_outer_classname = "NoticeStructProto";
+
+enum NoticeErrorCode {
+  FAILURE = 0;
+}
+
+message NoticeContentInfo {
+  string content_id = 1;
+  string title = 2;
+  string content = 3;
+}
+
+message NoticeContentInfoList {
+  repeated NoticeContentInfo content = 1;
+}
+
+message NoticeMenuInfo {
+  string menu_id = 1;
+  string name = 2;
+  string order = 3;
+}
+
+message NoticeMenuInfoList {
+  repeated NoticeMenuInfo menu = 1;
+}
+
+message NoticeLabelInfo {
+  string label_id = 1;
+  string name = 2;
+  string order = 3;
+}
+
+message NoticeLabelInfoList {
+  repeated NoticeLabelInfo label = 1;
+}
+
+message NoticeFilterTagsInfo {
+  repeated string tags = 1;
+}
+
+message NoticeOptionsInfo {
+  oneof FilterTags {
+    NoticeFilterTagsInfo server = 1;
+    NoticeFilterTagsInfo channel = 2;
+  }
+}
+
+message NoticeDetailsInfo {
+  NoticeMenuInfo menu = 1;
+  NoticeLabelInfo label = 2;
+  NoticeContentInfo content = 3;
+  NoticeOptionsInfo options = 4;
+}
+
+message NoticeDetailsInfoList {
+  repeated NoticeDetailsInfo details = 1;
+}
+
