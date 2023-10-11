@@ -24,7 +24,7 @@ public interface NoticeLabelPageOps {
   interface RSocket {
     String PAGE_MAPPING = "notice.label.page";
 
-    Mono<NoticeLabelPageReply> page(NoticeMenuPageRequest request);
+    Mono<NoticeLabelPageReply> page(NoticeLabelPageRequest request);
   }
 
   @FunctionalInterface
@@ -32,6 +32,6 @@ public interface NoticeLabelPageOps {
     String PAGE_MAPPING = "/notice/label/page";
 
     Result<org.doodle.design.notice.model.payload.reply.NoticeLabelPageReply> page(
-        org.doodle.design.notice.model.payload.request.NoticeMenuPageRequest request);
+        org.doodle.design.notice.model.payload.request.NoticeLabelPageRequest request);
   }
 }

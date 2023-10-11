@@ -24,7 +24,7 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @NoArgsConstructor
 public class NoticeMenuInfo {
-  String contentId;
-  String title;
-  String content;
+  String menuId;
+  String name;
+  int order;
 }
