@@ -13,27 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.notice.model;
+package org.doodle.design.notice;
 
 import org.doodle.design.common.Result;
-import org.doodle.design.notice.NoticeDetailsPullReply;
-import org.doodle.design.notice.NoticeDetailsPullRequest;
 import reactor.core.publisher.Mono;
 
-public interface NoticeDetailsPullOps {
+public interface NoticeDetailsPageOps {
 
   @FunctionalInterface
   interface RSocket {
-    String PULL_MAPPING = "notice.details.pull";
+    String PAGE_MAPPING = "notice.details.page";
 
-    Mono<NoticeDetailsPullReply> pull(NoticeDetailsPullRequest request);
+    Mono<NoticeDetailsPageReply> page(NoticeDetailsPageRequest request);
   }
 
   @FunctionalInterface
   interface Servlet {
-    String PULL_MAPPING = "/notice/details/pull";
+    String PAGE_MAPPING = "/notice/details/page";
 
-    Result<org.doodle.design.notice.model.payload.reply.NoticeDetailsPullReply> pull(
-        org.doodle.design.notice.model.payload.request.NoticeDetailsPullRequest request);
+    Result<org.doodle.design.notice.model.payload.reply.NoticeDetailsPageReply> page(
+        org.doodle.design.notice.model.payload.request.NoticeDetailsPageRequest request);
   }
 }

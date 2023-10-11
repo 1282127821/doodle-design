@@ -13,11 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.notice.model;
+package org.doodle.design.notice;
 
 import org.doodle.design.common.Result;
-import org.doodle.design.notice.NoticeMenuPageReply;
-import org.doodle.design.notice.NoticeMenuPageRequest;
 import reactor.core.publisher.Mono;
 
 public interface NoticeMenuPageOps {
