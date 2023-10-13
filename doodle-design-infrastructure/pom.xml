@@ -13,7 +13,6 @@
   <artifactId>doodle-design-infrastructure</artifactId>
   <packaging>pom</packaging>
   <modules>
-    <module>doodle-design-admin</module>
     <module>doodle-design-broker</module>
     <module>doodle-design-config</module>
     <module>doodle-design-console</module>
