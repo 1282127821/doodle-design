@@ -303,14 +303,6 @@ public abstract class GiftPackMapper implements ProtoMapper {
     return GiftPackCodePageReply.newBuilder().setError(errorCode).build();
   }
 
-  public GiftPackCodeUseReply toCodeUseReply(CodeInfo info) {
-    return GiftPackCodeUseReply.newBuilder().setPayload(info).build();
-  }
-
-  public GiftPackCodeUseReply toCodeUseError(GiftPackErrorCode errorCode) {
-    return GiftPackCodeUseReply.newBuilder().setError(errorCode).build();
-  }
-
   public GiftPackPackQueryReply toPackQueryReply(PackInfo info) {
     return GiftPackPackQueryReply.newBuilder().setPayload(info).build();
   }
@@ -321,6 +313,14 @@ public abstract class GiftPackMapper implements ProtoMapper {
 
   public GiftPackPackPageReply toPackPageReply(PackInfoList infos) {
     return GiftPackPackPageReply.newBuilder().setPayload(infos).build();
+  }
+
+  public GiftPackPackUseReply toPackUseReply(PackInfo info) {
+    return GiftPackPackUseReply.newBuilder().setPayload(info).build();
+  }
+
+  public GiftPackPackUseReply toPackUseError(GiftPackErrorCode errorCode) {
+    return GiftPackPackUseReply.newBuilder().setError(errorCode).build();
   }
 
   public GiftPackPackPageReply toPackPageError(GiftPackErrorCode errorCode) {

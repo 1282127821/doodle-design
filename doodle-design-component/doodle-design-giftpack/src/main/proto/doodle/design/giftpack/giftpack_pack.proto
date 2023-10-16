@@ -25,6 +25,18 @@ option java_multiple_files = true;
 option java_package = "org.doodle.design.giftpack";
 option java_outer_classname = "GiftPackPackProto";
 
+message GiftPackPackUseRequest {
+  string packCode = 1;
+  CodeUserInfo user = 2;
+}
+
+message GiftPackPackUseReply {
+  oneof Result {
+    GiftPackErrorCode error = 1;
+    PackInfo payload = 2;
+  }
+}
+
 message GiftPackPackQueryRequest {
   string pack_code = 1;
 }
