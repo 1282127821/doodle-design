@@ -96,11 +96,6 @@
       </dependency>
       <dependency>
         <groupId>org.doodle</groupId>
-        <artifactId>doodle-design-admin</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.doodle</groupId>
         <artifactId>doodle-design-broker</artifactId>
         <version>${project.version}</version>
       </dependency>
