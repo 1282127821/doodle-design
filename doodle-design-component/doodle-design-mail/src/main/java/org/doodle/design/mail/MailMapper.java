@@ -15,6 +15,47 @@
  */
 package org.doodle.design.mail;
 
+import java.util.Objects;
 import org.doodle.design.common.ProtoMapper;
+import org.doodle.design.mail.model.info.MailDeliverRSocketRoute;
+import org.doodle.design.mail.model.info.MailDeliverServletRoute;
 
-public abstract class MailMapper implements ProtoMapper {}
+public abstract class MailMapper implements ProtoMapper {
+
+  public MailDeliverRoute.RSocketDeliverRoute toProto(MailDeliverRSocketRoute route) {
+    return MailDeliverRoute.RSocketDeliverRoute.newBuilder().putAllTags(route.getTags()).build();
+  }
+
+  public MailDeliverRSocketRoute fromProto(MailDeliverRoute.RSocketDeliverRoute route) {
+    return MailDeliverRSocketRoute.builder().tags(route.getTagsMap()).build();
+  }
+
+  public MailDeliverRoute.ServletDeliverRoute toProto(MailDeliverServletRoute route) {
+    return MailDeliverRoute.ServletDeliverRoute.newBuilder().setUri(route.getUri()).build();
+  }
+
+  public MailDeliverServletRoute fromProto(MailDeliverRoute.ServletDeliverRoute route) {
+    return MailDeliverServletRoute.builder().uri(route.getUri()).build();
+  }
+
+  public MailDeliverRoute toProto(org.doodle.design.mail.model.info.MailDeliverRoute route) {
+    MailDeliverRoute.Builder builder = MailDeliverRoute.newBuilder();
+    if (Objects.nonNull(route.getRsocket())) {
+      builder.setRsocket(toProto(route.getRsocket()));
+    } else if (Objects.nonNull(route.getServlet())) {
+      builder.setServlet(toProto(route.getServlet()));
+    }
+    return builder.build();
+  }
+
+  public org.doodle.design.mail.model.info.MailDeliverRoute fromProto(MailDeliverRoute route) {
+    org.doodle.design.mail.model.info.MailDeliverRoute.MailDeliverRouteBuilder builder =
+        org.doodle.design.mail.model.info.MailDeliverRoute.builder();
+    if (route.hasRsocket()) {
+      builder.rsocket(fromProto(route.getRsocket()));
+    } else if (route.hasServlet()) {
+      builder.servlet(fromProto(route.getServlet()));
+    }
+    return builder.build();
+  }
+}

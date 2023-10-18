@@ -18,6 +18,50 @@ syntax = "proto3";
 
 package doodle.design.mail;
 
+import "google/protobuf/timestamp.proto";
+
 option java_multiple_files = true;
 option java_package = "org.doodle.design.mail";
 option java_outer_classname = "MailStructProto";
+
+enum MailErrorCode {
+  FAILURE = 0;
+}
+
+message MailDeliverRoute {
+  message ServletDeliverRoute {
+    string uri = 1;
+  }
+  message RSocketDeliverRoute {
+    map<string, string> tags = 1;
+  }
+  oneof RouteMethod {
+    ServletDeliverRoute servlet = 1;
+    RSocketDeliverRoute rsocket = 2;
+  }
+}
+
+message MailContentInfo {
+  string mail_id = 1;
+  string title = 2;
+  string content = 3;
+  string attachment = 4;
+}
+
+message MailContentInfoList {
+  repeated MailContentInfo content = 1;
+}
+
+message MailRoleSyncInfo {
+  string role_id = 1;
+  int64 sync_id = 2;
+}
+
+message MailRoleSyncInfoList {
+  repeated MailRoleSyncInfo role_sync = 1;
+}
+
+message MailLifecycleInfo {
+  google.protobuf.Timestamp start = 1;
+  google.protobuf.Timestamp end = 2;
+}
