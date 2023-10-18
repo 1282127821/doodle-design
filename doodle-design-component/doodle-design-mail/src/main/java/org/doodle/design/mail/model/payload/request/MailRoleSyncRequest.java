@@ -26,5 +26,6 @@ import org.doodle.design.mail.model.info.MailDeliverRoute;
 @NoArgsConstructor
 public class MailRoleSyncRequest {
   String roleId;
+  long roleCreateTime;
   MailDeliverRoute route;
 }

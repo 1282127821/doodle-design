@@ -26,6 +26,7 @@ option java_outer_classname = "MailStructProto";
 
 enum MailErrorCode {
   FAILURE = 0;
+  SUCCESS = 1;
 }
 
 message MailDeliverRoute {
@@ -42,7 +43,7 @@ message MailDeliverRoute {
 }
 
 message MailContentInfo {
-  string mail_id = 1;
+  string content_id = 1;
   string title = 2;
   string content = 3;
   string attachment = 4;

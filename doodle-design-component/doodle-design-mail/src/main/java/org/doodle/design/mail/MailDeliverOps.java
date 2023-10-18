@@ -23,7 +23,7 @@ public interface MailDeliverOps {
   interface RSocket {
     String DELIVER_MAPPING = "mail.deliver";
 
-    Mono<MailErrorCode> deliver(MailDeliverRequest request);
+    Mono<MailDeliverReply> deliver(MailDeliverRequest request);
   }
 
   @FunctionalInterface

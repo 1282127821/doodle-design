@@ -58,4 +58,8 @@ public abstract class MailMapper implements ProtoMapper {
     }
     return builder.build();
   }
+
+  public MailDeliverReply toDeliverReply(MailErrorCode errorCode) {
+    return MailDeliverReply.newBuilder().setErrorCode(errorCode).build();
+  }
 }

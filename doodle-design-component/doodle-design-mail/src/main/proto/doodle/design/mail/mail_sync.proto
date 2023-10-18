@@ -26,5 +26,10 @@ option java_outer_classname = "MailSyncProto";
 
 message MailRoleSyncRequest {
   string role_id = 1;
-  MailDeliverRoute route = 2;
+  int64 role_create_time = 2;
+  MailDeliverRoute route = 3;
+}
+
+message MailRoleSyncReply {
+  MailErrorCode error_code = 1;
 }

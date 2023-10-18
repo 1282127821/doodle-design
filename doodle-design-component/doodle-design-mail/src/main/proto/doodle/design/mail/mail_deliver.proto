@@ -28,3 +28,7 @@ message MailDeliverRequest {
   string role_id = 1;
   MailContentInfoList content = 2;
 }
+
+message MailDeliverReply {
+  MailErrorCode error_code = 1;
+}
