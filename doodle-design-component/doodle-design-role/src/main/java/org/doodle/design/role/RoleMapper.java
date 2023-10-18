@@ -30,6 +30,7 @@ public abstract class RoleMapper implements ProtoMapper {
         .setRoleLevel(info.getRoleLevel())
         .setServerId(info.getServerId())
         .setServerName(info.getServerName())
+        .setLastActiveTime(info.getLastActiveTime())
         .build();
   }
 
@@ -41,6 +42,7 @@ public abstract class RoleMapper implements ProtoMapper {
         .roleLevel(proto.getRoleLevel())
         .serverId(proto.getServerId())
         .serverName(proto.getServerName())
+        .lastActiveTime(proto.getLastActiveTime())
         .build();
   }
 

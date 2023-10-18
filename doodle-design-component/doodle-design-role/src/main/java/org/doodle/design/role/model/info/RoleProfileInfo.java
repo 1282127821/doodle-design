@@ -36,4 +36,6 @@ public class RoleProfileInfo {
   String serverId;
   // 区服名
   String serverName;
+  // 最近更新时间
+  long lastActiveTime;
 }
