@@ -66,3 +66,25 @@ message MailLifecycleInfo {
   google.protobuf.Timestamp start = 1;
   google.protobuf.Timestamp end = 2;
 }
+
+message MailTargetInfo {
+  string role_id = 1;
+  MailDeliverRoute route = 2;
+}
+
+enum MailState {
+  PENDING = 0;
+  READY = 1;
+  RETRYING = 2;
+  SENDING = 3;
+  COMPLETED = 4;
+  DIE = 5;
+}
+
+message MailPushInfo {
+  MailTargetInfo target = 1;
+  MailContentInfo content = 2;
+  MailState state = 3;
+  int64 send_time = 4;
+  int64 retry_time = 5;
+}
