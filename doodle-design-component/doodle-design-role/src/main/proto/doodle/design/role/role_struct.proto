@@ -56,7 +56,7 @@ message RoleGMInfo {
   string cmd = 1;
   string reason = 2;
   oneof Kind {
-    RoleGMDuration option = 3;
+    RoleGMDuration duration = 3;
     RoleGMLifecycle lifecycle = 4;
   }
 }

@@ -16,8 +16,39 @@
 package org.doodle.design.login;
 
 import org.doodle.design.common.ProtoMapper;
+import org.doodle.design.login.model.info.LoginAccountAuthTokenInfo;
 
 public abstract class LoginMapper implements ProtoMapper {
+
+  public LoginAccountAuthToken toProto(LoginAccountAuthTokenInfo info) {
+    return LoginAccountAuthToken.newBuilder()
+        .setAccountId(info.getAccountId())
+        .setSignToken(info.getSignToken())
+        .setTimestamp(info.getTimestamp())
+        .build();
+  }
+
+  public LoginAccountAuthTokenInfo fromProto(LoginAccountAuthToken proto) {
+    return LoginAccountAuthTokenInfo.builder()
+        .accountId(proto.getAccountId())
+        .signToken(proto.getSignToken())
+        .timestamp(proto.getTimestamp())
+        .build();
+  }
+
+  public LoginAccountInfo toProto(org.doodle.design.login.model.info.LoginAccountInfo info) {
+    return LoginAccountInfo.newBuilder()
+        .setAccountId(info.getAccountId())
+        .setSdkType(info.getSdkType())
+        .build();
+  }
+
+  public org.doodle.design.login.model.info.LoginAccountInfo fromProto(LoginAccountInfo proto) {
+    return org.doodle.design.login.model.info.LoginAccountInfo.builder()
+        .accountId(proto.getAccountId())
+        .sdkType(proto.getSdkType())
+        .build();
+  }
 
   public LoginAccountBindReply toProto(LoginAccountAuthToken token) {
     return LoginAccountBindReply.newBuilder().setPayload(token).build();
