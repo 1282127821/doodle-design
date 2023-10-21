@@ -45,3 +45,10 @@ message LoginAccountPayloadInfo {
     LoginVirtualInfo virtual = 2;
   }
 }
+
+message LoginAccountAuthTokenInfo {
+  string sign_token = 1;
+  string account_id = 2;
+  int64 timestamp = 3;
+}
+

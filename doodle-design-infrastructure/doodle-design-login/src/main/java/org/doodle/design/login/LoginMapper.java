@@ -71,7 +71,25 @@ public abstract class LoginMapper implements ProtoMapper {
     return builder.build();
   }
 
-  public LoginAccountBindReply toAccountBindReply(String token) {
+  public LoginAccountAuthTokenInfo toProto(
+      org.doodle.design.login.model.info.LoginAccountAuthTokenInfo info) {
+    return LoginAccountAuthTokenInfo.newBuilder()
+        .setSignToken(info.getSignToken())
+        .setAccountId(info.getAccountId())
+        .setTimestamp(info.getTimestamp())
+        .build();
+  }
+
+  public org.doodle.design.login.model.info.LoginAccountAuthTokenInfo fromProto(
+      LoginAccountAuthTokenInfo proto) {
+    return org.doodle.design.login.model.info.LoginAccountAuthTokenInfo.builder()
+        .signToken(proto.getSignToken())
+        .accountId(proto.getAccountId())
+        .timestamp(proto.getTimestamp())
+        .build();
+  }
+
+  public LoginAccountBindReply toAccountBindReply(LoginAccountAuthTokenInfo token) {
     return LoginAccountBindReply.newBuilder().setPayload(token).build();
   }
 

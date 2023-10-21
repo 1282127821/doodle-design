@@ -13,11 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.login.model.payload.reply;
+package org.doodle.design.login.model.info;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.doodle.design.login.model.info.LoginAccountAuthTokenInfo;
 
 @Builder
 @ToString
@@ -25,6 +24,8 @@ import org.doodle.design.login.model.info.LoginAccountAuthTokenInfo;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @AllArgsConstructor
 @NoArgsConstructor
-public class LoginAccountBindReply {
-  LoginAccountAuthTokenInfo authTokenInfo;
+public class LoginAccountAuthTokenInfo {
+  String signToken;
+  String accountId;
+  long timestamp;
 }

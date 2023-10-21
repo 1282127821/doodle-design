@@ -39,7 +39,7 @@ message JgLoginAccountBindRequest {
 message LoginAccountBindReply {
   oneof Result {
     LoginErrorCode error = 1;
-    string payload = 2;
+    LoginAccountAuthTokenInfo payload = 2;
   }
 }
 
