@@ -34,8 +34,14 @@ message LoginAccountInfo {
   doodle.design.common.SdkBundleInfo.SdkType sdk_type = 2;
 }
 
-message LoginAccountAuthToken {
-  string sign_token = 1;
-  string account_id = 2;
-  int64 timestamp = 3;
+message LoginVirtualInfo {
+  string virtual_id = 1;
+  LoginAccountInfo account = 2;
+}
+
+message LoginAccountPayloadInfo {
+  oneof Kind {
+    LoginAccountInfo account = 1;
+    LoginVirtualInfo virtual = 2;
+  }
 }

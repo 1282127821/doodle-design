@@ -22,18 +22,7 @@ import "doodle/design/login/login_struct.proto";
 
 option java_multiple_files = true;
 option java_package = "org.doodle.design.login";
-option java_outer_classname = "LoginJgProto";
-
-message LoginAccountAuthRequest {
-  LoginAccountAuthToken auth_token = 1;
-}
-
-message LoginAccountAuthReply {
-  oneof Result {
-    LoginErrorCode error = 1;
-    LoginAccountInfo payload = 2;
-  }
-}
+option java_outer_classname = "LoginAccountProto";
 
 message EmbeddedLoginAccountBindRequest {
   string account_id = 1;
@@ -50,6 +39,17 @@ message JgLoginAccountBindRequest {
 message LoginAccountBindReply {
   oneof Result {
     LoginErrorCode error = 1;
-    LoginAccountAuthToken payload = 2;
+    string payload = 2;
+  }
+}
+
+message LoginAccountAuthRequest {
+  string token = 1;
+}
+
+message LoginAccountAuthReply {
+  oneof Result {
+    LoginErrorCode error = 1;
+    LoginAccountPayloadInfo payload = 2;
   }
 }

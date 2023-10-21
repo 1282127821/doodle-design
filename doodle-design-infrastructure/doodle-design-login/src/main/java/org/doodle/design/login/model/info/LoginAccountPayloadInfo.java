@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.login.model.payload.request;
+package org.doodle.design.login.model.info;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -24,6 +24,7 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @AllArgsConstructor
 @NoArgsConstructor
-public class LoginAccountAuthRequest {
-  String token;
+public class LoginAccountPayloadInfo {
+  LoginAccountInfo accountInfo;
+  LoginVirtualInfo virtualInfo;
 }

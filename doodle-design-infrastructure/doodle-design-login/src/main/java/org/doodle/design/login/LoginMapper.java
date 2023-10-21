@@ -15,26 +15,10 @@
  */
 package org.doodle.design.login;
 
+import java.util.Objects;
 import org.doodle.design.common.ProtoMapper;
-import org.doodle.design.login.model.info.LoginAccountAuthTokenInfo;
 
 public abstract class LoginMapper implements ProtoMapper {
-
-  public LoginAccountAuthToken toProto(LoginAccountAuthTokenInfo info) {
-    return LoginAccountAuthToken.newBuilder()
-        .setAccountId(info.getAccountId())
-        .setSignToken(info.getSignToken())
-        .setTimestamp(info.getTimestamp())
-        .build();
-  }
-
-  public LoginAccountAuthTokenInfo fromProto(LoginAccountAuthToken proto) {
-    return LoginAccountAuthTokenInfo.builder()
-        .accountId(proto.getAccountId())
-        .signToken(proto.getSignToken())
-        .timestamp(proto.getTimestamp())
-        .build();
-  }
 
   public LoginAccountInfo toProto(org.doodle.design.login.model.info.LoginAccountInfo info) {
     return LoginAccountInfo.newBuilder()
@@ -50,7 +34,44 @@ public abstract class LoginMapper implements ProtoMapper {
         .build();
   }
 
-  public LoginAccountBindReply toProto(LoginAccountAuthToken token) {
+  public LoginVirtualInfo toProto(org.doodle.design.login.model.info.LoginVirtualInfo info) {
+    return LoginVirtualInfo.newBuilder()
+        .setVirtualId(info.getVirtualId())
+        .setAccount(toProto(info.getAccountInfo()))
+        .build();
+  }
+
+  public org.doodle.design.login.model.info.LoginVirtualInfo fromProto(LoginVirtualInfo proto) {
+    return org.doodle.design.login.model.info.LoginVirtualInfo.builder()
+        .virtualId(proto.getVirtualId())
+        .accountInfo(fromProto(proto.getAccount()))
+        .build();
+  }
+
+  public LoginAccountPayloadInfo toProto(
+      org.doodle.design.login.model.info.LoginAccountPayloadInfo info) {
+    LoginAccountPayloadInfo.Builder builder = LoginAccountPayloadInfo.newBuilder();
+    if (Objects.nonNull(info.getAccountInfo())) {
+      builder.setAccount(toProto(info.getAccountInfo()));
+    } else if (Objects.nonNull(info.getVirtualInfo())) {
+      builder.setVirtual(toProto(info.getVirtualInfo()));
+    }
+    return builder.build();
+  }
+
+  public org.doodle.design.login.model.info.LoginAccountPayloadInfo fromProto(
+      LoginAccountPayloadInfo proto) {
+    org.doodle.design.login.model.info.LoginAccountPayloadInfo.LoginAccountPayloadInfoBuilder
+        builder = org.doodle.design.login.model.info.LoginAccountPayloadInfo.builder();
+    if (proto.hasAccount()) {
+      builder.accountInfo(fromProto(proto.getAccount()));
+    } else if (proto.hasVirtual()) {
+      builder.virtualInfo(fromProto(proto.getVirtual()));
+    }
+    return builder.build();
+  }
+
+  public LoginAccountBindReply toAccountBindReply(String token) {
     return LoginAccountBindReply.newBuilder().setPayload(token).build();
   }
 
@@ -58,7 +79,7 @@ public abstract class LoginMapper implements ProtoMapper {
     return LoginAccountBindReply.newBuilder().setError(errorCode).build();
   }
 
-  public LoginAccountAuthReply toProto(LoginAccountInfo info) {
+  public LoginAccountAuthReply toAccountAuthReply(LoginAccountPayloadInfo info) {
     return LoginAccountAuthReply.newBuilder().setPayload(info).build();
   }
 

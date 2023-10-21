@@ -17,7 +17,6 @@ package org.doodle.design.login.model.payload.reply;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.doodle.design.login.model.info.LoginAccountAuthTokenInfo;
 
 @Builder
 @ToString
@@ -26,6 +25,5 @@ import org.doodle.design.login.model.info.LoginAccountAuthTokenInfo;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LoginAccountBindReply {
-  // 帐号验证token
-  LoginAccountAuthTokenInfo authTokenInfo;
+  String token;
 }

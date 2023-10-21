@@ -17,7 +17,7 @@ package org.doodle.design.login.model.payload.reply;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.doodle.design.login.model.info.LoginAccountInfo;
+import org.doodle.design.login.model.info.LoginAccountPayloadInfo;
 
 @Builder
 @ToString
@@ -26,6 +26,5 @@ import org.doodle.design.login.model.info.LoginAccountInfo;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LoginAccountAuthReply {
-  // 玩家帐号信息
-  LoginAccountInfo accountInfo;
+  LoginAccountPayloadInfo payloadInfo;
 }

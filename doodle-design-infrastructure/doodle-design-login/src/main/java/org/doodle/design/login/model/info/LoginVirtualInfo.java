@@ -24,11 +24,7 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @AllArgsConstructor
 @NoArgsConstructor
-public class LoginAccountAuthTokenInfo {
-  // 签名token
-  String signToken;
-  // 帐号UID
-  String accountId;
-  // 生成时间
-  long timestamp;
+public class LoginVirtualInfo {
+  String virtualId;
+  LoginAccountInfo accountInfo;
 }
