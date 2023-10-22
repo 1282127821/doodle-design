@@ -17,17 +17,15 @@ package org.doodle.design.mail.model.info;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.doodle.design.mail.MailState;
+import org.doodle.design.mail.MailScheduleState;
 
 @Builder
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @AllArgsConstructor
 @NoArgsConstructor
-public class MailPushInfo {
-  String pushId;
-  MailState state;
-  MailTargetInfo targetInfo;
-  MailContentInfo contentInfo;
-  long sendTime;
+public class MailPushScheduleInfo {
+  String scheduleId;
+  MailPushInfo pushInfo;
+  MailScheduleState state;
 }

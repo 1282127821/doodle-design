@@ -74,17 +74,27 @@ message MailTargetInfo {
 
 enum MailState {
   PENDING = 0;
-  READY = 1;
-  RETRYING = 2;
-  SENDING = 3;
-  COMPLETED = 4;
-  DIE = 5;
+  SCHEDULING = 1;
+  COMPLETED = 2;
+  CANCELLED = 3;
+  DIE = 4;
 }
 
 message MailPushInfo {
-  MailTargetInfo target = 1;
-  MailContentInfo content = 2;
-  MailState state = 3;
-  int64 send_time = 4;
-  int64 retry_time = 5;
+  string push_id = 1;
+  MailTargetInfo target = 2;
+  MailContentInfo content = 3;
+  MailState state = 4;
+  int64 send_time = 5;
+}
+
+enum MailScheduleState {
+  SENDING = 0;
+  IDLE = 2;
+}
+
+message MailScheduleInfo {
+  string schedule_id = 1;
+  MailPushInfo push = 2;
+  MailScheduleState state = 3;
 }
