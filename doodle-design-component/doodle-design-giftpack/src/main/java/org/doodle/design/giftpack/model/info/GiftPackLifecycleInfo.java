@@ -15,7 +15,7 @@
  */
 package org.doodle.design.giftpack.model.info;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -25,6 +25,6 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @NoArgsConstructor
 public class GiftPackLifecycleInfo {
-  LocalDateTime start;
-  LocalDateTime end;
+  Instant start;
+  Instant end;
 }

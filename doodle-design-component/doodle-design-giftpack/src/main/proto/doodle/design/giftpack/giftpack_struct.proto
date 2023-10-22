@@ -33,7 +33,7 @@ message GiftPackContentInfo {
   string content = 2;
 }
 
-message GiftPackLifecycle {
+message GiftPackLifecycleInfo {
   google.protobuf.Timestamp start = 1;
   google.protobuf.Timestamp end = 2;
 }
@@ -48,7 +48,7 @@ message GiftPackGroupInfo {
   int64 group_id = 1;
   string group_code = 2;
   GiftPackContentInfo content = 3;
-  GiftPackLifecycle lifecycle = 4;
+  GiftPackLifecycleInfo lifecycle = 4;
 }
 
 message GiftPackGroupInfoList {
@@ -57,9 +57,9 @@ message GiftPackGroupInfoList {
 
 message GiftPackBatchInfo {
   int64 batch_id = 1;
-  string batch_size = 2;
+  int64 batch_size = 2;
   GiftPackContentInfo content = 3;
-  GiftPackLifecycle lifecycle = 4;
+  GiftPackLifecycleInfo lifecycle = 4;
 }
 
 message GiftPackBatchInfoList {
@@ -70,7 +70,7 @@ message GiftPackSpecInfo {
   int64 spec_id = 1;
   string role_id = 2;
   GiftPackContentInfo content = 3;
-  GiftPackLifecycle lifecycle = 4;
+  GiftPackLifecycleInfo lifecycle = 4;
 }
 
 message GiftPackSpecInfoList {
@@ -83,4 +83,8 @@ message GiftPackInfo {
     GiftPackBatchInfo batch = 2;
     GiftPackSpecInfo spec = 3;
   }
+}
+
+message GiftPackInfoList {
+  repeated GiftPackInfo pack = 1;
 }
