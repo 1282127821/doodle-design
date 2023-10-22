@@ -15,6 +15,22 @@
  */
 package org.doodle.design.giftpack;
 
-import org.doodle.design.common.ProtoMapper;
+import org.doodle.design.common.Result;
+import reactor.core.publisher.Mono;
 
-public abstract class GiftPackMapper implements ProtoMapper {}
+public interface GiftPackRoleUseOps {
+  @FunctionalInterface
+  interface RSocket {
+    String USE_MAPPING = "giftpack.role.use";
+
+    Mono<GiftPackRoleUseReply> use(GiftPackRoleUseRequest request);
+  }
+
+  @FunctionalInterface
+  interface Servlet {
+    String USE_MAPPING = "/giftpack/role/use";
+
+    Result<org.doodle.design.giftpack.model.payload.reply.GiftPackRoleUseReply> use(
+        org.doodle.design.giftpack.model.payload.request.GiftPackRoleUseRequest request);
+  }
+}

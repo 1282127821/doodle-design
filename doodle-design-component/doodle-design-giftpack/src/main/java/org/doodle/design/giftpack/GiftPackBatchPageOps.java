@@ -15,6 +15,22 @@
  */
 package org.doodle.design.giftpack;
 
-import org.doodle.design.common.ProtoMapper;
+import org.doodle.design.common.Result;
+import reactor.core.publisher.Mono;
 
-public abstract class GiftPackMapper implements ProtoMapper {}
+public interface GiftPackBatchPageOps {
+  @FunctionalInterface
+  interface RSocket {
+    String PAGE_MAPPING = "giftpack.batch.page";
+
+    Mono<GiftPackBatchPageReply> page(GiftPackBatchPageRequest request);
+  }
+
+  @FunctionalInterface
+  interface Servlet {
+    String PAGE_MAPPING = "/giftpack/batch/page";
+
+    Result<org.doodle.design.giftpack.model.payload.reply.GiftPackBatchPageReply> page(
+        org.doodle.design.giftpack.model.payload.request.GiftPackBatchPageRequest request);
+  }
+}

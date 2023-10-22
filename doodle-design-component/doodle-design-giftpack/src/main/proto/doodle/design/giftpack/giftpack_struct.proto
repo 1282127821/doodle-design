@@ -19,7 +19,6 @@ syntax = "proto3";
 package doodle.design.giftpack;
 
 import "google/protobuf/timestamp.proto";
-import "google/protobuf/wrappers.proto";
 
 option java_multiple_files = true;
 option java_package = "org.doodle.design.giftpack";
@@ -29,84 +28,59 @@ enum GiftPackErrorCode {
   FAILURE = 0;
 }
 
-message VisionInfo {
-  string vision_id = 1;
-  string description = 2;
-}
-
-message VisionInfoList {
-  repeated VisionInfo vision = 1;
-}
-
-message GiftInfo {
-  string gift_id = 1;
+message GiftPackContentInfo {
+  int64 content_id = 1;
   string content = 2;
-  VisionInfo vision = 3;
 }
 
-message GiftInfoList {
-  repeated GiftInfo gift = 1;
-}
-
-message CodeInfo {
-  int64 code_id = 1;
-  string pack_code = 2;
-  GiftInfoList gift = 3;
-}
-
-message CodeInfoList {
-  repeated CodeInfo code = 1;
-}
-
-message PackLifecycleInfo {
+message GiftPackLifecycle {
   google.protobuf.Timestamp start = 1;
   google.protobuf.Timestamp end = 2;
 }
 
-message PackOptionsInfo {
-  bool enable = 1;
+enum GiftPackType {
+  GROUP = 0;
+  BATCH = 1;
+  SPEC = 2;
 }
 
-message UniversalPackDetailInfo {
-  google.protobuf.Int64Value quantity = 1;
-  google.protobuf.Int64Value times = 2;
+message GiftPackGroupInfo {
+  int64 group_id = 1;
+  string group_code = 2;
+  GiftPackContentInfo content = 3;
+  GiftPackLifecycle lifecycle = 4;
 }
 
-message TemporaryPackDetailInfo {
-  int64 quantity = 1;
-  int64 batch = 2;
+message GiftPackGroupInfoList {
+  repeated GiftPackGroupInfo group = 1;
 }
 
-message PackDetailInfo {
+message GiftPackBatchInfo {
+  int64 batch_id = 1;
+  string batch_size = 2;
+  GiftPackContentInfo content = 3;
+  GiftPackLifecycle lifecycle = 4;
+}
+
+message GiftPackBatchInfoList {
+  repeated GiftPackBatchInfo batch = 1;
+}
+
+message GiftPackSpecInfo {
+  int64 spec_id = 1;
+  string role_id = 2;
+  GiftPackContentInfo content = 3;
+  GiftPackLifecycle lifecycle = 4;
+}
+
+message GiftPackSpecInfoList {
+  repeated GiftPackSpecInfo spec = 1;
+}
+
+message GiftPackInfo {
   oneof Kind {
-    UniversalPackDetailInfo universal = 1;
-    TemporaryPackDetailInfo temporary = 2;
+    GiftPackGroupInfo group = 1;
+    GiftPackBatchInfo batch = 2;
+    GiftPackSpecInfo spec = 3;
   }
-}
-
-message PackConditionInfo {
-  enum MatchType {
-    ANY = 0;
-    ALL = 1;
-  }
-  MatchType match_type = 1;
-  map<string, string> condition = 2;
-}
-
-message PackInfo {
-  string pack_id = 1;
-  CodeInfo code = 2;
-  PackLifecycleInfo lifecycle = 3;
-  PackOptionsInfo options = 4;
-  PackConditionInfo condition = 5;
-  PackDetailInfo detail = 6;
-}
-
-message PackInfoList {
-  repeated PackInfo pack = 1;
-}
-
-message CodeUserInfo {
-  string user_id = 1;
-  map<string, string> vars = 2;
 }

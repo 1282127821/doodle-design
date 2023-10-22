@@ -13,8 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.giftpack;
+package org.doodle.design.giftpack.model.payload.reply;
 
-import org.doodle.design.common.ProtoMapper;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
+import org.doodle.design.giftpack.model.info.GiftPackGroupInfo;
 
-public abstract class GiftPackMapper implements ProtoMapper {}
+@Builder
+@Data
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@AllArgsConstructor
+@NoArgsConstructor
+public class GiftPackGroupQueryReply {
+  GiftPackGroupInfo groupInfo;
+}

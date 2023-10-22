@@ -13,8 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.giftpack;
 
-import org.doodle.design.common.ProtoMapper;
+syntax = "proto3";
 
-public abstract class GiftPackMapper implements ProtoMapper {}
+package doodle.design.giftpack;
+
+import "doodle/design/giftpack/giftpack_struct.proto";
+
+option java_multiple_files = true;
+option java_package = "org.doodle.design.giftpack";
+option java_outer_classname = "GiftPackCodeProto";
+
+message GiftPackRoleUseRequest {
+  string role_id = 1;
+  string pack_code = 2;
+}
+
+message GiftPackRoleUseReply {
+  oneof Result {
+    GiftPackErrorCode error = 1;
+    GiftPackInfo payload = 2;
+  }
+}

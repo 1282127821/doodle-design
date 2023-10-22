@@ -15,6 +15,22 @@
  */
 package org.doodle.design.giftpack;
 
-import org.doodle.design.common.ProtoMapper;
+import org.doodle.design.common.Result;
+import reactor.core.publisher.Mono;
 
-public abstract class GiftPackMapper implements ProtoMapper {}
+public interface GiftPackBatchQueryOps {
+  @FunctionalInterface
+  interface RSocket {
+    String QUERY_MAPPING = "giftpack.batch.query";
+
+    Mono<GiftPackBatchQueryReply> query(GiftPackBatchQueryRequest request);
+  }
+
+  @FunctionalInterface
+  interface Servlet {
+    String QUERY_MAPPING = "/giftpack/batch/query";
+
+    Result<org.doodle.design.giftpack.model.payload.reply.GiftPackBatchQueryReply> query(
+        org.doodle.design.giftpack.model.payload.request.GiftPackBatchQueryRequest request);
+  }
+}
