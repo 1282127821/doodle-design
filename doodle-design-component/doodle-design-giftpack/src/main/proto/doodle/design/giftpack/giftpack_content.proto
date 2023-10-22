@@ -23,26 +23,26 @@ import "doodle/design/common/pagination.proto";
 
 option java_multiple_files = true;
 option java_package = "org.doodle.design.giftpack";
-option java_outer_classname = "GiftPackSpecProto";
+option java_outer_classname = "GiftPackContentProto";
 
-message GiftPackSpecQueryRequest {
-  int64 spec_id = 1;
+message GiftPackContentQueryRequest {
+  int64 content_id = 1;
 }
 
-message GiftPackSpecQueryReply {
+message GiftPackContentQueryReply {
   oneof Result {
     GiftPackErrorCode error = 1;
-    GiftPackSpecInfo payload = 2;
+    GiftPackContentInfo payload = 2;
   }
 }
 
-message GiftPackSpecPageRequest {
+message GiftPackContentPageRequest {
   doodle.design.common.PageRequest page = 1;
 }
 
-message GiftPackSpecPageReply {
+message GiftPackContentPageReply {
   oneof Result {
     GiftPackErrorCode error = 1;
-    GiftPackSpecInfoList payload = 2;
+    GiftPackContentInfoList payload = 2;
   }
 }

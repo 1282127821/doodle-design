@@ -33,6 +33,10 @@ message GiftPackContentInfo {
   string content = 2;
 }
 
+message GiftPackContentInfoList {
+  repeated GiftPackContentInfo content = 1;
+}
+
 message GiftPackLifecycleInfo {
   google.protobuf.Timestamp start = 1;
   google.protobuf.Timestamp end = 2;

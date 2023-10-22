@@ -53,6 +53,15 @@ public abstract class GiftPackMapper implements ProtoMapper {
         .build();
   }
 
+  public GiftPackContentInfoList toContentInfoList(
+      List<org.doodle.design.giftpack.model.info.GiftPackContentInfo> infos) {
+    GiftPackContentInfoList.Builder builder = GiftPackContentInfoList.newBuilder();
+    if (!CollectionUtils.isEmpty(infos)) {
+      infos.stream().map(this::toProto).forEach(builder::addContent);
+    }
+    return builder.build();
+  }
+
   public GiftPackGroupInfo toProto(org.doodle.design.giftpack.model.info.GiftPackGroupInfo info) {
     return GiftPackGroupInfo.newBuilder()
         .setGroupId(info.getGroupId())
@@ -134,6 +143,22 @@ public abstract class GiftPackMapper implements ProtoMapper {
       infos.stream().map(this::toProto).forEach(builder::addSpec);
     }
     return builder.build();
+  }
+
+  public GiftPackContentQueryReply toContentQueryReply(GiftPackContentInfo info) {
+    return GiftPackContentQueryReply.newBuilder().setPayload(info).build();
+  }
+
+  public GiftPackContentQueryReply toContentQueryError(GiftPackErrorCode errorCode) {
+    return GiftPackContentQueryReply.newBuilder().setError(errorCode).build();
+  }
+
+  public GiftPackContentPageReply toContentPageReply(GiftPackContentInfoList infoList) {
+    return GiftPackContentPageReply.newBuilder().setPayload(infoList).build();
+  }
+
+  public GiftPackContentPageReply toContentPageError(GiftPackErrorCode errorCode) {
+    return GiftPackContentPageReply.newBuilder().setError(errorCode).build();
   }
 
   public GiftPackGroupQueryReply toGroupQueryReply(GiftPackGroupInfo info) {
