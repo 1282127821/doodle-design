@@ -16,6 +16,7 @@
 package org.doodle.design.giftpack;
 
 import java.util.List;
+import java.util.Objects;
 import org.doodle.design.common.ProtoMapper;
 import org.springframework.util.CollectionUtils;
 
@@ -145,6 +146,31 @@ public abstract class GiftPackMapper implements ProtoMapper {
     return builder.build();
   }
 
+  public GiftPackInfo toProto(org.doodle.design.giftpack.model.info.GiftPackInfo info) {
+    GiftPackInfo.Builder builder = GiftPackInfo.newBuilder();
+    if (Objects.nonNull(info.getGroupInfo())) {
+      builder.setGroup(toProto(info.getGroupInfo()));
+    } else if (Objects.nonNull(info.getBatchInfo())) {
+      builder.setBatch(toProto(info.getBatchInfo()));
+    } else if (Objects.nonNull(info.getSpecInfo())) {
+      builder.setSpec(toProto(info.getSpecInfo()));
+    }
+    return builder.build();
+  }
+
+  public org.doodle.design.giftpack.model.info.GiftPackInfo fromProto(GiftPackInfo proto) {
+    org.doodle.design.giftpack.model.info.GiftPackInfo.GiftPackInfoBuilder builder =
+        org.doodle.design.giftpack.model.info.GiftPackInfo.builder();
+    if (proto.hasGroup()) {
+      builder.groupInfo(fromProto(proto.getGroup()));
+    } else if (proto.hasBatch()) {
+      builder.batchInfo(fromProto(proto.getBatch()));
+    } else if (proto.hasSpec()) {
+      builder.specInfo(fromProto(proto.getSpec()));
+    }
+    return builder.build();
+  }
+
   public GiftPackContentQueryReply toContentQueryReply(GiftPackContentInfo info) {
     return GiftPackContentQueryReply.newBuilder().setPayload(info).build();
   }
@@ -207,5 +233,13 @@ public abstract class GiftPackMapper implements ProtoMapper {
 
   public GiftPackSpecPageReply toSpecPageError(GiftPackErrorCode errorCode) {
     return GiftPackSpecPageReply.newBuilder().setError(errorCode).build();
+  }
+
+  public GiftPackRoleUseReply toRoleUseReply(GiftPackInfo info) {
+    return GiftPackRoleUseReply.newBuilder().setPayload(info).build();
+  }
+
+  public GiftPackRoleUseReply toRoleUseError(GiftPackErrorCode errorCode) {
+    return GiftPackRoleUseReply.newBuilder().setError(errorCode).build();
   }
 }
