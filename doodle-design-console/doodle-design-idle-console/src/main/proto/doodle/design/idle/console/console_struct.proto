@@ -18,10 +18,108 @@ syntax = "proto3";
 
 package doodle.design.idle.console;
 
+import "google/protobuf/timestamp.proto";
+import "doodle/design/common/range.proto";
+
 option java_multiple_files = true;
 option java_package = "org.doodle.design.idle.console";
 option java_outer_classname = "ConsoleStructProto";
 
 enum ConsoleErrorCode {
   FAILURE = 0;
+}
+
+enum ConsoleArchiveType {
+  ECS = 0;
+  DB = 1;
+  COMPONENT = 2;
+  GAME = 3;
+  CROSS = 4;
+}
+
+message ConsoleArchiveInfo {
+  int64 unique_id = 1;
+  int64 category_seq_id = 2;
+  ConsoleArchiveType type = 3;
+  string category = 4;
+}
+
+
+
+message ConsoleEcsPortInfo {
+  doodle.design.common.IntRange available = 1;
+  map<int32, ConsoleArchiveInfo> assigner = 2;
+  repeated int32 exposed = 3;
+}
+
+message ConsoleEcsIpInfo {
+  repeated string wlan = 1;
+  repeated string lan = 2;
+}
+
+message ConsoleEcsSshInfo {
+  string username = 1;
+  string password = 2;
+  int32 port = 3;
+}
+
+message ConsoleEcsInfo {
+  ConsoleArchiveInfo archive = 1;
+  ConsoleEcsIpInfo ip = 2;
+  ConsoleEcsPortInfo port = 3;
+  ConsoleEcsSshInfo ssh = 4;
+}
+
+message ConsoleCloudInfo {
+  string description = 1;
+}
+
+message ConsoleHostInfo {
+  oneof Kind {
+    ConsoleEcsInfo ecs = 1;
+    ConsoleCloudInfo cloud = 2;
+  }
+}
+
+message ConsoleMongodbInfo {
+  string url = 2;
+}
+
+message ConsoleDbInfo {
+  ConsoleArchiveInfo archive = 1;
+  ConsoleHostInfo host = 2;
+  oneof Kind {
+    ConsoleMongodbInfo mongodb = 3;
+  }
+}
+
+message ConsoleDbInfoList {
+  repeated ConsoleDbInfo db = 1;
+}
+
+message ConsoleComponentInfo {
+  ConsoleArchiveInfo archive = 1;
+  ConsoleHostInfo host = 2;
+}
+
+message ConsoleComponentInfoList {
+  repeated ConsoleComponentInfo component = 1;
+}
+
+message ConsoleGameInfo {
+  ConsoleArchiveInfo archive = 1;
+  ConsoleHostInfo host = 2;
+}
+
+message ConsoleGameInfoList {
+  repeated ConsoleGameInfo game = 1;
+}
+
+message ConsoleCrossInfo {
+  ConsoleArchiveInfo archive = 1;
+  ConsoleHostInfo host = 2;
+}
+
+message ConsoleCrossInfoList {
+  repeated ConsoleCrossInfo cross = 1;
 }

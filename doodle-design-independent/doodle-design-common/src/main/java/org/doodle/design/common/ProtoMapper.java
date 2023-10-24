@@ -15,6 +15,8 @@
  */
 package org.doodle.design.common;
 
+import com.google.common.collect.BoundType;
+import com.google.common.collect.Range;
 import com.google.protobuf.ListValue;
 import com.google.protobuf.Struct;
 import com.google.protobuf.Timestamp;
@@ -26,6 +28,94 @@ import org.doodle.design.common.model.SdkBundle;
 import org.doodle.design.common.util.ProtoUtils;
 
 public interface ProtoMapper {
+
+  default FloatRange toFloatProto(Range<Float> info) {
+    return FloatRange.newBuilder()
+        .setLeft(info.lowerEndpoint())
+        .setRight(info.upperEndpoint())
+        .setType(toProto(info.lowerBoundType(), info.upperBoundType()))
+        .build();
+  }
+
+  default Range<Float> fromFloatProto(FloatRange proto) {
+    return Range.range(
+        proto.getLeft(),
+        fromProto(proto.getType(), true),
+        proto.getRight(),
+        fromProto(proto.getType(), false));
+  }
+
+  default DoubleRange toDoubleProto(Range<Double> info) {
+    return DoubleRange.newBuilder()
+        .setLeft(info.lowerEndpoint())
+        .setRight(info.upperEndpoint())
+        .setType(toProto(info.lowerBoundType(), info.upperBoundType()))
+        .build();
+  }
+
+  default Range<Double> fromDoubleProto(DoubleRange proto) {
+    return Range.range(
+        proto.getLeft(),
+        fromProto(proto.getType(), true),
+        proto.getRight(),
+        fromProto(proto.getType(), false));
+  }
+
+  default LongRange toLongProto(Range<Long> info) {
+    return LongRange.newBuilder()
+        .setLeft(info.lowerEndpoint())
+        .setRight(info.upperEndpoint())
+        .setType(toProto(info.lowerBoundType(), info.upperBoundType()))
+        .build();
+  }
+
+  default Range<Long> fromLongProto(LongRange proto) {
+    return Range.range(
+        proto.getLeft(),
+        fromProto(proto.getType(), true),
+        proto.getRight(),
+        fromProto(proto.getType(), false));
+  }
+
+  default IntRange toIntProto(Range<Integer> info) {
+    return IntRange.newBuilder()
+        .setLeft(info.lowerEndpoint())
+        .setRight(info.upperEndpoint())
+        .setType(toProto(info.lowerBoundType(), info.upperBoundType()))
+        .build();
+  }
+
+  default Range<Integer> fromIntProto(IntRange proto) {
+    return Range.range(
+        proto.getLeft(),
+        fromProto(proto.getType(), true),
+        proto.getRight(),
+        fromProto(proto.getType(), false));
+  }
+
+  default BoundType fromProto(RangeType info, boolean left) {
+    if (left) {
+      return (info == RangeType.LEFT_OPEN_RIGHT_CLOSE || info == RangeType.LEFT_OPEN_RIGHT_OPEN)
+          ? BoundType.OPEN
+          : BoundType.CLOSED;
+    } else {
+      return (info == RangeType.LEFT_OPEN_RIGHT_OPEN || info == RangeType.LEFT_CLOSE_RIGHT_OPEN)
+          ? BoundType.OPEN
+          : BoundType.CLOSED;
+    }
+  }
+
+  default RangeType toProto(BoundType left, BoundType right) {
+    if (left == BoundType.OPEN && right == BoundType.OPEN) {
+      return RangeType.LEFT_OPEN_RIGHT_OPEN;
+    } else if (left == BoundType.OPEN && right == BoundType.CLOSED) {
+      return RangeType.LEFT_OPEN_RIGHT_CLOSE;
+    } else if (left == BoundType.CLOSED && right == BoundType.OPEN) {
+      return RangeType.LEFT_CLOSE_RIGHT_OPEN;
+    } else {
+      return RangeType.LEFT_CLOSE_RIGHT_CLOSE;
+    }
+  }
 
   default LogMessageInfo toProto(org.doodle.design.common.model.LogMessageInfo info) {
     return LogMessageInfo.newBuilder()
