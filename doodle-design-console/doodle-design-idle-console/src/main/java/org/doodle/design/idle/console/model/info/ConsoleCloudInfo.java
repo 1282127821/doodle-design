@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.idle.console.mode.info;
+package org.doodle.design.idle.console.model.info;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -23,8 +23,6 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @AllArgsConstructor
 @NoArgsConstructor
-public class ConsoleEcsSshInfo {
-  String username;
-  String password;
-  int port;
+public class ConsoleCloudInfo {
+  String description;
 }

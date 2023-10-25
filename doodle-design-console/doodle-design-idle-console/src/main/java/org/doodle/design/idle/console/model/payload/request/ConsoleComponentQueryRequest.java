@@ -13,19 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.idle.console.mode.info;
+package org.doodle.design.idle.console.model.payload.request;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 @Builder
+@ToString
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @AllArgsConstructor
 @NoArgsConstructor
-public class ConsoleEcsInfo {
-  ConsoleArchiveInfo archiveInfo;
-  ConsoleEcsIpInfo ipInfo;
-  ConsoleEcsPortInfo portInfo;
-  ConsoleEcsSshInfo sshInfo;
+public class ConsoleComponentQueryRequest {
+  long uniqueId;
 }

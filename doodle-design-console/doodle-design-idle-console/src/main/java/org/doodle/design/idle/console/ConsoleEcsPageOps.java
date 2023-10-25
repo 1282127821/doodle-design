@@ -13,20 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.idle.console.mode.info;
+package org.doodle.design.idle.console;
 
-import lombok.*;
-import lombok.experimental.FieldDefaults;
-import org.doodle.design.idle.console.ConsoleArchiveType;
+import org.doodle.design.common.Result;
+import reactor.core.publisher.Mono;
 
-@Builder
-@Data
-@FieldDefaults(level = AccessLevel.PRIVATE)
-@AllArgsConstructor
-@NoArgsConstructor
-public class ConsoleArchiveInfo {
-  long uniqueId;
-  long categorySeqId;
-  ConsoleArchiveType type;
-  String category;
+public interface ConsoleEcsPageOps {
+  @FunctionalInterface
+  interface RSocket {
+    String PAGE_MAPPING = "console.ecs.page";
+
+    Mono<ConsoleEcsPageReply> page(ConsoleEcsPageRequest request);
+  }
+
+  @FunctionalInterface
+  interface Servlet {
+    String PAGE_MAPPING = "/console/ecs/page";
+
+    Result<org.doodle.design.idle.console.model.payload.reply.ConsoleEcsPageReply> page(
+        org.doodle.design.idle.console.model.payload.request.ConsoleEcsPageRequest request);
+  }
 }

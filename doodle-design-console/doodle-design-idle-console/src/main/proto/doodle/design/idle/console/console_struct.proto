@@ -44,8 +44,6 @@ message ConsoleArchiveInfo {
   string category = 4;
 }
 
-
-
 message ConsoleEcsPortInfo {
   doodle.design.common.IntRange available = 1;
   map<int32, ConsoleArchiveInfo> assigner = 2;
@@ -68,6 +66,10 @@ message ConsoleEcsInfo {
   ConsoleEcsIpInfo ip = 2;
   ConsoleEcsPortInfo port = 3;
   ConsoleEcsSshInfo ssh = 4;
+}
+
+message ConsoleEcsInfoList {
+  repeated ConsoleEcsInfo ecs = 1;
 }
 
 message ConsoleCloudInfo {
@@ -109,6 +111,7 @@ message ConsoleComponentInfoList {
 message ConsoleGameInfo {
   ConsoleArchiveInfo archive = 1;
   ConsoleHostInfo host = 2;
+
 }
 
 message ConsoleGameInfoList {

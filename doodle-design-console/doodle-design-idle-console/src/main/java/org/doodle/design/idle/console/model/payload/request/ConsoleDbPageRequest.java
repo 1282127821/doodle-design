@@ -13,22 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.idle.console.mode.info;
+package org.doodle.design.idle.console.model.payload.request;
 
-import java.util.Map;
-import java.util.Set;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.doodle.design.common.IntRange;
-import org.doodle.design.idle.console.ConsoleArchiveInfo;
+import org.doodle.design.common.model.PageRequest;
 
 @Builder
+@ToString
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @AllArgsConstructor
 @NoArgsConstructor
-public class ConsoleEcsPortInfo {
-  IntRange available;
-  Map<Integer, ConsoleArchiveInfo> assignerMap;
-  Set<Integer> exposed;
+public class ConsoleDbPageRequest {
+  PageRequest page;
 }

@@ -23,26 +23,27 @@ import "doodle/design/common/pagination.proto";
 
 option java_multiple_files = true;
 option java_package = "org.doodle.design.idle.console";
-option java_outer_classname = "ConsoleCrossProto";
+option java_outer_classname = "ConsoleEcsProto";
 
-message ConsoleCrossQueryRequest {
+message ConsoleEcsQueryRequest {
   int64 unique_id = 1;
 }
 
-message ConsoleCrossQueryReply {
+message ConsoleEcsQueryReply {
   oneof Result {
     ConsoleErrorCode error = 1;
-    ConsoleCrossInfo payload = 2;
+    ConsoleEcsInfo payload = 2;
   }
 }
 
-message ConsoleCrossPageRequest {
+message ConsoleEcsPageRequest {
   doodle.design.common.PageRequest page = 1;
 }
 
-message ConsoleCrossPageReply {
+message ConsoleEcsPageReply {
   oneof Result {
     ConsoleErrorCode error = 1;
-    ConsoleCrossInfoList payload = 2;
+    ConsoleEcsInfoList payload = 2;
   }
 }
+

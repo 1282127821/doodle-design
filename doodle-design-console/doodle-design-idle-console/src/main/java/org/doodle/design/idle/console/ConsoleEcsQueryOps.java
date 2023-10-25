@@ -13,16 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.idle.console.mode.info;
+package org.doodle.design.idle.console;
 
-import lombok.*;
-import lombok.experimental.FieldDefaults;
+import org.doodle.design.common.Result;
+import reactor.core.publisher.Mono;
 
-@Builder
-@Data
-@FieldDefaults(level = AccessLevel.PRIVATE)
-@AllArgsConstructor
-@NoArgsConstructor
-public class ConsoleCloudInfo {
-  String description;
+public interface ConsoleEcsQueryOps {
+  @FunctionalInterface
+  interface RSocket {
+    String QUERY_MAPPING = "console.ecs.query";
+
+    Mono<ConsoleEcsQueryReply> query(ConsoleEcsQueryRequest request);
+  }
+
+  @FunctionalInterface
+  interface Servlet {
+    String QUERY_MAPPING = "/console/ecs/query";
+
+    Result<org.doodle.design.idle.console.model.payload.reply.ConsoleEcsQueryReply> query(
+        org.doodle.design.idle.console.model.payload.request.ConsoleEcsQueryRequest request);
+  }
 }

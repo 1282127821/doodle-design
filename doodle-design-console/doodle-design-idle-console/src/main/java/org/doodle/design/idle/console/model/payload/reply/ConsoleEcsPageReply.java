@@ -13,16 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.design.idle.console.mode.info;
+package org.doodle.design.idle.console.model.payload.reply;
 
+import java.util.List;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.doodle.design.idle.console.model.info.ConsoleEcsInfo;
 
 @Builder
+@ToString
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @AllArgsConstructor
 @NoArgsConstructor
-public class ConsoleGameInfo {
-  long gameId;
+public class ConsoleEcsPageReply {
+  List<ConsoleEcsInfo> ecsInfos;
 }

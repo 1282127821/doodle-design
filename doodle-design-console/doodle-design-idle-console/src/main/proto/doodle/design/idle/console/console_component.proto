@@ -19,8 +19,29 @@ syntax = "proto3";
 package doodle.design.idle.console;
 
 import "doodle/design/idle/console/console_struct.proto";
+import "doodle/design/common/pagination.proto";
 
 option java_multiple_files = true;
 option java_package = "org.doodle.design.idle.console";
 option java_outer_classname = "ConsoleComponentProto";
 
+message ConsoleComponentQueryRequest {
+  int64 unique_id = 1;
+}
+
+message ConsoleComponentQueryReply {
+  oneof Result {
+    ConsoleErrorCode error = 1;
+    ConsoleComponentInfo payload = 2;
+  }
+}
+
+message ConsoleComponentPageRequest {
+  doodle.design.common.PageRequest page = 1;
+}
+message ConsoleComponentPageReply {
+  oneof Result {
+    ConsoleErrorCode error = 1;
+    ConsoleComponentInfoList payload = 2;
+  }
+}
