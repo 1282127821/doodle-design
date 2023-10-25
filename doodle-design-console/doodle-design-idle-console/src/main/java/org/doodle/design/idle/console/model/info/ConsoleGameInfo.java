@@ -24,5 +24,6 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ConsoleGameInfo {
-  long gameId;
+  ConsoleArchiveInfo archiveInfo;
+  ConsoleHostInfo hostInfo;
 }

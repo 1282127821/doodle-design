@@ -17,7 +17,7 @@ package org.doodle.design.idle.console.model.payload.reply;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.doodle.design.idle.console.model.info.ConsoleCrossInfo;
+import org.doodle.design.idle.console.model.info.ConsoleGameInfo;
 
 @Builder
 @ToString
@@ -26,5 +26,5 @@ import org.doodle.design.idle.console.model.info.ConsoleCrossInfo;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ConsoleGameQueryReply {
-  ConsoleCrossInfo crossInfo;
+  ConsoleGameInfo gameInfo;
 }

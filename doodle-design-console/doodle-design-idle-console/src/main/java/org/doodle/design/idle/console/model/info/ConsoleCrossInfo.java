@@ -24,5 +24,6 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ConsoleCrossInfo {
-  long crossId;
+  ConsoleArchiveInfo archiveInfo;
+  ConsoleHostInfo hostInfo;
 }

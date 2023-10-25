@@ -24,5 +24,6 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ConsoleComponentInfo {
-  long componentId;
+  ConsoleArchiveInfo archiveInfo;
+  ConsoleHostInfo hostInfo;
 }

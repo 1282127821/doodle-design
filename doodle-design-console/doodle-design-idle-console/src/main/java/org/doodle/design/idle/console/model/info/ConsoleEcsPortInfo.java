@@ -15,11 +15,11 @@
  */
 package org.doodle.design.idle.console.model.info;
 
+import com.google.common.collect.Range;
 import java.util.Map;
 import java.util.Set;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.doodle.design.common.IntRange;
 import org.doodle.design.idle.console.ConsoleArchiveInfo;
 
 @Builder
@@ -28,7 +28,7 @@ import org.doodle.design.idle.console.ConsoleArchiveInfo;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ConsoleEcsPortInfo {
-  IntRange available;
+  Range<Integer> available;
   Map<Integer, ConsoleArchiveInfo> assignerMap;
   Set<Integer> exposed;
 }
