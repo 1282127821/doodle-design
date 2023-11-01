@@ -15,6 +15,7 @@
   <modules>
     <module>doodle-design-broker</module>
     <module>doodle-design-config</module>
+    <module>doodle-design-container</module>
     <module>doodle-design-dataseer</module>
     <module>doodle-design-excel</module>
     <module>doodle-design-gateway</module>
