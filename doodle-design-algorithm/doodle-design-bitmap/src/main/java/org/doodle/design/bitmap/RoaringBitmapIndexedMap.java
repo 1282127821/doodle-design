@@ -84,7 +84,8 @@ public class RoaringBitmapIndexedMap<K, V> implements IndexedMap<K, V, Map<Strin
 
   private void removeTags(int index, Map<String, String> removed, Map<String, String> reserved) {
     for (Map.Entry<String, String> tag : removed.entrySet()) {
-      if (!reserved.containsKey(tag.getKey())) {
+      String previousValue = reserved.get(tag.getKey());
+      if (Objects.nonNull(previousValue) && !previousValue.equalsIgnoreCase(tag.getValue())) {
         RoaringBitmap bitmap = tagIndexes.get(tag.getKey(), tag.getValue());
         if (Objects.nonNull(bitmap)) {
           bitmap.remove(index);
