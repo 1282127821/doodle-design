@@ -48,15 +48,9 @@ public class RoaringBitmapIndexedMap<K, V> implements IndexedMap<K, V, Map<Strin
     int index = keyToIndex.computeIfAbsent(key, ignored -> internalIndex.incrementAndGet());
     synchronized (this) {
       previousValue = indexToValue.put(index, value);
-      indexToTags.put(index, tags);
-      for (Map.Entry<String, String> tag : tags.entrySet()) {
-        RoaringBitmap bitmap = tagIndexes.get(tag.getKey(), tag.getValue());
-        if (Objects.isNull(bitmap)) {
-          bitmap = new RoaringBitmap();
-          tagIndexes.put(tag.getKey(), tag.getValue(), bitmap);
-        }
-        bitmap.add(index);
-      }
+      Map<String, String> previousTags = indexToTags.put(index, tags);
+      removeTags(index, previousTags, tags);
+      addTags(index, tags);
     }
     return previousValue;
   }
@@ -69,7 +63,7 @@ public class RoaringBitmapIndexedMap<K, V> implements IndexedMap<K, V, Map<Strin
       synchronized (this) {
         Map<String, String> tags = indexToTags.remove(index);
         if (Objects.nonNull(tags)) {
-          removeTags(index, tags);
+          removeTags(index, tags, Collections.emptyMap());
         }
       }
       return previousValue;
@@ -77,13 +71,26 @@ public class RoaringBitmapIndexedMap<K, V> implements IndexedMap<K, V, Map<Strin
     return null;
   }
 
-  private void removeTags(int index, Map<String, String> tags) {
+  private void addTags(int index, Map<String, String> tags) {
     for (Map.Entry<String, String> tag : tags.entrySet()) {
       RoaringBitmap bitmap = tagIndexes.get(tag.getKey(), tag.getValue());
-      if (Objects.nonNull(bitmap)) {
-        bitmap.remove(index);
-        if (bitmap.isEmpty()) {
-          tagIndexes.remove(tag.getKey(), tag.getValue());
+      if (Objects.isNull(bitmap)) {
+        bitmap = new RoaringBitmap();
+        tagIndexes.put(tag.getKey(), tag.getValue(), bitmap);
+      }
+      bitmap.add(index);
+    }
+  }
+
+  private void removeTags(int index, Map<String, String> removed, Map<String, String> reserved) {
+    for (Map.Entry<String, String> tag : removed.entrySet()) {
+      if (!reserved.containsKey(tag.getKey())) {
+        RoaringBitmap bitmap = tagIndexes.get(tag.getKey(), tag.getValue());
+        if (Objects.nonNull(bitmap)) {
+          bitmap.remove(index);
+          if (bitmap.isEmpty()) {
+            tagIndexes.remove(tag.getKey(), tag.getValue());
+          }
         }
       }
     }
