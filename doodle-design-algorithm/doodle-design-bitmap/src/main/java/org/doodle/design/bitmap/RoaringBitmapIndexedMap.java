@@ -49,7 +49,9 @@ public class RoaringBitmapIndexedMap<K, V> implements IndexedMap<K, V, Map<Strin
     synchronized (this) {
       previousValue = indexToValue.put(index, value);
       Map<String, String> previousTags = indexToTags.put(index, tags);
-      removeTags(index, previousTags, tags);
+      if (Objects.nonNull(previousTags) && !previousTags.isEmpty()) {
+        removeTags(index, previousTags, tags);
+      }
       addTags(index, tags);
     }
     return previousValue;
