@@ -125,26 +125,45 @@ public class RoaringBitmapIndexedMap<K, V> implements IndexedMap<K, V, Map<Strin
 
   @Override
   public List<V> query(Map<String, String> tags, QueryOps queryOps) {
-    if (Objects.isNull(tags) || tags.isEmpty()) {
+    if (tags == null || tags.isEmpty()) {
       return new ArrayList<>(indexToValue.values());
     }
+    return queryOps == QueryOps.AND ? queryAnd(tags) : queryOr(tags);
+  }
+
+  private List<V> queryOr(Map<String, String> tags) {
     RoaringBitmap result = null;
     for (Map.Entry<String, String> tag : tags.entrySet()) {
       RoaringBitmap bitmap = tagIndexes.get(tag.getKey(), tag.getValue());
-      if (Objects.isNull(bitmap) && queryOps == QueryOps.AND) {
+      if (Objects.isNull(bitmap)) {
+        continue;
+      }
+      if (Objects.isNull(result)) {
+        result = new RoaringBitmap();
+      }
+      result.or(bitmap);
+    }
+
+    if (Objects.isNull(result) || result.isEmpty()) {
+      return Collections.emptyList();
+    }
+
+    return new RoaringBitmapList(result);
+  }
+
+  private List<V> queryAnd(Map<String, String> tags) {
+    RoaringBitmap result = null;
+    for (Map.Entry<String, String> tag : tags.entrySet()) {
+      RoaringBitmap bitmap = tagIndexes.get(tag.getKey(), tag.getValue());
+      if (Objects.isNull(bitmap)) {
         return Collections.emptyList();
       }
       if (Objects.isNull(result)) {
         result = new RoaringBitmap();
         result.or(bitmap);
       } else {
-        if (queryOps == QueryOps.AND) {
-          result.and(bitmap);
-        } else if (queryOps == QueryOps.OR) {
-          result.or(bitmap);
-        }
+        result.and(bitmap);
       }
-
       if (result.isEmpty()) {
         return Collections.emptyList();
       }
