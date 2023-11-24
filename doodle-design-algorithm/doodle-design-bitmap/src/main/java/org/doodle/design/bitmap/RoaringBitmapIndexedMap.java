@@ -131,7 +131,7 @@ public class RoaringBitmapIndexedMap<K, V> implements IndexedMap<K, V, Map<Strin
     RoaringBitmap result = null;
     for (Map.Entry<String, String> tag : tags.entrySet()) {
       RoaringBitmap bitmap = tagIndexes.get(tag.getKey(), tag.getValue());
-      if (Objects.isNull(bitmap)) {
+      if (Objects.isNull(bitmap) && queryOps == QueryOps.AND) {
         return Collections.emptyList();
       }
       if (Objects.isNull(result)) {
