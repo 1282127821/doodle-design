@@ -115,6 +115,8 @@ public class RoaringBitmapIndexedMap<K, V> implements IndexedMap<K, V, Map<Strin
       keyToIndex.clear();
       indexToValue.clear();
       indexToTags.clear();
+      tagIndexes.clear();
+      internalIndex.set(0);
     }
   }
 
